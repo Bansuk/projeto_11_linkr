@@ -1,12 +1,30 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from "axios";
 export default function PublishPost(){
     const[link, setLink] = useState("")
     const[text,setText]= useState("")
-    console.log(link)
+    const[mock, setMock] = useState({})
+    console.log(mock)
+    
+    useEffect((() => {
+        axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/sign-in",{
+            email:"teste213@gmail.com",
+            password:"teste213"
+        })
+        .then(response => {
+            setMock(response.data);
+        })
+    }),[])
+
+    function publishContent(){
+        
+    }
+    
+
     return(
         <CardPublishPost>
-            <StyledProfileImg />
+            <StyledProfileImg src={mock.user.avatar}/>
             <InfoPublishPost>
                 <SpanPublishPost>O que vocẽ tem para favoritar hoje?</SpanPublishPost>
                 <FirstInputPublishPost 
@@ -21,7 +39,7 @@ export default function PublishPost(){
                 value={text}
                 onChange={e=> setText(e.target.value)}
                 />
-                <ButtonPublishPost>Publicar</ButtonPublishPost>
+                <ButtonPublishPost onClick={publishContent}>Publicar</ButtonPublishPost>
             </InfoPublishPost>
         </CardPublishPost>
     )
