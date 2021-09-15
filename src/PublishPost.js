@@ -4,6 +4,7 @@ import axios from "axios";
 export default function PublishPost(){
     const[link, setLink] = useState("")
     const[text,setText]= useState("")
+    const[button, setButton]= useState(true)
     const[mock, setMock] = useState("")
     console.log(mock)
     
@@ -18,6 +19,7 @@ export default function PublishPost(){
     }),[])
 
     function publishContent(){
+        setButton(false);
         const config = {
             headers: {
                 "Authorization": `Bearer ${mock.token}`
@@ -25,7 +27,7 @@ export default function PublishPost(){
         }
         axios("https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts",config)
         .then(response => console.log(response.data))
-        .catch(error => alert("Erro para Publicar Link"))
+        .catch(error => alert("Houve um erro ao publicar seu link"))
     }
     
     if(mock===""){
@@ -36,8 +38,7 @@ export default function PublishPost(){
     return(
         <CardPublishPost>
             <StyledProfileImg src={mock.user.avatar}/>
-            <InfoPublishPost>
-                <form onSubmit={publishContent}>
+            <InfoPublishPost onSubmit={publishContent}>
                     <SpanPublishPost>O que vocẽ tem para favoritar hoje?</SpanPublishPost>
                     <FirstInputPublishPost 
                     type="url" 
@@ -52,8 +53,12 @@ export default function PublishPost(){
                     value={text}
                     onChange={e=> setText(e.target.value)}
                     />
-                    <ButtonPublishPost type="submit">Publicar</ButtonPublishPost>
-                </form>
+                    {button ?
+                        <ButtonPublishPost type="submit">Publicar</ButtonPublishPost>
+                        :
+                        <ButtonPublishPost>Publishing...</ButtonPublishPost>
+                    }
+                
             </InfoPublishPost>
         </CardPublishPost>
     )
@@ -75,7 +80,7 @@ width:50px;
 height:50px;
 border-radius:26.5px;
 `;
-const InfoPublishPost = styled.div`
+const InfoPublishPost = styled.form`
 display: flex;
 justify-content: space-between;
 flex-direction: column;
