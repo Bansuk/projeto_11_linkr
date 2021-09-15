@@ -4,7 +4,18 @@ import { useState } from "react";
 import axios from "axios";
 
 export default function SignUp(){
-    
+    const [newUser, setNewUser] = useState({
+        email: '',
+        password: '',
+        username: '',
+        pictureUrl: ''
+    })
+
+    function register(e){
+        e.preventDefault();
+        axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/sign-up', newUser)
+            .then((resp) => console.log(resp.data))
+    }
 
     return (
         <SignUpContainer>
@@ -14,11 +25,14 @@ export default function SignUp(){
                 the best links on the web</p>
             </LogoContainer>
             <FormContainer>
-                <InputWrapper>
-                    <input type='email' placeholder='e-mail'></input>
-                    <input type='password' placeholder='password'></input>
-                    <input type='text' placeholder='username'></input>
-                    <input type='url' placeholder='picture url'></input>
+                <InputWrapper onSubmit={register}>
+                    <input type='email' placeholder='e-mail' value={newUser.email}
+                    onChange={(e) => setNewUser({...newUser, email: e.target.value})}></input>
+                    <input type='password' placeholder='password' value={newUser.password} onChange={(e) => setNewUser({...newUser, password: e.target.value})} ></input>
+                    <input type='text' placeholder='username'
+                    value={newUser.username} onChange={(e) => setNewUser({...newUser, username: e.target.value})} ></input>
+                    <input type='url' placeholder='picture url'
+                    value={newUser.pictureUrl} onChange={(e) => setNewUser({...newUser, pictureUrl: e.target.value})} ></input>
                     <button type='submit'>Sign Up</button>
                 </InputWrapper>
                 <Anchor to='/'>
@@ -65,11 +79,6 @@ const FormContainer = styled.div`
 
 const InputWrapper = styled.form`
     width: 85%;
-    
-    /* display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center; */
 
     input{
         width: 100%;
