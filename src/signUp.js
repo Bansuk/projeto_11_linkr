@@ -25,7 +25,7 @@ export default function SignUp(){
     }
 
     return (
-        <SignUpContainer>
+        <MainContainer>
             <LogoContainer>
                 <h1>linkr</h1>
                 <p>save, share and discover
@@ -46,11 +46,11 @@ export default function SignUp(){
                     <span>Switch back to log in</span>
                 </Anchor>
             </FormContainer>
-        </SignUpContainer>
+        </MainContainer>
     );
 }
 
-const SignUpContainer = styled.div`
+const MainContainer = styled.div`
     display: flex;
     width: 100vw;
     height: 100vh;
@@ -153,3 +153,11 @@ const Anchor = styled(Link)`
     font-size: 20px;
     margin-top: 20px;
 `
+
+export {
+    MainContainer,
+    LogoContainer,
+    FormContainer,
+    InputWrapper,
+    Anchor,
+}
