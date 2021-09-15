@@ -1,15 +1,24 @@
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import {BrowserRouter, Switch, Route} from 'react-router-dom';
+import SignUp from "./signUp";
 import Timeline from "./Timeline";
-function App() {
+
+export default function App() {
     return (
+        <>
         <BrowserRouter>
             <Switch>
+                <Route path='/sign-up' exact>
+                    <SignUp />
+                </Route>
                 <Route path="/timeline" exact>
                     <Timeline />
                 </Route>
+                
             </Switch>
-        </BrowserRouter>
+            
+        </BrowserRouter>            
+        </>
+
     );
 }
 
-export default App;
