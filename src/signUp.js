@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 
@@ -10,11 +10,17 @@ export default function SignUp(){
         username: '',
         pictureUrl: ''
     })
+    const history = useHistory();
 
     function register(e){
         e.preventDefault();
         axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/sign-up', newUser)
-            .then((resp) => console.log(resp.data))
+            .then((resp) => history.push('/'))
+            .catch((err) => {
+                if(err.response.status > 399 && err.response.status < 500){
+                    alert('O e-mail inserido já está cadastrado!');
+                }
+            })
     }
 
     return (
@@ -27,12 +33,12 @@ export default function SignUp(){
             <FormContainer>
                 <InputWrapper onSubmit={register}>
                     <input type='email' placeholder='e-mail' value={newUser.email}
-                    onChange={(e) => setNewUser({...newUser, email: e.target.value})}></input>
-                    <input type='password' placeholder='password' value={newUser.password} onChange={(e) => setNewUser({...newUser, password: e.target.value})} ></input>
+                    onChange={(e) => setNewUser({...newUser, email: e.target.value})} required ></input>
+                    <input type='password' placeholder='password' value={newUser.password} onChange={(e) => setNewUser({...newUser, password: e.target.value})} required ></input>
                     <input type='text' placeholder='username'
-                    value={newUser.username} onChange={(e) => setNewUser({...newUser, username: e.target.value})} ></input>
+                    value={newUser.username} onChange={(e) => setNewUser({...newUser, username: e.target.value})} required ></input>
                     <input type='url' placeholder='picture url'
-                    value={newUser.pictureUrl} onChange={(e) => setNewUser({...newUser, pictureUrl: e.target.value})} ></input>
+                    value={newUser.pictureUrl} onChange={(e) => setNewUser({...newUser, pictureUrl: e.target.value})} required ></input>
                     <button type='submit'>Sign Up</button>
                 </InputWrapper>
                 <Anchor to='/'>
