@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
-import axios from "axios";
 import { MainContainer, LogoContainer, FormContainer, InputWrapper, Anchor } from './signUp'
+import { signInUser } from "../services/api.services";
 
 
 export default function Login({setUser}){
@@ -17,7 +17,7 @@ export default function Login({setUser}){
         e.preventDefault();
         setLoading(true);
 
-        axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/sign-in', logUser)
+        signInUser(logUser)
             .then((resp) => {
                 setUser({...resp.data});
                 history.push('/timeline');

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Link, useHistory } from "react-router-dom";
 import { useState } from "react";
-import axios from "axios";
+import { signUpUser } from "../services/api.services";
 
 export default function SignUp(){
     const [newUser, setNewUser] = useState({
@@ -15,8 +15,9 @@ export default function SignUp(){
 
     function register(e){
         e.preventDefault();
-        setLoading(true)
-        axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/sign-up', newUser)
+        setLoading(true);
+
+        signUpUser(newUser)
             .then((resp) => history.push('/'))
             .catch((err) => {
                     alert('O e-mail inserido já está cadastrado!');
