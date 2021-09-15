@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { getPostsList } from "../Services/api.services";
+import { getPostsList } from "./api.services";
 import Post from "./Post";
-import { Content, Heading } from "../Styles/MainPage";
+import { Content, Heading } from "./MainPage";
 import styled from "styled-components";
 
 export default function Timeline() {

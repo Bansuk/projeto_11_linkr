@@ -1,7 +1,6 @@
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import Post from "./Components/Post";
-import GlobalStyle from "./Styles/GlobalStyle";
-import Timeline from "./Components/Timeline";
+import GlobalStyle from "./GlobalStyle";
+import Timeline from "./Timeline";
 
 function App() {
     return (
