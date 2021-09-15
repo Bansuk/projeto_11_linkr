@@ -1,5 +1,5 @@
 import {ButtonPublishPost, SecondInputPublishPost, FirstInputPublishPost, SpanPublishPost, InfoPublishPost,
-    StyledProfileImg, CardPublishPost} from "./Styles/PublishPost"
+    StyledProfileImg, CardPublishPost} from "../Styles/PublishPostStyle"
 import { useState, useEffect } from 'react';
 import axios from "axios";
 export default function PublishPost(){

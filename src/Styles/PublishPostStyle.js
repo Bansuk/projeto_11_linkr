@@ -25,7 +25,7 @@ width:82%
 `;
 const SpanPublishPost = styled.span`
 font-size:20px
-color: #707070; 
+color: #707070;
 font-weight:300
 `;
 const FirstInputPublishPost = styled.input`
@@ -46,4 +46,4 @@ margin: 0px 0px 0px 390px;
 `;
 
 export {ButtonPublishPost, SecondInputPublishPost, FirstInputPublishPost, SpanPublishPost, InfoPublishPost,
-StyledProfileImg, CardPublishPost};
+StyledProfileImg, CardPublishPost}
