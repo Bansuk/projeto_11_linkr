@@ -10,16 +10,17 @@ export default function SignUp(){
         username: '',
         pictureUrl: ''
     })
+    const [loading, setLoading] = useState(false);
     const history = useHistory();
 
     function register(e){
         e.preventDefault();
+        setLoading(true)
         axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/sign-up', newUser)
             .then((resp) => history.push('/'))
             .catch((err) => {
-                if(err.response.status > 399 && err.response.status < 500){
                     alert('O e-mail inserido já está cadastrado!');
-                }
+                    setLoading(false);    
             })
     }
 
@@ -39,7 +40,7 @@ export default function SignUp(){
                     value={newUser.username} onChange={(e) => setNewUser({...newUser, username: e.target.value})} required ></input>
                     <input type='url' placeholder='picture url'
                     value={newUser.pictureUrl} onChange={(e) => setNewUser({...newUser, pictureUrl: e.target.value})} required ></input>
-                    <button type='submit'>Sign Up</button>
+                    <button type='submit' disabled={loading}>Sign Up</button>
                 </InputWrapper>
                 <Anchor to='/'>
                     <span>Switch back to log in</span>
@@ -51,6 +52,13 @@ export default function SignUp(){
 
 const SignUpContainer = styled.div`
     display: flex;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+
+    @media(max-width: 900px){
+        flex-direction: column;
+    }
 `
 
 const LogoContainer = styled.div`
@@ -71,6 +79,27 @@ const LogoContainer = styled.div`
         font-weight: bold;
         width: 70%;
     }
+
+    @media(max-width: 900px){
+        width: 100vw;
+        height: 25vh;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+       
+        
+        h1{
+            font-size: 76px;
+        }
+
+        p{
+            font-size: 23px;
+            text-align: justify;
+        }
+    }
+
 `
 
 const FormContainer = styled.div`
@@ -81,6 +110,11 @@ const FormContainer = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    @media(max-width: 900px){
+        width: 100vw;
+        height: 75vh;
+    }
 `
 
 const InputWrapper = styled.form`
@@ -88,7 +122,7 @@ const InputWrapper = styled.form`
 
     input{
         width: 100%;
-        height: 65px;
+        height: 18%;
         margin-bottom: 13px;
         border: none;
         outline: none;
@@ -96,7 +130,7 @@ const InputWrapper = styled.form`
         padding: 12px 17px;
         font-family: 'Oswald', sans-serif;
         font-size: 27px;
-        font-weight: bold;
+        font-weight: bold; 
     }
 
     button{
@@ -117,4 +151,5 @@ const InputWrapper = styled.form`
 const Anchor = styled(Link)`
     color: white;
     font-size: 20px;
+    margin-top: 20px;
 `
