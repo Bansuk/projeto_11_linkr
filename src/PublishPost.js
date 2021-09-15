@@ -46,12 +46,14 @@ export default function PublishPost(){
                     value={link} 
                     onChange={e => setLink(e.target.value)}
                     required
+                    disabled={!button}
                     />
                     <SecondInputPublishPost 
                     type="text" 
                     placeholder="Muito irado esse link falando de #javascript" 
                     value={text}
                     onChange={e=> setText(e.target.value)}
+                    disabled={!button}
                     />
                     {button ?
                         <ButtonPublishPost type="submit">Publicar</ButtonPublishPost>
@@ -68,7 +70,7 @@ const CardPublishPost = styled.div`
     border-radius: 16px;
 	width: 611px;
 	height: 209px;
-	background: red;
+	background: #FFFFFF;
     display:flex;
     box-sizing:border-box;
     padding:16px;
