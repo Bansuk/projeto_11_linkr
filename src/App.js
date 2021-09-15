@@ -6,8 +6,8 @@ import SignUp from "./signUp";
 export default function App() {
     return (
         <BrowserRouter>
+            <GlobalStyle />
             <Switch>
-                <GlobalStyle />
                 <Route path="/timeline" exact>
                     <Timeline />
                 </Route>

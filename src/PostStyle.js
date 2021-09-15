@@ -98,6 +98,10 @@ const Snippet = styled.div`
     & p {
         color: #9b9595;
         margin: 5px 0 13px 0;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
     }
 
     & img {
