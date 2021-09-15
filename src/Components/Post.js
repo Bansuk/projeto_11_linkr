@@ -1,39 +1,54 @@
 import styled from "styled-components";
-import logo from "../Components/unnamed.jpg";
-import a from "../Components/image 4.png";
 import { FaRegHeart } from "react-icons/fa";
+import { useHistory } from "react-router";
+import ReactHashtag from "react-hashtag";
 
-export default function Post() {
+export default function Post({
+    text,
+    link,
+    linkTitle,
+    linkDescription,
+    linkImage,
+    userId,
+    username,
+    avatar,
+    likes,
+}) {
+    const history = useHistory();
+
+    function redirectTo(path) {
+        history.push(path);
+    }
+
     return (
         <Content>
             <InnerContent>
                 <InteractionColumn>
-                    <img src={logo} alt="Foto de perfil do usuario" />
+                    <img
+                        src={avatar}
+                        alt="Foto de perfil do usuario"
+                        onClick={() => redirectTo(`/user/${userId}`)}
+                    />
                     <FaRegHeart />
-                    <span>13 likes</span>
+                    <span>{likes} likes</span>
                 </InteractionColumn>
                 <LinkColumn>
-                    <span className={"post__author"}>Josenal Juvencio</span>
+                    <span
+                        className={"post__author"}
+                        onClick={() => redirectTo(`/user/${userId}`)}
+                    >
+                        {username}
+                    </span>
                     <p className={"post__text"}>
-                        Muito maneiro esse tutorial de Material UI com React,
-                        deem uma olhada! #react #material
+                        <ReactHashtag>{text}</ReactHashtag>
                     </p>
-                    <Snippet>
+                    <Snippet onClick={() => window.open(link)}>
                         <div>
-                            <h1>
-                                Como aplicar o Material UI em um projeto React
-                                sadasdsadasddsddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
-                            </h1>
-                            <p>
-                                Hey! I have moved this tutorial to my personal
-                                blog. Same content, new location. Sorry about
-                                making you click through to another page.
-                            </p>
-                            <span>
-                                https://medium.com/@pshrmn/a-simple-react-router
-                            </span>
+                            <h1>{linkTitle}</h1>
+                            <p>{linkDescription}</p>
+                            <span>{link}</span>
                         </div>
-                        <img src={a} alt="" />
+                        <img src={linkImage} alt="Imagem do post" />
                     </Snippet>
                 </LinkColumn>
             </InnerContent>
@@ -51,6 +66,7 @@ const Content = styled.div`
     max-width: 611px;
     min-width: 375px;
     width: calc(100% - 611px);
+    margin-bottom: 15px;
 `;
 
 const InnerContent = styled.div`
@@ -76,6 +92,10 @@ const InteractionColumn = styled.div`
         width: 50px;
         border-radius: 26px;
         margin-bottom: 20px;
+
+        :hover {
+            cursor: pointer;
+        }
     }
 
     & span {
@@ -84,7 +104,7 @@ const InteractionColumn = styled.div`
 `;
 
 const LinkColumn = styled.div`
-    width: 100%;
+    width: 90%;
     margin-left: 20px;
     word-wrap: break-word;
 
@@ -109,13 +129,12 @@ const Snippet = styled.div`
     color: #cecece;
     font-size: 11px;
     word-wrap: break-word;
-    width: 90%;
-    background-color: blue;
+    width: 92%;
+    margin-top: 10px;
 
     & div {
         margin: 23px 20px;
         word-wrap: break-word;
-        background-color: red;
         width: 350px;
     }
 
@@ -133,4 +152,12 @@ const Snippet = styled.div`
         border-radius: 0px 12px 13px 0px;
         width: 153px;
     }
+
+    :hover {
+        cursor: pointer;
+    }
+`;
+
+const Hashtag = styled.span`
+    color: green;
 `;

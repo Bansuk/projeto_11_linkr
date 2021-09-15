@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { getPostsList } from "../Services/api.services";
 import Post from "./Post";
+import { Content, Heading } from "../Styles/MainPage";
 
 export default function Timeline() {
     const [statusMessage, setStatusMessage] = useState("Loading");
@@ -26,9 +27,24 @@ export default function Timeline() {
     }, []);
 
     return (
-        <>
-            <h1>Timeline</h1>
-            {statusMessage === "OK" ? <Post></Post> : statusMessage}
-        </>
+        <Content>
+            <Heading>Timeline</Heading>
+            {statusMessage === "OK"
+                ? postsList.map(post => (
+                      <Post
+                          key={post.id}
+                          text={post.text}
+                          link={post.link}
+                          linkTitle={post.linkTitle}
+                          linkDescription={post.linkDescription}
+                          linkImage={post.linkImage}
+                          userId={post.user.id}
+                          username={post.user.username}
+                          avatar={post.user.avatar}
+                          likes={post.likes.length}
+                      ></Post>
+                  ))
+                : statusMessage}
+        </Content>
     );
 }
