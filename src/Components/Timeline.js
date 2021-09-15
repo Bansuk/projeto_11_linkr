@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import styled from "styled-components";
 import { getPostsList } from "../Services/api.services";
 import Post from "./Post";
 import { Content, Heading } from "../Styles/MainPage";
+import styled from "styled-components";
 
 export default function Timeline() {
     const [statusMessage, setStatusMessage] = useState("Loading");
@@ -28,23 +28,32 @@ export default function Timeline() {
 
     return (
         <Content>
-            <Heading>Timeline</Heading>
-            {statusMessage === "OK"
-                ? postsList.map(post => (
-                      <Post
-                          key={post.id}
-                          text={post.text}
-                          link={post.link}
-                          linkTitle={post.linkTitle}
-                          linkDescription={post.linkDescription}
-                          linkImage={post.linkImage}
-                          userId={post.user.id}
-                          username={post.user.username}
-                          avatar={post.user.avatar}
-                          likes={post.likes.length}
-                      ></Post>
-                  ))
-                : statusMessage}
+            <Heading>timeline</Heading>
+            {statusMessage === "OK" ? (
+                postsList.map(post => (
+                    <Post
+                        key={post.id}
+                        text={post.text}
+                        link={post.link}
+                        linkTitle={post.linkTitle}
+                        linkDescription={post.linkDescription}
+                        linkImage={post.linkImage}
+                        userId={post.user.id}
+                        username={post.user.username}
+                        avatar={post.user.avatar}
+                        likes={post.likes.length}
+                    ></Post>
+                ))
+            ) : (
+                <Message>{statusMessage}</Message>
+            )}
         </Content>
     );
 }
+
+const Message = styled.span`
+    color: #fff;
+    font-weight: 700;
+    font-family: "Oswald", sans-serif;
+    font-size: 36px;
+`;

@@ -40,7 +40,22 @@ export default function Post({
                         {username}
                     </span>
                     <p className={"post__text"}>
-                        <ReactHashtag>{text}</ReactHashtag>
+                        <ReactHashtag
+                            renderHashtag={hashtagValue => (
+                                <Hashtag
+                                    onClick={hashtagValue => {
+                                        let hashtag =
+                                            hashtagValue.target.innerText;
+                                        hashtag = hashtag.slice(1);
+                                        redirectTo(`/hashtag/${hashtag}`);
+                                    }}
+                                >
+                                    {hashtagValue}
+                                </Hashtag>
+                            )}
+                        >
+                            {text}
+                        </ReactHashtag>
                     </p>
                     <Snippet onClick={() => window.open(link)}>
                         <div>
@@ -64,9 +79,15 @@ const Content = styled.div`
     height: 276px;
     justify-content: center;
     max-width: 611px;
-    min-width: 375px;
+    min-width: 465px;
     width: calc(100% - 611px);
     margin-bottom: 15px;
+    font-family: "Lato", sans-serif;
+
+    @media (max-width: 800px) {
+        border-radius: 0;
+        width: 100%;
+    }
 `;
 
 const InnerContent = styled.div`
@@ -134,13 +155,12 @@ const Snippet = styled.div`
 
     & div {
         margin: 23px 20px;
-        word-wrap: break-word;
+
         width: 350px;
     }
 
     & h1 {
         font-size: 16px;
-        word-wrap: break-word;
     }
 
     & p {
@@ -159,5 +179,6 @@ const Snippet = styled.div`
 `;
 
 const Hashtag = styled.span`
-    color: green;
+    color: #fff;
+    font-weight: 700;
 `;
