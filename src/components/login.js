@@ -2,18 +2,22 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
-import { MainContainer, LogoContainer, FormContainer, InputWrapper, Anchor } from "./signUp";
+import { MainContainer, LogoContainer, FormContainer, InputWrapper, Anchor } from './signUp'
 
 
-export default function Login({user, setUser}){
+export default function Login({setUser}){
     const [loading, setLoading] = useState(false);
+    const [logUser, setLogUser] = useState({
+        email: '',
+        password: ''
+    })
     const history = useHistory();
 
     function signIn(e){
         e.preventDefault();
         setLoading(true);
 
-        axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/sign-in', user)
+        axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/sign-in', logUser)
             .then((resp) => {
                 setUser({...resp.data});
                 history.push('/timeline');
@@ -34,9 +38,9 @@ export default function Login({user, setUser}){
             </LogoContainer>
             <FormContainer>
                 <Inputs onSubmit={signIn}>
-                    <input type='email' placeholder='e-mail' value={user.email}
-                    onChange={(e) => setUser({...user, email: e.target.value})} required ></input>
-                    <input type='password' placeholder='password' value={user.password} onChange={(e) => setUser({...user, password: e.target.value})} required ></input>
+                    <input type='email' placeholder='e-mail' value={logUser.email}
+                    onChange={(e) => setLogUser({...logUser, email: e.target.value})} required ></input>
+                    <input type='password' placeholder='password' value={logUser.password} onChange={(e) => setLogUser({...logUser, password: e.target.value})} required ></input>
                     <button type='submit' disabled={loading}>Log in</button>
                 </Inputs>
                 <Anchor to='/sign-up'>
