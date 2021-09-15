@@ -4,7 +4,7 @@ import axios from "axios";
 export default function PublishPost(){
     const[link, setLink] = useState("")
     const[text,setText]= useState("")
-    const[mock, setMock] = useState({})
+    const[mock, setMock] = useState("")
     console.log(mock)
     
     useEffect((() => {
@@ -18,28 +18,42 @@ export default function PublishPost(){
     }),[])
 
     function publishContent(){
-        
+        const config = {
+            headers: {
+                "Authorization": `Bearer ${mock.token}`
+            }
+        }
+        axios("https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts",config)
+        .then(response => console.log(response.data))
+        .catch(error => alert("Erro para Publicar Link"))
     }
     
-
+    if(mock===""){
+        return(
+            <div>Carregando</div>
+        )
+    }
     return(
         <CardPublishPost>
             <StyledProfileImg src={mock.user.avatar}/>
             <InfoPublishPost>
-                <SpanPublishPost>O que vocẽ tem para favoritar hoje?</SpanPublishPost>
-                <FirstInputPublishPost 
-                type="url" 
-                placeholder="https://" 
-                value={link} 
-                onChange={e => setLink(e.target.value)}
-                />
-                <SecondInputPublishPost 
-                type="text" 
-                placeholder="Muito irado esse link falando de #javascript" 
-                value={text}
-                onChange={e=> setText(e.target.value)}
-                />
-                <ButtonPublishPost onClick={publishContent}>Publicar</ButtonPublishPost>
+                <form onSubmit={publishContent}>
+                    <SpanPublishPost>O que vocẽ tem para favoritar hoje?</SpanPublishPost>
+                    <FirstInputPublishPost 
+                    type="url" 
+                    placeholder="https://" 
+                    value={link} 
+                    onChange={e => setLink(e.target.value)}
+                    required
+                    />
+                    <SecondInputPublishPost 
+                    type="text" 
+                    placeholder="Muito irado esse link falando de #javascript" 
+                    value={text}
+                    onChange={e=> setText(e.target.value)}
+                    />
+                    <ButtonPublishPost type="submit">Publicar</ButtonPublishPost>
+                </form>
             </InfoPublishPost>
         </CardPublishPost>
     )
