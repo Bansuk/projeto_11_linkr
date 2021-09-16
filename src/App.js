@@ -1,30 +1,27 @@
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import GlobalStyle from "./Styles/GlobalStyle";
-import Timeline from "./Components/Timeline";
-import SignUp from "./Components/signUp";
-import UserContext from "./Context/UserContext";
+import GlobalStyle from "./styles/GlobalStyle";
+import Timeline from "./components/Timeline";
+import SignUp from "./components/signUp";
+import Login from "./components/login";
+import UserContext from "./contexts/userContext";
+import { useState } from "react";
 
 export default function App() {
-    const user = {
-        token: "3582c710-71c0-46b4-8101-d57544fbc839",
-        user: {
-            id: 450,
-            email: "teste213@gmail.com",
-            username: "teste213",
-            avatar: "https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/450/avatar",
-        },
-    };
+    const [user, setUser] = useState({});
 
     return (
         <UserContext.Provider value={user}>
             <BrowserRouter>
                 <GlobalStyle />
                 <Switch>
+                    <Route path="/sign-up" exact>
+                        <SignUp />
+                    </Route>
+                    <Route path="/" exact>
+                        <Login user={user} setUser={setUser} />
+                    </Route>
                     <Route path="/timeline" exact>
                         <Timeline />
-                    </Route>
-                    <Route path="/sign-up">
-                        <SignUp />
                     </Route>
                 </Switch>
             </BrowserRouter>
