@@ -48,9 +48,9 @@ export default function Post({
                     </span>
                     <p className={"post__text"}>
                         <ReactHashtag
-                            renderHashtag={hashtagValue => (
+                            renderHashtag={(index, hashtagValue) => (
                                 <Hashtag
-                                    key={id}
+                                    key={index}
                                     onClick={hashtagValue => {
                                         let hashtag =
                                             hashtagValue.target.innerText;
