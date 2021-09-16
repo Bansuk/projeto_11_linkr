@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Link, useHistory } from "react-router-dom";
 import { useState } from "react";
-import axios from "axios";
+import { signUpUser } from "../services/api.services";
 
 export default function SignUp(){
     const [newUser, setNewUser] = useState({
@@ -15,8 +15,9 @@ export default function SignUp(){
 
     function register(e){
         e.preventDefault();
-        setLoading(true)
-        axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/sign-up', newUser)
+        setLoading(true);
+
+        signUpUser(newUser)
             .then((resp) => history.push('/'))
             .catch((err) => {
                     alert('O e-mail inserido já está cadastrado!');
@@ -25,7 +26,7 @@ export default function SignUp(){
     }
 
     return (
-        <SignUpContainer>
+        <MainContainer>
             <LogoContainer>
                 <h1>linkr</h1>
                 <p>save, share and discover
@@ -46,11 +47,11 @@ export default function SignUp(){
                     <span>Switch back to log in</span>
                 </Anchor>
             </FormContainer>
-        </SignUpContainer>
+        </MainContainer>
     );
 }
 
-const SignUpContainer = styled.div`
+const MainContainer = styled.div`
     display: flex;
     width: 100vw;
     height: 100vh;
@@ -153,3 +154,11 @@ const Anchor = styled(Link)`
     font-size: 20px;
     margin-top: 20px;
 `
+
+export {
+    MainContainer,
+    LogoContainer,
+    FormContainer,
+    InputWrapper,
+    Anchor,
+}
