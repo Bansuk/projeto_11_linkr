@@ -24,7 +24,7 @@ export default function App() {
                     <Route path="/timeline" exact>
                         <Timeline />
                     </Route>
-                    <Route path="/sign-up" exact>
+                    <Route path="/sign-up" exact setUser={setUser}>
                         <SignUp />
                     </Route>
                 </Switch>
