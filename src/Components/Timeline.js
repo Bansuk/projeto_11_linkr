@@ -10,23 +10,20 @@ export default function Timeline() {
     const [postsList, setPostsList] = useState([]);
     const { token } = useContext(UserContext);
 
-    function checkIfPostsListIsEmpty() {
-        if (postsList === []) setStatusMessage("Nenhum post encontrado");
-        else setStatusMessage("OK");
-    }
-
     useEffect(() => {
         getPostsList(token)
             .then(res => {
                 setPostsList(res.data.posts);
-                checkIfPostsListIsEmpty();
+                if (postsList === [])
+                    setStatusMessage("Nenhum post encontrado");
+                else setStatusMessage("OK");
             })
             .catch(err => {
                 setStatusMessage(
                     "Houve uma falha ao obter os posts, por favor atualize a página"
                 );
             });
-    }, [token]);
+    }, [token, postsList]);
 
     return (
         <Content>
