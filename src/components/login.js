@@ -36,11 +36,14 @@ export default function Login({setUser}){
                 <p>save, share and discover
                 the best links on the web</p>
             </LogoContainer>
+
             <FormContainer>
                 <Inputs onSubmit={signIn}>
                     <input type='email' placeholder='e-mail' value={logUser.email}
                     onChange={(e) => setLogUser({...logUser, email: e.target.value})} required ></input>
+
                     <input type='password' placeholder='password' value={logUser.password} onChange={(e) => setLogUser({...logUser, password: e.target.value})} required ></input>
+                    
                     <button type='submit' disabled={loading}>Log in</button>
                 </Inputs>
                 <Anchor to='/sign-up'>

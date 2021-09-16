@@ -8,10 +8,6 @@ function config(token) {
     };
 }
 
-function getPostsList(token) {
-    return axios.get(`${URL}/posts`, config(token));
-}
-
 function signInUser(user){
     return axios.post(`${URL}sign-in`, user)
 }
