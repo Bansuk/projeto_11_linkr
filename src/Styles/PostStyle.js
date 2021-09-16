@@ -68,6 +68,11 @@ const LinkColumn = styled.div`
         font-size: 19px;
         color: #b7b7b7;
         margin: 5px 0 5px 0;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        max-width: 90%;
     }
 `;
 

@@ -11,15 +11,15 @@ import {
 } from "../Styles/PostStyle";
 
 export default function Post({
-    text,
-    link,
-    linkTitle,
-    linkDescription,
-    linkImage,
-    userId,
-    username,
-    avatar,
-    likes,
+    post: {
+        text,
+        link,
+        linkTitle,
+        linkDescription,
+        linkImage,
+        user: { id, username, avatar },
+        likes,
+    },
 }) {
     const history = useHistory();
 
@@ -34,15 +34,15 @@ export default function Post({
                     <img
                         src={avatar}
                         alt="Foto de perfil do usuario"
-                        onClick={() => redirectTo(`/user/${userId}`)}
+                        onClick={() => redirectTo(`/user/${id}`)}
                     />
                     <FaRegHeart />
-                    <span>{likes} likes</span>
+                    <span>{likes.length} likes</span>
                 </InteractionColumn>
                 <LinkColumn>
                     <span
                         className={"post__author"}
-                        onClick={() => redirectTo(`/user/${userId}`)}
+                        onClick={() => redirectTo(`/user/${id}`)}
                     >
                         {username}
                     </span>

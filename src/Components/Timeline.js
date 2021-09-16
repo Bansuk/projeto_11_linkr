@@ -30,20 +30,7 @@ export default function Timeline() {
         <Content>
             <Heading>timeline</Heading>
             {statusMessage === "OK" ? (
-                postsList.map(post => (
-                    <Post
-                        key={post.id}
-                        text={post.text}
-                        link={post.link}
-                        linkTitle={post.linkTitle}
-                        linkDescription={post.linkDescription}
-                        linkImage={post.linkImage}
-                        userId={post.user.id}
-                        username={post.user.username}
-                        avatar={post.user.avatar}
-                        likes={post.likes.length}
-                    ></Post>
-                ))
+                postsList.map(post => <Post key={post.id} post={post}></Post>)
             ) : (
                 <Message>{statusMessage}</Message>
             )}
