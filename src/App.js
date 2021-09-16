@@ -4,6 +4,7 @@ import Timeline from "./Components/Timeline";
 import SignUp from "./Components/signUp";
 import UserContext from "./Context/UserContext";
 import { useState } from "react/cjs/react.development";
+import TopBar from "./Components/TopBar";
 
 export default function App() {
     const [user, setUser] = useState({
@@ -20,6 +21,7 @@ export default function App() {
         <UserContext.Provider value={user}>
             <BrowserRouter>
                 <GlobalStyle />
+                <TopBar />
                 <Switch>
                     <Route path="/timeline" exact>
                         <Timeline />
