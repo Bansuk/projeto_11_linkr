@@ -16,4 +16,4 @@ function signUpUser(user){
     return axios.post(`${URL}sign-up`, user)
 }
 
-export { getPostsList, signInUser, signUpUser };
+export { signInUser, signUpUser };
