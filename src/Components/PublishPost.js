@@ -1,43 +1,27 @@
 import {ButtonPublishPost, SecondInputPublishPost, FirstInputPublishPost, SpanPublishPost, InfoPublishPost,
     StyledProfileImg, CardPublishPost} from "../Styles/PublishPostStyle"
-import { useState, useEffect } from 'react';
+import { useState} from 'react';
 import axios from "axios";
 export default function PublishPost(){
     const[link, setLink] = useState("")
     const[text,setText]= useState("")
     const[button, setButton]= useState(true)
-    const[mock, setMock] = useState("")
-    
-    useEffect((() => {
-        axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/sign-in",{
-            email:"teste213@gmail.com",
-            password:"teste213"
-        })
-        .then(response => {
-            setMock(response.data);
-        })
-    }),[])
 
     function publishContent(){
         setButton(false);
         const config = {
             headers: {
-                "Authorization": `Bearer ${mock.token}`
+                "Authorization": `Bearer ${"2b19cbc1-856a-4d00-9666-2676d198c4bd"}`
             }
         }
-        axios("https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts",config)
-        .then(response => console.log(response.data))
-        .catch(error => alert("Houve um erro ao publicar seu link"))
+        axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts",config)
+        .then(response => console.log(response))
+        .catch(() => alert("Houve um erro ao publicar seu link"))
     }
     
-    if(mock===""){
-        return(
-            <div>Carregando</div>
-        )
-    }
     return(
         <CardPublishPost>
-            <StyledProfileImg src={mock.user.avatar}/>
+            <StyledProfileImg />
             <InfoPublishPost onSubmit={publishContent}>
                     <SpanPublishPost>O que vocẽ tem para favoritar hoje?</SpanPublishPost>
                     <FirstInputPublishPost 

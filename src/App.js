@@ -10,10 +10,6 @@ export default function App() {
                 <Route path='/sign-up' exact>
                     <SignUp />
                 </Route>
-                <Route path="/timeline" exact>
-                    <Timeline />
-                </Route>
-                
             </Switch>
             
         </BrowserRouter>            
