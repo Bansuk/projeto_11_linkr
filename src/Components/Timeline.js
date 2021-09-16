@@ -1,12 +1,14 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { getPostsList } from "../Services/api.services";
 import Post from "./Post";
 import { Content, Heading } from "../Styles/MainPage";
 import styled from "styled-components";
+import UserContext from "../Context/UserContext";
 
 export default function Timeline() {
     const [statusMessage, setStatusMessage] = useState("Loading");
     const [postsList, setPostsList] = useState([]);
+    const { token } = useContext(UserContext);
 
     function checkIfPostsListIsEmpty() {
         if (postsList === []) setStatusMessage("Nenhum post encontrado");
@@ -14,7 +16,7 @@ export default function Timeline() {
     }
 
     useEffect(() => {
-        getPostsList("2b19cbc1-856a-4d00-9666-2676d198c4bd")
+        getPostsList(token)
             .then(res => {
                 setPostsList(res.data.posts);
                 checkIfPostsListIsEmpty();

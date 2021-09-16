@@ -35,10 +35,6 @@ const InteractionColumn = styled.div`
     width: 9.5%;
 
     & img {
-        max-height: 50px;
-        min-height: 40px;
-        max-width: 50px;
-        min-width: 50px;
         height: 50px;
         width: 50px;
         border-radius: 26px;
@@ -84,7 +80,7 @@ const Snippet = styled.div`
     display: flex;
     color: #cecece;
     font-size: 11px;
-    width: 95%;
+    width: 100%;
     margin-top: 10px;
 
     & div {
@@ -111,7 +107,8 @@ const Snippet = styled.div`
 
     & img {
         border-radius: 0px 12px 13px 0px;
-        width: 30%;
+        width: 170px;
+        object-fit: cover;
     }
 
     & span {
