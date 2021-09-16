@@ -8,10 +8,10 @@ import UserContext from "../Context/UserContext";
 export default function Timeline() {
     const [statusMessage, setStatusMessage] = useState("Loading");
     const [postsList, setPostsList] = useState([]);
-    const { token } = useContext(UserContext);
+    //const { token } = useContext(UserContext);
 
     useEffect(() => {
-        getPostsList(token)
+        getPostsList("3582c710-71c0-46b4-8101-d57544fbc839")
             .then(res => {
                 setPostsList(res.data.posts);
                 if (postsList === [])
@@ -23,7 +23,7 @@ export default function Timeline() {
                     "Houve uma falha ao obter os posts, por favor atualize a página"
                 );
             });
-    }, [token, postsList]);
+    }, [postsList]);
 
     return (
         <Content>
