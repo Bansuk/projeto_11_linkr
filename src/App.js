@@ -1,6 +1,5 @@
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
 import SignUp from "./Components/signUp";
-import Timeline from "./Timeline";
 
 export default function App() {
     return (
