@@ -40,13 +40,29 @@ export default function TopBar() {
             </div>
             {isMenuOpen ? (
                 <Menu>
-                    <span onClick={() => redirectTo("/my-posts")}>
+                    <span
+                        onClick={() => {
+                            redirectTo("/my-posts");
+                            isMenuOpen(false);
+                        }}
+                    >
                         My posts
                     </span>
-                    <span onClick={() => redirectTo("/my-likes")}>
+                    <span
+                        onClick={() => {
+                            redirectTo("/my-likes");
+                            isMenuOpen(false);
+                        }}
+                    >
                         My likes
                     </span>
-                    <span>Logout</span>
+                    <span
+                        onClick={() => {
+                            redirectTo("/");
+                        }}
+                    >
+                        Logout
+                    </span>
                 </Menu>
             ) : (
                 ""
