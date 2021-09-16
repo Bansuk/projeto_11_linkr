@@ -56,6 +56,7 @@ const MainContainer = styled.div`
     width: 100vw;
     height: 100vh;
     overflow: hidden;
+
     @media(max-width: 900px){
         flex-direction: column;
     }
@@ -67,16 +68,19 @@ const LogoContainer = styled.div`
     width: 66vw;
     height: 100vh;
     padding: 10%;
+
     h1{
         font-family: 'Passion One', cursive;
         font-size: 106px;
     }
+
     p{
         font-family: 'Oswald', sans-serif;
         font-size: 43px;
         font-weight: bold;
         width: 70%;
     }
+
     @media(max-width: 900px){
         width: 100vw;
         height: 25vh;
@@ -90,11 +94,13 @@ const LogoContainer = styled.div`
         h1{
             font-size: 76px;
         }
+
         p{
             font-size: 23px;
             text-align: justify;
         }
     }
+
 `
 
 const FormContainer = styled.div`
@@ -105,6 +111,7 @@ const FormContainer = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
     @media(max-width: 900px){
         width: 100vw;
         height: 75vh;
@@ -113,6 +120,7 @@ const FormContainer = styled.div`
 
 const InputWrapper = styled.form`
     width: 85%;
+
     input{
         width: 100%;
         height: 18%;
@@ -125,6 +133,7 @@ const InputWrapper = styled.form`
         font-size: 27px;
         font-weight: bold; 
     }
+
     button{
         width: 100%;
         background-color: #1877F2;
