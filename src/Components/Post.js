@@ -50,6 +50,7 @@ export default function Post({
                         <ReactHashtag
                             renderHashtag={hashtagValue => (
                                 <Hashtag
+                                    key={id}
                                     onClick={hashtagValue => {
                                         let hashtag =
                                             hashtagValue.target.innerText;
