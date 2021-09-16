@@ -7,18 +7,16 @@ import { useState } from "react/cjs/react.development";
 
 export default function App() {
     return (
-        <UserContext.Provider>
-            <BrowserRouter>
-                <GlobalStyle />
-                <Switch>
-                    <Route path="/timeline" exact>
-                        <Timeline />
-                    </Route>
-                    <Route path="/sign-up" exact>
-                        <SignUp />
-                    </Route>
-                </Switch>
-            </BrowserRouter>
-        </UserContext.Provider>
+        <BrowserRouter>
+            <GlobalStyle />
+            <Switch>
+                <Route path="/timeline" exact>
+                    <Timeline />
+                </Route>
+                <Route path="/sign-up" exact>
+                    <SignUp />
+                </Route>
+            </Switch>
+        </BrowserRouter>
     );
 }
