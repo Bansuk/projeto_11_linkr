@@ -1,13 +1,13 @@
 import { FaRegHeart } from "react-icons/fa";
 import { useHistory } from "react-router";
-import ReactHashtag from "react-hashtag";
+//import ReactHashtag from "react-hashtag";
 import {
     Content,
     InnerContent,
     InteractionColumn,
     LinkColumn,
     Snippet,
-    Hashtag,
+    //Hashtag,
 } from "../Styles/PostStyle";
 
 export default function Post({
@@ -47,7 +47,7 @@ export default function Post({
                         {username}
                     </span>
                     <p className={"post__text"}>
-                        <ReactHashtag
+                        {/* <ReactHashtag
                             renderHashtag={(index, hashtagValue) => (
                                 <Hashtag
                                     key={index}
@@ -63,7 +63,7 @@ export default function Post({
                             )}
                         >
                             {text}
-                        </ReactHashtag>
+                        </ReactHashtag> */}
                     </p>
                     <Snippet onClick={() => window.open(link)}>
                         <div>
