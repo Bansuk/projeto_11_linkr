@@ -16,7 +16,7 @@ export default function SignUp(){
     function register(e){
         e.preventDefault();
         setLoading(true)
-        axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/sign-up', newUser)
+        axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v3/linkr/sign-up', newUser)
             .then((resp) => history.push('/'))
             .catch((err) => {
                     alert('O e-mail inserido já está cadastrado!');
