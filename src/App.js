@@ -1,5 +1,5 @@
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
-import SignUp from "./Components/signUp";
+import SignUp from "./signUp";
 
 export default function App() {
     return (
@@ -9,11 +9,11 @@ export default function App() {
                 <Route path='/sign-up' exact>
                     <SignUp />
                 </Route>
+                
             </Switch>
             
         </BrowserRouter>            
         </>
-
     );
 }
 
