@@ -8,7 +8,7 @@ const Content = styled.div`
     height: 276px;
     justify-content: center;
     max-width: 1000px;
-    min-width: 650px;
+    min-width: 400px;
     width: calc(100% - 611px);
     margin-bottom: 15px;
     font-family: "Lato", sans-serif;
@@ -110,7 +110,7 @@ const Snippet = styled.div`
         border-radius: 0px 12px 13px 0px;
         width: calc(70% - 220px);
         object-fit: cover;
-        min-width: 170px;
+        min-width: 130px;
     }
 
     & span {
