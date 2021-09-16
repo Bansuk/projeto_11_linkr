@@ -9,7 +9,7 @@ const Content = styled.div`
     justify-content: center;
     max-width: 1000px;
     min-width: 400px;
-    width: calc(100% - 611px);
+    width: 100%;
     margin-bottom: 15px;
     font-family: "Lato", sans-serif;
 
