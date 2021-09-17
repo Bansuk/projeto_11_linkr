@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from "react";
-import { getPostsList } from "../Services/api.services";
+import { getPostsList } from "../services/api.services";
 import Post from "./Post";
-import { Content, Heading } from "../Styles/MainPage";
+import { Content, Heading } from "../styles/MainPage";
 import styled from "styled-components";
-import UserContext from "../Context/UserContext";
+import UserContext from "../contexts/userContext";
 
 export default function Timeline() {
     const [statusMessage, setStatusMessage] = useState("Loading");

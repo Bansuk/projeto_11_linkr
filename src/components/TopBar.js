@@ -2,7 +2,7 @@ import { useEffect, useState, useContext, useRef } from "react";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 import { useHistory } from "react-router";
 import styled from "styled-components";
-import UserContext from "../Context/UserContext";
+import UserContext from "../contexts/userContext";
 
 export default function TopBar() {
     const { user } = useContext(UserContext);

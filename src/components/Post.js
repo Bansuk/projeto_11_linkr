@@ -8,7 +8,7 @@ import {
     LinkColumn,
     Snippet,
     Hashtag,
-} from "../Styles/PostStyle";
+} from "../styles/PostStyle";
 
 export default function Post({
     post: {
