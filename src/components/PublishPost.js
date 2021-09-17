@@ -9,7 +9,6 @@ export default function PublishPost(){
     const[button, setButton]= useState(true)
     const { user, token} = useContext(UserContext);
     let post = {link,text};
-    console.log(post)
     function publishContent(){
         if(link === ""){alert("Favor preencher o link")}
         else{
@@ -25,6 +24,7 @@ export default function PublishPost(){
                 alert("Houve um erro ao publicar seu link")
                 setButton(true)
             })
+
         }
     }
     
