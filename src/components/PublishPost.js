@@ -15,7 +15,6 @@ export default function PublishPost(){
             setButton(false);
             postNewPost(post,token)
             .then(response => {
-                console.log("response")
                 setButton(true)
                 setLink("")
                 setText("")
