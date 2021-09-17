@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const URL = "https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/";
+const URL = "https://mock-api.bootcamp.respondeai.com.br/api/v3/linkr/";
 
 function config(token) {
     return {
@@ -20,4 +20,8 @@ function getPostsList(token) {
     return axios.get(`${URL}/posts`, config(token));
 }
 
-export { getPostsList, signInUser, signUpUser };
+function getMyPostsList(token, user){
+    return axios.get(`${URL}users/${user.id}/posts`, config(token));
+}
+
+export { getPostsList, signInUser, signUpUser, getMyPostsList };
