@@ -5,6 +5,7 @@ import SignUp from "./components/signUp";
 import Login from "./components/login";
 import UserContext from "./contexts/userContext";
 import { useState } from "react";
+import TopBar from "./components/TopBar";
 
 export default function App() {
     const [user, setUser] = useState({});
@@ -21,6 +22,7 @@ export default function App() {
                         <Login user={user} setUser={setUser} />
                     </Route>
                     <Route path="/timeline" exact>
+                        <TopBar setUser={setUser} />
                         <Timeline />
                     </Route>
                 </Switch>
