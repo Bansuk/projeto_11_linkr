@@ -14,6 +14,7 @@ export default function App() {
         <UserContext.Provider value={user}>
             <BrowserRouter>
                 <GlobalStyle />
+                <TopBar setUser={setUser} />
                 <Switch>
                     <Route path="/sign-up" exact>
                         <SignUp />
@@ -22,7 +23,7 @@ export default function App() {
                         <Login user={user} setUser={setUser} />
                     </Route>
                     <Route path="/timeline" exact>
-                        <TopBar />
+                        <TopBar setUser={setUser} />
                         <Timeline />
                     </Route>
                 </Switch>
