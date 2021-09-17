@@ -25,7 +25,7 @@ export default function MyPosts() {
 
     return (
         <Content>
-            <Heading onClick={() => console.log(myPostsList[0], statusMessage)}>my posts</Heading>
+            <Heading>my posts</Heading>
             {myPostsList && myPostsList[0] ? (
                 myPostsList.map(post => <Post key={post.id} post={post}></Post>)
             ) : (
