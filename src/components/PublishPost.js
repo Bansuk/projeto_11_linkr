@@ -31,7 +31,7 @@ export default function PublishPost(){
         <CardPublishPost>
             <StyledProfileImg src={user.avatar}/>
             <InfoPublishPost >
-                    <SpanPublishPost>O que vocẽ tem para favoritar hoje?</SpanPublishPost>
+                    <SpanPublishPost>O que você tem para favoritar hoje?</SpanPublishPost>
                     <FirstInputPublishPost 
                     type="url" 
                     placeholder="https://" 
@@ -91,16 +91,21 @@ width:82%;
 position: relative;
 `;
 const SpanPublishPost = styled.span`
-font-size:20px
+font-family: Lato, sans-serif;
+font-size:20px;
 color: #707070;
-font-weight:300
+font-weight:300;
+background-color:#EFEFEF;
 `;
 const FirstInputPublishPost = styled.input`
 height:30px;
+border-radius:5px;
+background-color:#EFEFEF;
 `;
 const SecondInputPublishPost = styled.input`
 height:66px;
 margin-bottom: 31px;
+border-radius:5px;
 `;
 const ButtonPublishPost = styled.button`
 width:112px;
