@@ -30,57 +30,63 @@ export default function TopBar({ setUser }) {
     return (
         <Container>
             <h1>linkr</h1>
-            <div>
-                {isMenuOpen ? (
-                    <BiChevronUp
-                        className={"topbar__icon"}
-                        onClick={() => setIsMenuOpen(false)}
-                    />
-                ) : (
-                    <BiChevronDown
-                        className={"topbar__icon"}
-                        onClick={() => setIsMenuOpen(true)}
-                    />
-                )}
+            <div ref={ref}>
+                <div>
+                    {isMenuOpen ? (
+                        <BiChevronUp
+                            className={"topbar__icon"}
+                            onClick={() => setIsMenuOpen(false)}
+                        />
+                    ) : (
+                        <BiChevronDown
+                            className={"topbar__icon"}
+                            onClick={() => setIsMenuOpen(true)}
+                        />
+                    )}
 
-                <img
-                    src={user.avatar}
-                    alt="Foto de perfil do usuário"
-                    onClick={() =>
-                        isMenuOpen ? setIsMenuOpen(false) : setIsMenuOpen(true)
-                    }
-                />
+                    <img
+                        ref={ref}
+                        src={user.avatar}
+                        alt="Foto de perfil do usuário"
+                        onClick={() =>
+                            isMenuOpen
+                                ? setIsMenuOpen(false)
+                                : setIsMenuOpen(true)
+                        }
+                    />
+                </div>
+                {isMenuOpen ? (
+                    <Menu>
+                        <span
+                            onClick={() => {
+                                redirectTo("/my-posts");
+                                setIsMenuOpen(false);
+                            }}
+                        >
+                            My posts
+                        </span>
+                        <span
+                            onClick={() => {
+                                redirectTo("/my-likes");
+                                setIsMenuOpen(false);
+                            }}
+                        >
+                            My likes
+                        </span>
+                        <span
+                            onClick={() => {
+                                setIsMenuOpen(false);
+                                setUser({});
+                                redirectTo("/");
+                            }}
+                        >
+                            Logout
+                        </span>
+                    </Menu>
+                ) : (
+                    ""
+                )}
             </div>
-            {isMenuOpen ? (
-                <Menu ref={ref}>
-                    <span
-                        onClick={() => {
-                            redirectTo("/my-posts");
-                            setIsMenuOpen(false);
-                        }}
-                    >
-                        My posts
-                    </span>
-                    <span
-                        onClick={() => {
-                            redirectTo("/my-likes");
-                            setIsMenuOpen(false);
-                        }}
-                    >
-                        My likes
-                    </span>
-                    <span
-                        onClick={() => {
-                            setUser({});
-                            redirectTo("/");
-                        }}
-                    >
-                        Logout
-                    </span>
-                </Menu>
-            ) : (
-                ""
-            )}
         </Container>
     );
 }

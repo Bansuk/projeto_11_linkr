@@ -54,7 +54,6 @@ const Menu = styled.div`
     font-weight: 700;
     height: 120px;
     justify-content: space-evenly;
-    margin-top: 170px;
     position: absolute;
     right: 0;
     width: 120px;

@@ -14,7 +14,6 @@ export default function App() {
         <UserContext.Provider value={user}>
             <BrowserRouter>
                 <GlobalStyle />
-                <TopBar setUser={setUser} />
                 <Switch>
                     <Route path="/sign-up" exact>
                         <SignUp />
