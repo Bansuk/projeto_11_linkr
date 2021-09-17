@@ -8,12 +8,16 @@ function config(token) {
     };
 }
 
-function signInUser(user){
-    return axios.post(`${URL}sign-in`, user)
+function signInUser(user) {
+    return axios.post(`${URL}sign-in`, user);
 }
 
-function signUpUser(user){
-    return axios.post(`${URL}sign-up`, user)
+function signUpUser(user) {
+    return axios.post(`${URL}sign-up`, user);
 }
 
-export { signInUser, signUpUser };
+function getPostsList(token) {
+    return axios.get(`${URL}/posts`, config(token));
+}
+
+export { getPostsList, signInUser, signUpUser };
