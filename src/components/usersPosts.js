@@ -17,7 +17,6 @@ export default function UsersPosts() {
     
 
     useEffect(() => {
-        console.log(userId);
         getMyPostsList(token, userId)
             .then(res => {
                 setMyPostsList(res.data.posts);
@@ -33,7 +32,7 @@ export default function UsersPosts() {
 
     return (
         <Content>
-            <Heading onClick={() => console.log(targetUser)}>{`${targetUser}'s posts`}</Heading>
+            <Heading>{`${targetUser}'s posts`}</Heading>
             {myPostsList && myPostsList[0] ? (
                 myPostsList.map(post => <Post key={post.id} post={post}></Post>)
             ) : (

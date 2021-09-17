@@ -14,7 +14,6 @@ export default function Timeline() {
     const history = useHistory();
 
     useEffect(() => {
-        console.log(user.id)
         getPostsList(token)
             .then(res => {
                 setPostsList(res.data.posts);
