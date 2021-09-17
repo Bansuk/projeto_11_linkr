@@ -27,6 +27,7 @@ export default function App() {
                         <Timeline />
                     </Route>
                     <Route path='/user/:id' exact>
+                        <TopBar setUser={setUser} />
                         <UsersPosts />
                     </Route>
                 </Switch>
