@@ -1,7 +1,6 @@
-import { useContext } from "react";
+import { useEffect, useState, useContext, useRef } from "react";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 import { useHistory } from "react-router";
-import { useState } from "react/cjs/react.development";
 import styled from "styled-components";
 import UserContext from "../Context/UserContext";
 
@@ -9,6 +8,20 @@ export default function TopBar() {
     const { user } = useContext(UserContext);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const history = useHistory();
+    const ref = useRef();
+
+    useEffect(() => {
+        const handleClickOutside = e => {
+            if (isMenuOpen && ref.current && !ref.current.contains(e.target)) {
+                setIsMenuOpen(false);
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [isMenuOpen]);
 
     function redirectTo(path) {
         history.push(path);
@@ -17,7 +30,7 @@ export default function TopBar() {
     return (
         <Container>
             <h1>linkr</h1>
-            <div>
+            <div ref={ref}>
                 {isMenuOpen ? (
                     <BiChevronUp
                         className={"topbar__icon"}
@@ -43,7 +56,6 @@ export default function TopBar() {
                     <span
                         onClick={() => {
                             redirectTo("/my-posts");
-                            isMenuOpen(false);
                         }}
                     >
                         My posts
@@ -51,7 +63,7 @@ export default function TopBar() {
                     <span
                         onClick={() => {
                             redirectTo("/my-likes");
-                            isMenuOpen(false);
+                            setIsMenuOpen(false);
                         }}
                     >
                         My likes
@@ -72,17 +84,17 @@ export default function TopBar() {
 }
 
 const Container = styled.div`
-    width: 100%;
-    padding: 0 20px 0 20px;
-    height: 72px;
-    background-color: #151515;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    display: flex;
-    justify-content: space-between;
     align-items: center;
+    background-color: #151515;
+    display: flex;
+    height: 72px;
+    justify-content: space-between;
+    left: 0;
+    padding: 0 20px 0 20px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1;
 
     & h1 {
         font-size: 49px;
@@ -123,16 +135,10 @@ const Menu = styled.div`
     font-family: "Lato", sans-serif;
     font-size: 17px;
     font-weight: 700;
-    height: 100px;
+    height: 120px;
     justify-content: space-evenly;
     margin-top: 170px;
     position: absolute;
     right: 0;
     width: 120px;
-
-    & span {
-        :hover {
-            cursor: pointer;
-        }
-    }
 `;

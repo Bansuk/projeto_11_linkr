@@ -21,7 +21,7 @@ export default function App() {
         <UserContext.Provider value={user}>
             <BrowserRouter>
                 <GlobalStyle />
-                <TopBar />
+                <TopBar onClick={() => alert("a")} />
                 <Switch>
                     <Route path="/timeline" exact>
                         <Timeline />
