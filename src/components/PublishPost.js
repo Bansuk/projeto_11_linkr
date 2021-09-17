@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { useContext, useState } from 'react';
-import axios from "axios";
 import UserContext from "../contexts/userContext";
 import { postNewPost } from "../services/api.services";
 
