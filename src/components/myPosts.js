@@ -7,17 +7,14 @@ import UserContext from "../contexts/userContext";
 
 export default function MyPosts() {
     const [statusMessage, setStatusMessage] = useState("Loading");
-    const [myPostsList, setMyPostsList] = useState(null);
+    const [myPostsList, setMyPostsList] = useState([]);
     const { token, user } = useContext(UserContext);
 
     useEffect(() => {
-        console.log('teste');
         getMyPostsList(token, user)
             .then(res => {
                 setMyPostsList(res.data.posts);
-                if (!myPostsList)
-                    setStatusMessage("Nenhum post encontrado");
-                else setStatusMessage("OK");
+                setStatusMessage("Nenhum post encontrado");
             })
             .catch(err => {
                 setStatusMessage(
@@ -28,8 +25,8 @@ export default function MyPosts() {
 
     return (
         <Content>
-            <Heading onClick={() => console.log(myPostsList, statusMessage)}>my posts</Heading>
-            {statusMessage === "OK" ? (
+            <Heading onClick={() => console.log(myPostsList[0], statusMessage)}>my posts</Heading>
+            {myPostsList && myPostsList[0] ? (
                 myPostsList.map(post => <Post key={post.id} post={post}></Post>)
             ) : (
                 <Message>{statusMessage}</Message>
