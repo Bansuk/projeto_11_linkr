@@ -95,17 +95,24 @@ font-family: Lato, sans-serif;
 font-size:20px;
 color: #707070;
 font-weight:300;
-background-color:#EFEFEF;
 `;
 const FirstInputPublishPost = styled.input`
 height:30px;
 border-radius:5px;
 background-color:#EFEFEF;
+::placeholder{
+    color: #949494;
+}
 `;
 const SecondInputPublishPost = styled.input`
 height:66px;
 margin-bottom: 31px;
 border-radius:5px;
+background-color:#EFEFEF;
+
+::placeholder{
+    color: #949494;
+}
 `;
 const ButtonPublishPost = styled.button`
 width:112px;
