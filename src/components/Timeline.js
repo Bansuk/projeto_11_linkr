@@ -5,13 +5,16 @@ import { Content, Heading } from "../styles/MainPage";
 import styled from "styled-components";
 import UserContext from "../contexts/userContext";
 import PublishPost from "./PublishPost";
+import { useHistory } from "react-router-dom";
 
 export default function Timeline() {
     const [statusMessage, setStatusMessage] = useState("Loading");
     const [postsList, setPostsList] = useState([]);
-    const { token } = useContext(UserContext);
+    const { token, user } = useContext(UserContext);
+    const history = useHistory();
 
     useEffect(() => {
+        console.log(user.id)
         getPostsList(token)
             .then(res => {
                 setPostsList(res.data.posts);
@@ -28,7 +31,7 @@ export default function Timeline() {
 
     return (
         <Content>
-            <Heading>timeline</Heading>
+            <Heading onClick={() => history.push('/user/77')}>timeline</Heading>
             <PublishPost />
             {statusMessage === "OK" ? (
                 postsList.map(post => <Post key={post.id} post={post}></Post>)
