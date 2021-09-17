@@ -7,9 +7,9 @@ const Content = styled.div`
     display: flex;
     height: 276px;
     justify-content: center;
-    max-width: 611px;
-    min-width: 465px;
-    width: calc(100% - 611px);
+    max-width: 1000px;
+    min-width: 400px;
+    width: 100%;
     margin-bottom: 15px;
     font-family: "Lato", sans-serif;
 
@@ -51,7 +51,7 @@ const InteractionColumn = styled.div`
 `;
 
 const LinkColumn = styled.div`
-    width: 90%;
+    width: 90vw;
     margin-left: 20px;
     word-wrap: break-word;
 
@@ -94,6 +94,7 @@ const Snippet = styled.div`
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
         overflow: hidden;
+        word-break: break-word;
     }
 
     & p {
@@ -107,8 +108,9 @@ const Snippet = styled.div`
 
     & img {
         border-radius: 0px 12px 13px 0px;
-        width: 170px;
+        width: calc(70% - 220px);
         object-fit: cover;
+        min-width: 130px;
     }
 
     & span {

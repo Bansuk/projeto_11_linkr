@@ -1,11 +1,11 @@
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import { useState } from "react";
+import GlobalStyle from "./styles/GlobalStyle";
+import Timeline from "./components/Timeline";
 import SignUp from "./components/signUp";
 import Login from "./components/login";
 import UserContext from "./contexts/userContext";
-import Timeline from "./components/Timeline";
+import { useState } from "react";
 import TopBar from "./components/TopBar";
-import GlobalStyle from "./styles/GlobalStyle";
 
 export default function App() {
     const [user, setUser] = useState({});
