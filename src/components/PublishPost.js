@@ -72,6 +72,11 @@ const CardPublishPost = styled.div`
     padding:16px;
     box-shadow: 0px 4px 4px 0px #00000040;
     margin-bottom: 15px;
+    @media (max-width: 800px) {
+        border-radius: 0;
+        width: 100%;
+        max-width: none;
+    }
 `;
 const StyledProfileImg = styled.img`
 margin-right:18px;
