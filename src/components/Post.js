@@ -1,4 +1,4 @@
-import { FaRegHeart } from "react-icons/fa";
+import { FaRegHeart, FaHeart } from "react-icons/fa";
 import { useHistory } from "react-router";
 import ReactHashtag from "react-hashtag";
 import {
@@ -6,22 +6,28 @@ import {
     InnerContent,
     InteractionColumn,
     LinkColumn,
-    Snippet,
     Hashtag,
+    Snippet,
 } from "../styles/PostStyle";
+import { useState, useContext } from "react";
+import { likePost } from "../services/api.services";
+import UserContext from "../contexts/userContext";
 
 export default function Post({
     post: {
+        id,
         text,
         link,
         linkTitle,
         linkDescription,
         linkImage,
-        user: { id, username, avatar },
+        user: { id: userId, username, avatar },
         likes,
     },
 }) {
     const history = useHistory();
+    const [isPostLiked, setIsPostLiked] = useState(false);
+    const { token } = useContext(UserContext);
 
     function redirectTo(path) {
         history.push(path);
@@ -34,15 +40,30 @@ export default function Post({
                     <img
                         src={avatar}
                         alt="Foto de perfil do usuario"
-                        onClick={() => redirectTo(`/user/${id}`)}
+                        onClick={() => redirectTo(`/user/${userId}`)}
                     />
-                    <FaRegHeart />
+                    {isPostLiked ? (
+                        <FaHeart
+                            className={"post__like-button"}
+                            onClick={() => {
+                                setIsPostLiked(false);
+                                likePost(token, id, "dislike");
+                            }}
+                        />
+                    ) : (
+                        <FaRegHeart
+                            onClick={() => {
+                                setIsPostLiked(true);
+                                likePost(token, id, "like");
+                            }}
+                        />
+                    )}
                     <span>{likes.length} likes</span>
                 </InteractionColumn>
                 <LinkColumn>
                     <span
                         className={"post__author"}
-                        onClick={() => redirectTo(`/user/${id}`)}
+                        onClick={() => redirectTo(`/user/${userId}`)}
                     >
                         {username}
                     </span>

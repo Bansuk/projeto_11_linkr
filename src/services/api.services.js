@@ -20,4 +20,8 @@ function getPostsList(token) {
     return axios.get(`${URL}/posts`, config(token));
 }
 
-export { getPostsList, signInUser, signUpUser };
+function likePost(token, postId, action) {
+    return axios.post(`${URL}posts/${postId}/${action}`, "", config(token));
+}
+
+export { getPostsList, signInUser, signUpUser, likePost };

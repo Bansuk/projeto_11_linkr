@@ -9,6 +9,7 @@ export default function Timeline() {
     const [statusMessage, setStatusMessage] = useState("Loading");
     const [postsList, setPostsList] = useState([]);
     const { token } = useContext(UserContext);
+    console.log(token);
 
     useEffect(() => {
         getPostsList(token)
