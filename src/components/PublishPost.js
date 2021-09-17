@@ -2,32 +2,32 @@ import styled from "styled-components";
 import { useContext, useState } from 'react';
 import axios from "axios";
 import UserContext from "../contexts/userContext";
+import { postNewPost } from "../services/api.services";
 
 export default function PublishPost(){
     const[link, setLink] = useState("")
     const[text,setText]= useState("")
     const[button, setButton]= useState(true)
-    const { token } = useContext(UserContext);
-
+    const { user, token} = useContext(UserContext);
+    let post = {link,text};
+    console.log(post)
     function publishContent(){
         setButton(false);
-        const config = {
-            headers: {
-                "Authorization": `Bearer ${token}`
-            }
-        }
-        axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts",{
-            text,
-            link
+        postNewPost(post,token)
+        .then(response => {
+            console.log("response")
+            setButton(true)
         })
-        .then(response => console.log("response"))
-        .catch(() => alert("Houve um erro ao publicar seu link"))
+        .catch(() => {
+            alert("Houve um erro ao publicar seu link")
+            setButton(true)
+        })
     }
     
     return(
         <CardPublishPost>
-            <StyledProfileImg />
-            <InfoPublishPost onSubmit={publishContent}>
+            <StyledProfileImg src={user.avatar}/>
+            <InfoPublishPost onSubmit={publishContent, false}>
                     <SpanPublishPost>O que vocẽ tem para favoritar hoje?</SpanPublishPost>
                     <FirstInputPublishPost 
                     type="url" 
@@ -57,14 +57,17 @@ export default function PublishPost(){
 
 
 const CardPublishPost = styled.div`
+    max-width: 1000px;
+    min-width: 400px;
+    width: 100%;
     border-radius: 16px;
-	width: 611px;
 	height: 209px;
 	background: #FFFFFF;
     display:flex;
     box-sizing:border-box;
     padding:16px;
     box-shadow: 0px 4px 4px 0px #00000040;
+    margin-bottom: 15px;
 `;
 const StyledProfileImg = styled.img`
 margin-right:18px;
@@ -74,9 +77,10 @@ border-radius:26.5px;
 `;
 const InfoPublishPost = styled.form`
 display: flex;
-justify-content: space-between;
+justify-content: space-around;
 flex-direction: column;
-width:82%
+width:82%;
+position: relative;
 `;
 const SpanPublishPost = styled.span`
 font-size:20px
@@ -84,12 +88,11 @@ color: #707070;
 font-weight:300
 `;
 const FirstInputPublishPost = styled.input`
-width:503px;
 height:30px;
 `;
 const SecondInputPublishPost = styled.input`
-width:503px;
 height:66px;
+margin-bottom: 31px;
 `;
 const ButtonPublishPost = styled.button`
 width:112px;
@@ -97,5 +100,7 @@ height:31px;
 background-color: #1877F2;
 color: #FFFFFF;
 border-radius:5px;
-margin: 0px 0px 0px 390px;
+position: absolute;
+right:0px;
+bottom:0px;
 `;
