@@ -1,19 +1,25 @@
 import styled from "styled-components";
-import { useState} from 'react';
+import { useContext, useState } from 'react';
 import axios from "axios";
+import UserContext from "../contexts/userContext";
+
 export default function PublishPost(){
     const[link, setLink] = useState("")
     const[text,setText]= useState("")
     const[button, setButton]= useState(true)
+    const { token } = useContext(UserContext);
 
     function publishContent(){
         setButton(false);
         const config = {
             headers: {
-                "Authorization": `Bearer ${"2b19cbc1-856a-4d00-9666-2676d198c4bd"}`
+                "Authorization": `Bearer ${token}`
             }
         }
-        axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts",config)
+        axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts",{
+            text,
+            link
+        })
         .then(response => console.log("response"))
         .catch(() => alert("Houve um erro ao publicar seu link"))
     }
