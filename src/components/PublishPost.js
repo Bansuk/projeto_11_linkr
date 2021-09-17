@@ -12,22 +12,27 @@ export default function PublishPost(){
     let post = {link,text};
     console.log(post)
     function publishContent(){
-        setButton(false);
-        postNewPost(post,token)
-        .then(response => {
-            console.log("response")
-            setButton(true)
-        })
-        .catch(() => {
-            alert("Houve um erro ao publicar seu link")
-            setButton(true)
-        })
+        if(link === ""){alert("Favor preencher o link")}
+        else{
+            setButton(false);
+            postNewPost(post,token)
+            .then(response => {
+                console.log("response")
+                setButton(true)
+                setLink("")
+                setText("")
+            })
+            .catch(() => {
+                alert("Houve um erro ao publicar seu link")
+                setButton(true)
+            })
+        }
     }
     
     return(
         <CardPublishPost>
             <StyledProfileImg src={user.avatar}/>
-            <InfoPublishPost onSubmit={publishContent, false}>
+            <InfoPublishPost >
                     <SpanPublishPost>O que vocẽ tem para favoritar hoje?</SpanPublishPost>
                     <FirstInputPublishPost 
                     type="url" 
@@ -45,7 +50,7 @@ export default function PublishPost(){
                     disabled={!button}
                     />
                     {button ?
-                        <ButtonPublishPost type="submit">Publicar</ButtonPublishPost>
+                        <ButtonPublishPost onClick={publishContent}>Publicar</ButtonPublishPost>
                         :
                         <ButtonPublishPost>Publishing...</ButtonPublishPost>
                     }
@@ -75,7 +80,7 @@ width:50px;
 height:50px;
 border-radius:26.5px;
 `;
-const InfoPublishPost = styled.form`
+const InfoPublishPost = styled.div`
 display: flex;
 justify-content: space-around;
 flex-direction: column;
