@@ -23,4 +23,8 @@ function postNewPost(post,token) {
     return axios.post(`${URL}/posts`, post,config(token));
 }
 
-export { getPostsList, signInUser, signUpUser , postNewPost };
+function getMyPostsList(token, user){
+    return axios.get(`${URL}users/${user.id}/posts`, config(token));
+}
+
+export { getPostsList, signInUser, signUpUser , postNewPost, getMyPostsList};
