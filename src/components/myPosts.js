@@ -4,6 +4,7 @@ import Post from "./Post";
 import { Content, Heading } from "../styles/MainPage";
 import styled from "styled-components";
 import UserContext from "../contexts/userContext";
+import TrendingHashtag from "./Trending";
 
 export default function MyPosts() {
     const [statusMessage, setStatusMessage] = useState("Loading");
@@ -25,12 +26,17 @@ export default function MyPosts() {
 
     return (
         <Content>
-            <Heading>my posts</Heading>
-            {myPostsList && myPostsList[0] ? (
-                myPostsList.map(post => <Post key={post.id} post={post}></Post>)
-            ) : (
-                <Message>{statusMessage}</Message>
-            )}
+            <div>
+                <Heading>my posts</Heading>
+                {myPostsList && myPostsList[0] ? (
+                    myPostsList.map(post => (
+                        <Post key={post.id} post={post}></Post>
+                    ))
+                ) : (
+                    <Message>{statusMessage}</Message>
+                )}
+            </div>
+            <TrendingHashtag />
         </Content>
     );
 }

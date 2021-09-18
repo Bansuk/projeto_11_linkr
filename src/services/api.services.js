@@ -22,11 +22,12 @@ function getPostsList(token) {
 function postNewPost(post, token) {
     return axios.post(`${URL}/posts`, post, config(token));
 }
-
+function getHashtagsList(token) {
+    return axios.get(`${URL}/hashtags/trending`, config(token));
+}
 function getMyPostsList(token, user) {
     return axios.get(`${URL}users/${user.id}/posts`, config(token));
 }
-
 function likePost(token, postId, action) {
     return axios.post(`${URL}posts/${postId}/${action}`, "", config(token));
 }
@@ -37,5 +38,6 @@ export {
     signUpUser,
     getMyPostsList,
     postNewPost,
+    getHashtagsList,
     likePost,
 };
