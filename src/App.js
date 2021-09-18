@@ -4,15 +4,18 @@ import Timeline from "./components/Timeline";
 import SignUp from "./components/signUp";
 import Login from "./components/login";
 import UserContext from "./contexts/userContext";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import TopBar from "./components/TopBar";
 import MyPosts from "./components/myPosts";
 
 export default function App() {
     const [user, setUser] = useState({});
+    
+
+    
 
     return (
-        <UserContext.Provider value={user}>
+        <UserContext.Provider value={{user, setUser}}>
             <BrowserRouter>
                 <GlobalStyle />
                 <Switch>

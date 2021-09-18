@@ -77,6 +77,7 @@ export default function TopBar({ setUser }) {
                             onClick={() => {
                                 setIsMenuOpen(false);
                                 setUser({});
+                                localStorage.removeItem('user');
                                 redirectTo("/");
                             }}
                         >
