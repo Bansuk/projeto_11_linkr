@@ -5,11 +5,13 @@ import { Content, Heading } from "../styles/MainPage";
 import styled from "styled-components";
 import UserContext from "../contexts/userContext";
 import PublishPost from "./PublishPost";
+import TrendingHashtag from "./Trending";
 
 export default function Timeline() {
     const [statusMessage, setStatusMessage] = useState("Loading");
     const [postsList, setPostsList] = useState([]);
     const { token } = useContext(UserContext);
+
 
     useEffect(() => {
         getPostsList(token)
@@ -28,13 +30,16 @@ export default function Timeline() {
 
     return (
         <Content>
+            <div>
             <Heading>timeline</Heading>
-            <PublishPost />
-            {statusMessage === "OK" ? (
-                postsList.map(post => <Post key={post.id} post={post}></Post>)
-            ) : (
-                <Message>{statusMessage}</Message>
-            )}
+                <PublishPost />
+                {statusMessage === "OK" ? (
+                    postsList.map(post => <Post key={post.id} post={post}></Post>)
+                ) : (
+                    <Message>{statusMessage}</Message>
+                )}
+            </div>
+            <TrendingHashtag />
         </Content>
     );
 }

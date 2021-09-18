@@ -3,7 +3,6 @@ import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { MainContainer, LogoContainer, FormContainer, InputWrapper, Anchor } from './signUp'
 import { signInUser } from "../services/api.services";
-import { checkUser } from "../services/api.services";
 
 
 export default function Login({setUser}){
@@ -19,11 +18,9 @@ export default function Login({setUser}){
         let loggedUser = localStorage.getItem('user');
         loggedUser = JSON.parse(loggedUser);
         
-        if(loggedUser){
-            if(loggedUser.token){
-                setUser({...loggedUser})
-                history.push('/timeline');
-            }
+        if(loggedUser && loggedUser.token){
+            setUser({...loggedUser})
+            history.push('/timeline');
         }
     }, [])
     

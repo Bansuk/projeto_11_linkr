@@ -9,6 +9,8 @@ export default function PublishPost(){
     const[button, setButton]= useState(true)
     const { user, token} = useContext(UserContext);
     let post = {link,text};
+
+
     function publishContent(){
         if(link === ""){alert("Favor preencher o link")}
         else{

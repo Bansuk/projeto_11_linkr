@@ -1,10 +1,10 @@
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import GlobalStyle from "./styles/GlobalStyle";
 import Timeline from "./components/Timeline";
 import SignUp from "./components/signUp";
 import Login from "./components/login";
 import UserContext from "./contexts/userContext";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import TopBar from "./components/TopBar";
 import MyPosts from "./components/myPosts";
 
@@ -12,23 +12,24 @@ export default function App() {
     const [user, setUser] = useState({});
     
 
-    
-
     return (
-        <UserContext.Provider value={{user, setUser}}>
+        <UserContext.Provider value={user}>
             <BrowserRouter>
                 <GlobalStyle />
                 <Switch>
                     <Route path="/sign-up" exact>
                         <SignUp />
                     </Route>
+
                     <Route path="/" exact>
                         <Login user={user} setUser={setUser} />
                     </Route>
-                    <Route path="/timeline" exact>
+
+                    <Route path="/timeline" exact >
                         <TopBar setUser={setUser} />
-                        <Timeline />
+                        <Timeline />                 
                     </Route>
+
                     <Route path="/my-posts" exact >
                         <TopBar setUser={setUser} />
                         <MyPosts />

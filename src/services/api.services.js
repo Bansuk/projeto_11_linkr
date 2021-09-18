@@ -30,6 +30,4 @@ function getMyPostsList(token, user){
     return axios.get(`${URL}users/${user.id}/posts`, config(token));
 }
 
-
-
 export { getPostsList, signInUser, signUpUser, getMyPostsList, postNewPost , getHashtagsList };
