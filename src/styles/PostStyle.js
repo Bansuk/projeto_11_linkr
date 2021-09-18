@@ -53,6 +53,7 @@ const LinkColumn = styled.div`
     width: 90vw;
     margin-left: 20px;
     word-wrap: break-word;
+    overflow: hidden;
 
     & .post__author {
         font-size: 19px;
