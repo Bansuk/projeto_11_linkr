@@ -29,7 +29,7 @@ export default function App() {
                     <Route path="/my-posts" exact >
                         <TopBar setUser={setUser} />
                         <MyPosts />
-                    </Route>
+                    </Route> 
                 </Switch>
             </BrowserRouter>
         </UserContext.Provider>
