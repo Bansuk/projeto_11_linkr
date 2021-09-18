@@ -9,9 +9,10 @@ import {
     Hashtag,
     Snippet,
 } from "../styles/PostStyle";
-import { useState, useContext } from "react";
+import { useContext, useState } from "react";
 import { likePost } from "../services/api.services";
 import UserContext from "../contexts/userContext";
+import ReactTooltip from "react-tooltip";
 
 export default function Post({
     post: {
@@ -26,11 +27,44 @@ export default function Post({
     },
 }) {
     const history = useHistory();
-    const [isPostLiked, setIsPostLiked] = useState(false);
-    const { token } = useContext(UserContext);
+    const { token, user } = useContext(UserContext);
+    const [likesList, setLikesList] = useState("");
 
     function redirectTo(path) {
         history.push(path);
+    }
+
+    function handleLikes() {
+        let usersList = "";
+        likes.forEach(e => (usersList += `${e["user.username"]} `));
+        usersList = usersList.replace(user.username, "");
+
+        if (likes.length === 0) setLikesList("Ninguém curtiu este post ainda.");
+        else if (likes.length === 1) {
+            if (likes.find(e => e.userId === user.id)) setLikesList("Você");
+            else setLikesList(usersList);
+        } else if (likes.length === 2) {
+            if (likes.find(e => e.userId === user.id))
+                setLikesList(`Você e ${usersList}`);
+            else
+                setLikesList(
+                    `${likes[0]["user.username"]} e ${likes[1]["user.username"]}`
+                );
+        } else {
+            let firstUser = usersList.replace(/ .*/, "");
+            firstUser = firstUser.replace(/(?<=\s).*/);
+
+            if (likes.find(e => e.userId === user.id))
+                setLikesList(
+                    `Você, ${firstUser} e outras ${likes.length - 2} pessoas`
+                );
+            else
+                setLikesList(
+                    `${likes[0]["user.username"]}, ${
+                        likes[1]["user.username"]
+                    } e outras ${likes.length - 2} pessoas`
+                );
+        }
     }
 
     return (
@@ -42,23 +76,23 @@ export default function Post({
                         alt="Foto de perfil do usuario"
                         onClick={() => redirectTo(`/user/${userId}`)}
                     />
-                    {isPostLiked ? (
+                    {likes.find(e => e.userId === user.id) ? (
                         <FaHeart
                             className={"post__like-button"}
-                            onClick={() => {
-                                setIsPostLiked(false);
-                                likePost(token, id, "dislike");
-                            }}
+                            onClick={() => likePost(token, id, "dislike")}
                         />
                     ) : (
                         <FaRegHeart
-                            onClick={() => {
-                                setIsPostLiked(true);
-                                likePost(token, id, "like");
-                            }}
+                            onClick={() => likePost(token, id, "like")}
                         />
                     )}
-                    <span>{likes.length} likes</span>
+                    <ReactTooltip place="bottom" type="light" effect="solid" />
+                    <span
+                        data-tip={likesList}
+                        onMouseOver={() => handleLikes()}
+                    >
+                        {likes.length} likes
+                    </span>
                 </InteractionColumn>
                 <LinkColumn>
                     <span
