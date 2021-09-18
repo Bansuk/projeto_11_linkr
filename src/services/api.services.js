@@ -22,5 +22,8 @@ function getPostsList(token) {
 function postNewPost(post,token) {
     return axios.post(`${URL}/posts`, post,config(token));
 }
+function getHashtagsList(token){
+    return axios.get(`${URL}/hashtags/trending`, config(token));
+}
 
-export { getPostsList, signInUser, signUpUser , postNewPost };
+export { getPostsList, signInUser, signUpUser , postNewPost , getHashtagsList };

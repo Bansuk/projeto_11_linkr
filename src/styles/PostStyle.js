@@ -7,13 +7,12 @@ const Content = styled.div`
     display: flex;
     height: 276px;
     justify-content: center;
-    max-width: 1000px;
-    min-width: 400px;
-    width: 100%;
+    width: 800px;
     margin-bottom: 15px;
     font-family: "Lato", sans-serif;
+    
 
-    @media (max-width: 800px) {
+    @media (max-width: 900px) {
         border-radius: 0;
         width: 100%;
         max-width: none;

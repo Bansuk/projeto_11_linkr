@@ -71,7 +71,7 @@ const CardPublishPost = styled.div`
     padding:16px;
     box-shadow: 0px 4px 4px 0px #00000040;
     margin-bottom: 15px;
-    @media (max-width: 800px) {
+    @media (max-width: 900px) {
         border-radius: 0;
         width: 100%;
         max-width: none;
@@ -100,6 +100,7 @@ const FirstInputPublishPost = styled.input`
 height:30px;
 border-radius:5px;
 background-color:#EFEFEF;
+border: inherit;
 ::placeholder{
     color: #949494;
 }
@@ -109,6 +110,7 @@ height:66px;
 margin-bottom: 31px;
 border-radius:5px;
 background-color:#EFEFEF;
+border: inherit;
 
 ::placeholder{
     color: #949494;
