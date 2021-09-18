@@ -34,7 +34,7 @@ export default function PublishPost(){
                     <SpanPublishPost>O que você tem para favoritar hoje?</SpanPublishPost>
                     <FirstInputPublishPost 
                     type="url" 
-                    placeholder="https://" 
+                    placeholder=" https://" 
                     value={link} 
                     onChange={e => setLink(e.target.value)}
                     required
@@ -42,7 +42,7 @@ export default function PublishPost(){
                     />
                     <SecondInputPublishPost 
                     type="text" 
-                    placeholder="Muito irado esse link falando de #javascript" 
+                    placeholder=" Muito irado esse link falando de #javascript" 
                     value={text}
                     onChange={e=> setText(e.target.value)}
                     disabled={!button}
@@ -100,6 +100,7 @@ const FirstInputPublishPost = styled.input`
 height:30px;
 border-radius:5px;
 background-color:#EFEFEF;
+border: inherit;
 ::placeholder{
     color: #949494;
 }
@@ -109,6 +110,7 @@ height:66px;
 margin-bottom: 31px;
 border-radius:5px;
 background-color:#EFEFEF;
+border: inherit;
 
 ::placeholder{
     color: #949494;
