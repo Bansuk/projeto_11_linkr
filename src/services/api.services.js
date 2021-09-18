@@ -28,5 +28,8 @@ function getHashtagsList(token){
 function getMyPostsList(token, user){
     return axios.get(`${URL}users/${user.id}/posts`, config(token));
 }
+function getHashtagPostsList(token,idHashtag){
+    return axios.get(`${URL}/hashtags/${idHashtag}/posts`, config(token));
+}
 
-export { getPostsList, signInUser, signUpUser, getMyPostsList, postNewPost , getHashtagsList };
+export { getPostsList, signInUser, signUpUser, getMyPostsList, postNewPost , getHashtagsList , getHashtagPostsList };

@@ -7,6 +7,7 @@ import UserContext from "./contexts/userContext";
 import { useState } from "react";
 import TopBar from "./components/TopBar";
 import MyPosts from "./components/myPosts";
+import Hashtag from "./components/Hashtag";
 
 export default function App() {
     const [user, setUser] = useState({});
@@ -30,6 +31,9 @@ export default function App() {
                         <TopBar setUser={setUser} />
                         <MyPosts />
                     </Route> 
+                    <Route path='/hashtag/:idHashtag' exact>
+                        <Hashtag />
+                    </Route>
                 </Switch>
             </BrowserRouter>
         </UserContext.Provider>
