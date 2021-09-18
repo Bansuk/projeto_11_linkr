@@ -5,15 +5,16 @@ const Content = styled.div`
     background-color: #171717;
     border-radius: 16px;
     display: flex;
-    height: 276px;
+    height: inherit;
     justify-content: center;
-    max-width: 1000px;
-    min-width: 400px;
-    width: 100%;
+    width: 800px;
     margin-bottom: 15px;
     font-family: "Lato", sans-serif;
+    box-sizing: border-box;
+    padding: 15px;
+    
 
-    @media (max-width: 800px) {
+    @media (max-width: 900px) {
         border-radius: 0;
         width: 100%;
         max-width: none;
@@ -22,7 +23,6 @@ const Content = styled.div`
 
 const InnerContent = styled.div`
     width: calc(100% - 40px);
-    height: calc(100% - 40px);
     display: flex;
 `;
 
@@ -54,6 +54,7 @@ const LinkColumn = styled.div`
     width: 90vw;
     margin-left: 20px;
     word-wrap: break-word;
+    overflow: hidden;
 
     & .post__author {
         font-size: 19px;
@@ -63,7 +64,7 @@ const LinkColumn = styled.div`
     & .post__text {
         font-size: 19px;
         color: #b7b7b7;
-        margin: 5px 0 5px 0;
+        margin: 14px 0 14px 0;
         display: -webkit-box;
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;

@@ -34,7 +34,7 @@ export default function PublishPost(){
                     <SpanPublishPost>O que você tem para favoritar hoje?</SpanPublishPost>
                     <FirstInputPublishPost 
                     type="url" 
-                    placeholder=" https://" 
+                    placeholder="https://" 
                     value={link} 
                     onChange={e => setLink(e.target.value)}
                     required
@@ -42,7 +42,7 @@ export default function PublishPost(){
                     />
                     <SecondInputPublishPost 
                     type="text" 
-                    placeholder=" Muito irado esse link falando de #javascript" 
+                    placeholder="Muito irado esse link falando de #javascript" 
                     value={text}
                     onChange={e=> setText(e.target.value)}
                     disabled={!button}
@@ -71,14 +71,14 @@ const CardPublishPost = styled.div`
     padding:16px;
     box-shadow: 0px 4px 4px 0px #00000040;
     margin-bottom: 15px;
-    @media (max-width: 800px) {
+    @media (max-width: 900px) {
         border-radius: 0;
         width: 100%;
         max-width: none;
     }
 `;
 const StyledProfileImg = styled.img`
-margin-right:18px;
+margin: 0px 4.25% 0 4.25%;
 width:50px;
 height:50px;
 border-radius:26.5px;

@@ -1,7 +1,10 @@
 import styled from "styled-components";
 
 const Content = styled.div`
-    margin: 125px 588px 0 241px;
+    margin: 125px auto 0 auto;
+    max-width: 1126px;
+    display:flex;
+    justify-content: space-between;
 
     @media (max-width: 800px) {
         margin: 90px 0 0 0;
