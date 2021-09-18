@@ -51,11 +51,11 @@ export default function Post({
                     `${likes[0]["user.username"]} e ${likes[1]["user.username"]}`
                 );
         } else {
-            let firstUser = usersList.match(/(.*)\s\S*\s/);
-
+            let firstUser = usersList.match(/^[^\s]+/);
+            console.log(firstUser);
             if (likes.find(e => e.userId === user.id))
                 setLikesList(
-                    `Você, ${firstUser[1]} e outras ${likes.length - 2} pessoas`
+                    `Você, ${firstUser[0]} e outras ${likes.length - 2} pessoas`
                 );
             else
                 setLikesList(
