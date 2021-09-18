@@ -6,6 +6,7 @@ import Login from "./components/login";
 import UserContext from "./contexts/userContext";
 import { useState } from "react";
 import TopBar from "./components/TopBar";
+import MyLikes from "./components/myLikes";
 
 export default function App() {
     const [user, setUser] = useState({});
@@ -24,6 +25,10 @@ export default function App() {
                     <Route path="/timeline" exact>
                         <TopBar setUser={setUser} />
                         <Timeline />
+                    </Route>
+                    <Route path="/my-likes" exact>
+                        <TopBar setUser={setUser} />
+                        <MyLikes />
                     </Route>
                 </Switch>
             </BrowserRouter>

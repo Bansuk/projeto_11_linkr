@@ -27,4 +27,8 @@ function getMyPostsList(token, user){
     return axios.get(`${URL}users/${user.id}/posts`, config(token));
 }
 
-export { getPostsList, signInUser, signUpUser , postNewPost, getMyPostsList};
+function getMyLikes(token, user){
+    return axios.get(`${URL}posts/liked`, config(token));
+}
+
+export { getPostsList, signInUser, signUpUser , postNewPost, getMyPostsList, getMyLikes};

@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { getMyPostsList } from "../services/api.services";
+import { getMyLikes } from "../services/api.services";
 import Post from "./Post";
 import { Content, Heading } from "../styles/MainPage";
 import styled from "styled-components";
@@ -11,7 +11,7 @@ export default function MyLikes() {
     const { token, user } = useContext(UserContext);
 
     useEffect(() => {
-        getMyPostsList(token, user)
+        getMyLikes(token, user)
             .then(res => {
                 setMyPostsList(res.data.posts);
                 setStatusMessage("Nenhum post encontrado");
@@ -25,7 +25,7 @@ export default function MyLikes() {
 
     return (
         <Content>
-            <Heading>my posts</Heading>
+            <Heading>my likes</Heading>
             {myPostsList && myPostsList[0] ? (
                 myPostsList.map(post => <Post key={post.id} post={post}></Post>)
             ) : (
