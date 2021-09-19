@@ -23,17 +23,20 @@ export default function App() {
                     <Route path="/" exact>
                         <Login user={user} setUser={setUser} />
                     </Route>
-                    <Route path="/timeline" exact>
+
+                    <>
                         <TopBar setUser={setUser} />
-                        <Timeline />
-                    </Route>
-                    <Route path="/my-posts" exact >
-                        <TopBar setUser={setUser} />
-                        <MyPosts />
-                    </Route> 
-                    <Route path='/hashtag/:idHashtag' exact>
-                        <Hashtag />
-                    </Route>
+
+                        <Route path="/timeline" exact>
+                            <Timeline />
+                        </Route>
+                        <Route path="/my-posts" exact >
+                            <MyPosts />
+                        </Route> 
+                        <Route path='/hashtag/:idHashtag' exact>
+                            <Hashtag />
+                        </Route>
+                    </>
                 </Switch>
             </BrowserRouter>
         </UserContext.Provider>
