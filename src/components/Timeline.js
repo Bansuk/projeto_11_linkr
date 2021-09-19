@@ -30,10 +30,12 @@ export default function Timeline() {
     return (
         <Content>
             <div>
-            <Heading>timeline</Heading>
+                <Heading>timeline</Heading>
                 <PublishPost />
                 {statusMessage === "OK" ? (
-                    postsList.map(post => <Post key={post.id} post={post}></Post>)
+                    postsList.map(post => (
+                        <Post key={post.id} post={post}></Post>
+                    ))
                 ) : (
                     <Message>{statusMessage}</Message>
                 )}
