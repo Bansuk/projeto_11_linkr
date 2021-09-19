@@ -36,10 +36,10 @@ export default function App() {
                         <Timeline />                 
                     </Route>
 
-                    <Route path="/my-posts" exact >
+                    <Route path="/my-posts" exact>
                         <TopBar setUser={setUser} />
                         <MyPosts />
-                    </Route> 
+                    </Route>
                 </Switch>
             </BrowserRouter>
         </UserContext.Provider>
