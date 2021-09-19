@@ -5,7 +5,7 @@ import { MainContainer, LogoContainer, FormContainer, InputWrapper, Anchor } fro
 import { signInUser } from "../services/api.services";
 
 
-export default function Login({setUser}){
+export default function Login({setUser, isAuth}){
     const [loading, setLoading] = useState(false);
     const [logUser, setLogUser] = useState({
         email: '',
@@ -15,11 +15,7 @@ export default function Login({setUser}){
     let persistUser = {};
 
     useEffect(() => {
-        let loggedUser = localStorage.getItem('user');
-        loggedUser = JSON.parse(loggedUser);
-        
-        if(loggedUser && loggedUser.token){
-            setUser({...loggedUser})
+        if(isAuth){
             history.push('/timeline');
         }
     }, [])
