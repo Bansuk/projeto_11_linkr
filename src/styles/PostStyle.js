@@ -48,6 +48,10 @@ const InteractionColumn = styled.div`
     & span {
         font-size: 11px;
     }
+
+    & .post__like-button {
+        color: #ac0000;
+    }
 `;
 
 const LinkColumn = styled.div`
@@ -113,7 +117,6 @@ const Snippet = styled.div`
         object-fit: cover;
         min-width: 130px;
     }
-
     & span {
         word-break: break-word;
     }

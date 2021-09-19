@@ -1,74 +1,76 @@
 import styled from "styled-components";
-import { useContext, useState } from 'react';
+import { useContext, useState } from "react";
 import UserContext from "../contexts/userContext";
 import { postNewPost } from "../services/api.services";
 
-export default function PublishPost(){
-    const[link, setLink] = useState("")
-    const[text,setText]= useState("")
-    const[button, setButton]= useState(true)
-    const { user, token} = useContext(UserContext);
-    let post = {link,text};
-    function publishContent(){
-        if(link === ""){alert("Favor preencher o link")}
-        else{
+export default function PublishPost() {
+    const [link, setLink] = useState("");
+    const [text, setText] = useState("");
+    const [button, setButton] = useState(true);
+    const { user, token } = useContext(UserContext);
+    let post = { link, text };
+    function publishContent() {
+        if (link === "") {
+            alert("Favor preencher o link");
+        } else {
             setButton(false);
-            postNewPost(post,token)
-            .then(response => {
-                setButton(true)
-                setLink("")
-                setText("")
-            })
-            .catch(() => {
-                alert("Houve um erro ao publicar seu link")
-                setButton(true)
-            })
-
+            postNewPost(post, token)
+                .then(response => {
+                    setButton(true);
+                    setLink("");
+                    setText("");
+                })
+                .catch(() => {
+                    alert("Houve um erro ao publicar seu link");
+                    setButton(true);
+                });
         }
     }
-    
-    return(
+
+    return (
         <CardPublishPost>
-            <StyledProfileImg src={user.avatar}/>
-            <InfoPublishPost >
-                    <SpanPublishPost>O que você tem para favoritar hoje?</SpanPublishPost>
-                    <FirstInputPublishPost 
-                    type="url" 
-                    placeholder="https://" 
-                    value={link} 
+            <StyledProfileImg src={user.avatar} />
+            <InfoPublishPost>
+                <SpanPublishPost>
+                    O que você tem para favoritar hoje?
+                </SpanPublishPost>
+                <FirstInputPublishPost
+                    type="url"
+                    placeholder="https://"
+                    value={link}
                     onChange={e => setLink(e.target.value)}
                     required
                     disabled={!button}
-                    />
-                    <SecondInputPublishPost 
-                    type="text" 
-                    placeholder="Muito irado esse link falando de #javascript" 
+                />
+                <SecondInputPublishPost
+                    type="text"
+                    placeholder="Muito irado esse link falando de #javascript"
                     value={text}
-                    onChange={e=> setText(e.target.value)}
+                    onChange={e => setText(e.target.value)}
                     disabled={!button}
-                    />
-                    {button ?
-                        <ButtonPublishPost onClick={publishContent}>Publicar</ButtonPublishPost>
-                        :
-                        <ButtonPublishPost>Publishing...</ButtonPublishPost>
-                    }
-                
+                />
+                {button ? (
+                    <ButtonPublishPost onClick={publishContent}>
+                        Publicar
+                    </ButtonPublishPost>
+                ) : (
+                    <ButtonPublishPost>Publishing...</ButtonPublishPost>
+                )}
             </InfoPublishPost>
         </CardPublishPost>
-    )
+    );
 }
-
 
 const CardPublishPost = styled.div`
     max-width: 1000px;
     min-width: 400px;
     width: 100%;
     border-radius: 16px;
-	height: 209px;
-	background: #FFFFFF;
-    display:flex;
-    box-sizing:border-box;
-    padding:16px;
+    height: 209px;
+    background: #ffffff;
+    display: flex;
+    box-sizing: border-box;
+    padding: 16px;
     box-shadow: 0px 4px 4px 0px #00000040;
     margin-bottom: 15px;
     @media (max-width: 900px) {
@@ -78,51 +80,51 @@ const CardPublishPost = styled.div`
     }
 `;
 const StyledProfileImg = styled.img`
-margin: 0px 4.25% 0 4.25%;
-width:50px;
-height:50px;
-border-radius:26.5px;
+    margin: 0px 4.25% 0 4.25%;
+    width: 50px;
+    height: 50px;
+    border-radius: 26.5px;
 `;
 const InfoPublishPost = styled.div`
-display: flex;
-justify-content: space-around;
-flex-direction: column;
-width:82%;
-position: relative;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    width: 82%;
+    position: relative;
 `;
 const SpanPublishPost = styled.span`
-font-family: Lato, sans-serif;
-font-size:20px;
-color: #707070;
-font-weight:300;
+    font-family: Lato, sans-serif;
+    font-size: 20px;
+    color: #707070;
+    font-weight: 300;
 `;
 const FirstInputPublishPost = styled.input`
-height:30px;
-border-radius:5px;
-background-color:#EFEFEF;
-border: inherit;
-::placeholder{
-    color: #949494;
-}
+    height: 30px;
+    border-radius: 5px;
+    background-color: #efefef;
+    border: inherit;
+    ::placeholder {
+        color: #949494;
+    }
 `;
 const SecondInputPublishPost = styled.input`
-height:66px;
-margin-bottom: 31px;
-border-radius:5px;
-background-color:#EFEFEF;
-border: inherit;
+    height: 66px;
+    margin-bottom: 31px;
+    border-radius: 5px;
+    background-color: #efefef;
+    border: inherit;
 
-::placeholder{
-    color: #949494;
-}
+    ::placeholder {
+        color: #949494;
+    }
 `;
 const ButtonPublishPost = styled.button`
-width:112px;
-height:31px;
-background-color: #1877F2;
-color: #FFFFFF;
-border-radius:5px;
-position: absolute;
-right:0px;
-bottom:0px;
+    width: 112px;
+    height: 31px;
+    background-color: #1877f2;
+    color: #ffffff;
+    border-radius: 5px;
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
 `;

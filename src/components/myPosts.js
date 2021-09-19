@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { getMyPostsList } from "../services/api.services";
 import Post from "./Post";
-import { Content,  Heading } from "../styles/MainPage";
+import { Content, Heading } from "../styles/MainPage";
 import styled from "styled-components";
 import UserContext from "../contexts/userContext";
 import TrendingHashtag from "./Trending";
@@ -13,23 +13,25 @@ export default function MyPosts() {
 
     useEffect(() => {
         getMyPostsList(token, user)
-        .then(res => {
-            setMyPostsList(res.data.posts);
-            setStatusMessage("Nenhum post encontrado");
-        })
-        .catch(err => {
-            setStatusMessage(
-                "Houve uma falha ao obter os posts, por favor atualize a página"
-            );
-        });
+            .then(res => {
+                setMyPostsList(res.data.posts);
+                setStatusMessage("Nenhum post encontrado");
+            })
+            .catch(err => {
+                setStatusMessage(
+                    "Houve uma falha ao obter os posts, por favor atualize a página"
+                );
+            });
     }, [token]);
 
     return (
         <Content>
             <div>
-            <Heading>my posts</Heading>
+                <Heading>my posts</Heading>
                 {myPostsList && myPostsList[0] ? (
-                    myPostsList.map(post => <Post key={post.id} post={post}></Post>)
+                    myPostsList.map(post => (
+                        <Post key={post.id} post={post}></Post>
+                    ))
                 ) : (
                     <Message>{statusMessage}</Message>
                 )}

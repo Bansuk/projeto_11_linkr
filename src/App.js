@@ -23,7 +23,6 @@ export default function App() {
                     <Route path="/" exact>
                         <Login user={user} setUser={setUser} />
                     </Route>
-
                     <>
                         <TopBar setUser={setUser} />
 
