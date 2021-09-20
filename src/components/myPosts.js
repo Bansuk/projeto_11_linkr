@@ -1,39 +1,35 @@
 import { useContext, useEffect, useState } from "react";
-import { getPostsList } from "../services/api.services";
+import { getMyPostsList } from "../services/api.services";
 import Post from "./Post";
 import { Content, Heading } from "../styles/MainPage";
 import styled from "styled-components";
 import UserContext from "../contexts/userContext";
-import PublishPost from "./PublishPost";
 import TrendingHashtag from "./Trending";
 
-export default function Timeline() {
+export default function MyPosts() {
     const [statusMessage, setStatusMessage] = useState("Loading");
-    const [postsList, setPostsList] = useState([]);
+    const [myPostsList, setMyPostsList] = useState([]);
     const { token, user } = useContext(UserContext);
 
     useEffect(() => {
-        getPostsList(token)
+        getMyPostsList(token, user)
             .then(res => {
-                setPostsList(res.data.posts);
-                if (postsList === [])
-                    setStatusMessage("Nenhum post encontrado");
-                else setStatusMessage("OK");
+                setMyPostsList(res.data.posts);
+                setStatusMessage("Nenhum post encontrado");
             })
             .catch(err => {
                 setStatusMessage(
                     "Houve uma falha ao obter os posts, por favor atualize a página"
                 );
             });
-    }, [token, postsList]);
+    }, [token]);
 
     return (
         <Content>
             <div>
-                <Heading>timeline</Heading>
-                <PublishPost />
-                {statusMessage === "OK" ? (
-                    postsList.map(post => (
+                <Heading>my posts</Heading>
+                {myPostsList && myPostsList[0] ? (
+                    myPostsList.map(post => (
                         <Post key={post.id} post={post}></Post>
                     ))
                 ) : (

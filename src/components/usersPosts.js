@@ -1,21 +1,28 @@
 import { useContext, useEffect, useState } from "react";
-import { getMyLikes } from "../services/api.services";
+import { getMyPostsList } from "../services/api.services";
 import Post from "./Post";
 import { Content, Heading } from "../styles/MainPage";
 import styled from "styled-components";
 import UserContext from "../contexts/userContext";
+import { useParams } from "react-router-dom";
 import TrendingHashtag from "./Trending";
 
-export default function MyLikes() {
+export default function UsersPosts() {
     const [statusMessage, setStatusMessage] = useState("Loading");
     const [myPostsList, setMyPostsList] = useState([]);
-    const { token, user } = useContext(UserContext);
+    const [targetUser, setTargetUser] = useState('')
+    const { token } = useContext(UserContext);
+    const userId = {
+        id: useParams().id
+    }
+    
 
     useEffect(() => {
-        getMyLikes(token, user)
+        getMyPostsList(token, userId)
             .then(res => {
                 setMyPostsList(res.data.posts);
                 setStatusMessage("Nenhum post encontrado");
+                setTargetUser(res.data.posts[0].user.username);
             })
             .catch(err => {
                 setStatusMessage(
@@ -27,7 +34,7 @@ export default function MyLikes() {
     return (
         <Content>
             <div>
-            <Heading>my likes</Heading>
+            <Heading>{`${targetUser}'s posts`}</Heading>
             {myPostsList && myPostsList[0] ? (
                 myPostsList.map(post => <Post key={post.id} post={post}></Post>)
             ) : (
