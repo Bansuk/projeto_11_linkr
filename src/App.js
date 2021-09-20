@@ -7,6 +7,7 @@ import UserContext from "./contexts/userContext";
 import { useState } from "react";
 import TopBar from "./components/TopBar";
 import MyPosts from "./components/myPosts";
+import Hashtag from "./components/Hashtag";
 
 export default function App() {
     const [user, setUser] = useState({});
@@ -22,14 +23,19 @@ export default function App() {
                     <Route path="/" exact>
                         <Login user={user} setUser={setUser} />
                     </Route>
-                    <Route path="/timeline" exact>
+                    <>
                         <TopBar setUser={setUser} />
-                        <Timeline />
-                    </Route>
-                    <Route path="/my-posts" exact>
-                        <TopBar setUser={setUser} />
-                        <MyPosts />
-                    </Route>
+
+                        <Route path="/timeline" exact>
+                            <Timeline />
+                        </Route>
+                        <Route path="/my-posts" exact >
+                            <MyPosts />
+                        </Route> 
+                        <Route path='/hashtag/:idHashtag' exact>
+                            <Hashtag />
+                        </Route>
+                    </>
                 </Switch>
             </BrowserRouter>
         </UserContext.Provider>

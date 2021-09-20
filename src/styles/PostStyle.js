@@ -12,13 +12,13 @@ const Content = styled.div`
     font-family: "Lato", sans-serif;
     box-sizing: border-box;
     padding: 15px;
-    
 
     @media (max-width: 900px) {
         border-radius: 0;
         width: 100%;
         max-width: none;
     }
+    
 `;
 
 const InnerContent = styled.div`
@@ -60,6 +60,23 @@ const LinkColumn = styled.div`
     word-wrap: break-word;
     overflow: hidden;
 
+    & textarea {
+        width: 100%;
+        border-radius: 7px;
+        border: none;
+        margin-top: 14px;
+        margin-bottom: 2px;
+        font-family: "Lato", sans-serif;
+        font-size: 14px;
+    }
+
+    & .post__top {
+        width:97%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
     & .post__author {
         font-size: 19px;
         color: #fff;
@@ -74,6 +91,11 @@ const LinkColumn = styled.div`
         -webkit-box-orient: vertical;
         overflow: hidden;
         max-width: 90%;
+    }
+
+    & .post__edit-button {
+        color: #fff;
+        margin-right: 5px;
     }
 `;
 
@@ -136,5 +158,6 @@ export {
     InteractionColumn,
     LinkColumn,
     Snippet,
-    Hashtag,
+    Hashtag
 };
+
