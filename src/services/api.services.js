@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useEffect } from "react";
 
 const URL = "https://mock-api.bootcamp.respondeai.com.br/api/v3/linkr/";
 

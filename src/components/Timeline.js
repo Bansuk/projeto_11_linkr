@@ -12,6 +12,7 @@ export default function Timeline() {
     const [postsList, setPostsList] = useState([]);
     const { token } = useContext(UserContext);
 
+
     useEffect(() => {
         getPostsList(token)
             .then(res => {
