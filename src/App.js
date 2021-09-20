@@ -6,6 +6,7 @@ import Login from "./components/login";
 import UserContext from "./contexts/userContext";
 import { useState } from "react";
 import TopBar from "./components/TopBar";
+import UsersPosts from "./components/usersPosts";
 import MyPosts from "./components/myPosts";
 import Hashtag from "./components/Hashtag";
 
@@ -34,6 +35,9 @@ export default function App() {
                         </Route> 
                         <Route path='/hashtag/:idHashtag' exact>
                             <Hashtag />
+                        </Route>
+                        <Route path='/user/:id' exact>
+                            <UsersPosts />
                         </Route>
                     </>
                 </Switch>

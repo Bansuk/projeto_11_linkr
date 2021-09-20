@@ -10,7 +10,7 @@ import TrendingHashtag from "./Trending";
 export default function Timeline() {
     const [statusMessage, setStatusMessage] = useState("Loading");
     const [postsList, setPostsList] = useState([]);
-    const { token } = useContext(UserContext);
+    const { token, user } = useContext(UserContext);
 
     useEffect(() => {
         getPostsList(token)
