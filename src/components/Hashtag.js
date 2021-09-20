@@ -12,7 +12,6 @@ const [postsList, setPostsList] = useState([]);
 const { token } = useContext(UserContext);
 const { idHashtag } = useParams();
 
-
 useEffect(() => {
     getHashtagPostsList(token, idHashtag)
         .then(res => {

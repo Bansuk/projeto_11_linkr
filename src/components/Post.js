@@ -1,4 +1,4 @@
-import { FaRegHeart, FaHeart } from "react-icons/fa";
+import { FaRegHeart, FaHeart, FaRegTrashAlt } from "react-icons/fa";
 import { TiPencil } from "react-icons/ti";
 import { useHistory } from "react-router";
 import ReactHashtag from "react-hashtag";
@@ -14,6 +14,8 @@ import { useContext, useRef, useState, useEffect } from "react";
 import { likePost, editPost } from "../services/api.services";
 import UserContext from "../contexts/userContext";
 import ReactTooltip from "react-tooltip";
+import Modal from 'react-modal'
+import { deletePost } from "../services/api.services";
 
 export default function Post({
     post: {
@@ -34,6 +36,8 @@ export default function Post({
     const [editedText, setEditedText] = useState("");
     const [isDisabled, setIsDisabled] = useState(false);
     const inputRef = useRef(null);
+    const [modalIsOpen, setIsOpen] = useState(false);
+    const [loading, setLoading]= useState(false);
 
     useEffect(() => {
         if (isEditing) {
@@ -80,6 +84,26 @@ export default function Post({
         }
     }
 
+    function openModal(){
+        setIsOpen(true)
+    }
+    function closeModal(){
+        setIsOpen(false)
+    }
+    function delPost(){
+        setLoading(true);
+        deletePost(token,id)
+        .then(()=> {
+            setLoading(false)
+            setIsOpen(false)
+        })
+        .catch(()=> {
+            setLoading(false)
+            setIsOpen(false)
+            alert("Não foi possível excluir o post")
+        })
+    }
+
     function saveModification(event) {
         event.preventDefault();
         setIsDisabled(true);
@@ -98,6 +122,23 @@ export default function Post({
 
     return (
         <Content>
+            <Modal
+                onRequestClose={closeModal}
+                isOpen={modalIsOpen}
+                className="Modal"
+            >
+                {loading ? (
+                    <h2>Excluindo...</h2>
+                ):(
+                    <>
+                        <h2>Tem certeza que deseja excluir essa publicação?</h2>
+                        <div className="modal-buttons">
+                            <button onClick={closeModal}>Não, voltar</button>
+                            <button onClick={delPost}>Sim, excluir</button>
+                        </div>
+                    </>
+                )}
+            </Modal>
             <InnerContent>
                 <InteractionColumn>
                     <img
@@ -132,13 +173,16 @@ export default function Post({
                             {username}
                         </span>
                         {user.id === userId ? (
-                            <TiPencil
-                                className={"post__edit-button"}
-                                onClick={() => {
-                                    setIsEditing(!isEditing);
-                                    setEditedText(text);
-                                }}
-                            />
+                            <div>
+                                <TiPencil
+                                    className={"post__edit-button"}
+                                    onClick={() => {
+                                        setIsEditing(!isEditing);
+                                        setEditedText(text);
+                                    }}
+                                />
+                                <FaRegTrashAlt color="white" onClick={openModal}/>
+                            </div>
                         ) : (
                             ""
                         )}
