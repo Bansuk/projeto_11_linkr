@@ -34,6 +34,9 @@ function getHashtagPostsList(token,idHashtag){
 function likePost(token, postId, action) {
     return axios.post(`${URL}posts/${postId}/${action}`, "", config(token));
 }
+function editPost(token, postId, newText) {
+    return axios.put(`${URL}posts/${postId}`, newText, config(token));
+}
 
 export {
     signInUser,
@@ -43,5 +46,6 @@ export {
     getMyPostsList,
     getHashtagsList,
     likePost,
-    getHashtagPostsList
+    getHashtagPostsList,
+    editPost
 };
