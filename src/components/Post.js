@@ -11,7 +11,7 @@ import {
     Snippet,
 } from "../styles/PostStyle";
 import { useContext, useRef, useState, useEffect } from "react";
-import { likePost } from "../services/api.services";
+import { likePost, editPost } from "../services/api.services";
 import UserContext from "../contexts/userContext";
 import ReactTooltip from "react-tooltip";
 
@@ -31,15 +31,16 @@ export default function Post({
     const { token, user } = useContext(UserContext);
     const [likesList, setLikesList] = useState("");
     const [isEditing, setIsEditing] = useState(false);
-    const [editedText, setEditedText] = useState(null);
+    const [editedText, setEditedText] = useState("");
+    const [isDisabled, setIsDisabled] = useState(false);
     const inputRef = useRef(null);
 
     useEffect(() => {
         if (isEditing) {
-            inputRef.current.focus();
-            //Forcando o cursor a ficar ao final do texto no foco
-            setEditedText(null);
-            setEditedText(text);
+            const e = inputRef.current;
+            e.focus();
+            //Colocando o cursor ao final do texto ao focar
+            e.setSelectionRange(e.value.length, e.value.length);
         }
     }, [isEditing]);
 
@@ -77,6 +78,22 @@ export default function Post({
                     } e outras ${likes.length - 2} pessoas`
                 );
         }
+    }
+
+    function saveModification(event) {
+        event.preventDefault();
+        setIsDisabled(true);
+        editPost(token, id, { text: editedText })
+            .then(res => {
+                setTimeout(() => {
+                    setIsEditing(false);
+                    setIsDisabled(false);
+                }, 3000);
+            })
+            .catch(err => {
+                alert("Não foi possível salvar as alterações!");
+                setIsDisabled(false);
+            });
     }
 
     return (
@@ -119,6 +136,7 @@ export default function Post({
                                 className={"post__edit-button"}
                                 onClick={() => {
                                     setIsEditing(!isEditing);
+                                    setEditedText(text);
                                 }}
                             />
                         ) : (
@@ -130,9 +148,14 @@ export default function Post({
                             ref={inputRef}
                             value={editedText}
                             onChange={e => setEditedText(e.target.value)}
-                            onKeyUp={e =>
-                                e.key === "Escape" ? setIsEditing(false) : ""
+                            onKeyDown={e =>
+                                e.key === "Escape"
+                                    ? setIsEditing(false)
+                                    : e.key === "Enter"
+                                    ? saveModification(e)
+                                    : ""
                             }
+                            disabled={isDisabled}
                         />
                     ) : (
                         <p className={"post__text"}>
