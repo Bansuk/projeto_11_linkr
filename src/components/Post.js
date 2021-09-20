@@ -93,9 +93,13 @@ export default function Post({
     function delPost(){
         setLoading(true);
         deletePost(token,id)
-        .then(()=> setLoading(false))
+        .then(()=> {
+            setLoading(false)
+            setIsOpen(false)
+        })
         .catch(()=> {
             setLoading(false)
+            setIsOpen(false)
             alert("Não foi possível excluir o post")
         })
     }
