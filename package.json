@@ -1,5 +1,6 @@
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
   "name": "projeto_11_linkr",
   "version": "0.1.0",
   "private": true,
@@ -41,6 +42,8 @@
     ]
   }
 =======
+=======
+>>>>>>> 820f21fd70e2de1c727e1cc6b4adfbb07d0e9ebf
     "name": "projeto_11_linkr",
     "version": "0.1.0",
     "private": true,
@@ -83,5 +86,8 @@
             "last 1 safari version"
         ]
     }
+<<<<<<< HEAD
 >>>>>>> 3d4eeb9ad646b4ee9425456368d8dd67a374087a
+=======
+>>>>>>> 820f21fd70e2de1c727e1cc6b4adfbb07d0e9ebf
 }
