@@ -39,7 +39,7 @@ return (
                 ) : (
                     <Message>{statusMessage}</Message>
                 )}
-            </div>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
+            </div>
             <TrendingHashtag />
         </Content>
 );
