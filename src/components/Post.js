@@ -14,7 +14,7 @@ import { useContext, useRef, useState, useEffect } from "react";
 import { likePost, editPost } from "../services/api.services";
 import UserContext from "../contexts/userContext";
 import ReactTooltip from "react-tooltip";
-import Modal from 'react-modal'
+import Modal from "react-modal";
 import { deletePost } from "../services/api.services";
 
 export default function Post({
@@ -37,7 +37,7 @@ export default function Post({
     const [isDisabled, setIsDisabled] = useState(false);
     const inputRef = useRef(null);
     const [modalIsOpen, setIsOpen] = useState(false);
-    const [loading, setLoading]= useState(false);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         if (isEditing) {
@@ -84,24 +84,24 @@ export default function Post({
         }
     }
 
-    function openModal(){
-        setIsOpen(true)
+    function openModal() {
+        setIsOpen(true);
     }
-    function closeModal(){
-        setIsOpen(false)
+    function closeModal() {
+        setIsOpen(false);
     }
-    function delPost(){
+    function delPost() {
         setLoading(true);
-        deletePost(token,id)
-        .then(()=> {
-            setLoading(false)
-            setIsOpen(false)
-        })
-        .catch(()=> {
-            setLoading(false)
-            setIsOpen(false)
-            alert("Não foi possível excluir o post")
-        })
+        deletePost(token, id)
+            .then(() => {
+                setLoading(false);
+                setIsOpen(false);
+            })
+            .catch(() => {
+                setLoading(false);
+                setIsOpen(false);
+                alert("Não foi possível excluir o post");
+            });
     }
 
     function saveModification(event) {
@@ -129,7 +129,7 @@ export default function Post({
             >
                 {loading ? (
                     <h2>Excluindo...</h2>
-                ):(
+                ) : (
                     <>
                         <h2>Tem certeza que deseja excluir essa publicação?</h2>
                         <div className="modal-buttons">
@@ -181,7 +181,10 @@ export default function Post({
                                         setEditedText(text);
                                     }}
                                 />
-                                <FaRegTrashAlt color="white" onClick={openModal}/>
+                                <FaRegTrashAlt
+                                    color="white"
+                                    onClick={openModal}
+                                />
                             </div>
                         ) : (
                             ""

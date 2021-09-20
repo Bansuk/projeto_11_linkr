@@ -16,23 +16,21 @@ export default function Timeline() {
         getPostsList(token)
             .then(res => {
                 setPostsList(res.data.posts);
-                if (postsList === [])
-                    setStatusMessage("Nenhum post encontrado");
-                else setStatusMessage("OK");
+                setStatusMessage("Nenhum post encontrado");
             })
             .catch(err => {
                 setStatusMessage(
                     "Houve uma falha ao obter os posts, por favor atualize a página"
                 );
             });
-    }, [token, postsList]);
+    }, [token]);
 
     return (
         <Content>
             <div>
                 <Heading>timeline</Heading>
                 <PublishPost />
-                {statusMessage === "OK" ? (
+                {postsList && postsList[0] ? (
                     postsList.map(post => (
                         <Post key={post.id} post={post}></Post>
                     ))
