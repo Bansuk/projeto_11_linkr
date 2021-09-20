@@ -24,7 +24,7 @@ useEffect(() => {
                 "Houve uma falha ao obter os posts, por favor atualize a página"
             );
         });
-}, [token]);
+}, [idHashtag,token]);
 
 return (
     <Content>
