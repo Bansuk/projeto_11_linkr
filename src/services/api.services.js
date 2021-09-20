@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useEffect } from "react";
 
 const URL = "https://mock-api.bootcamp.respondeai.com.br/api/v3/linkr/";
 
@@ -32,6 +31,9 @@ function getMyPostsList(token, user) {
 function likePost(token, postId, action) {
     return axios.post(`${URL}posts/${postId}/${action}`, "", config(token));
 }
+function deletePost(token,postId){
+    return axios.delete(`${URL}posts/${postId}`, config(token));
+}
 function editPost(token, postId, newText) {
     return axios.put(`${URL}posts/${postId}`, newText, config(token));
 }
@@ -44,5 +46,6 @@ export {
     postNewPost,
     getHashtagsList,
     likePost,
+    deletePost,
     editPost,
 };

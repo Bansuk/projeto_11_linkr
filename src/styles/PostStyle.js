@@ -18,6 +18,7 @@ const Content = styled.div`
         width: 100%;
         max-width: none;
     }
+    
 `;
 
 const InnerContent = styled.div`
@@ -70,6 +71,7 @@ const LinkColumn = styled.div`
     }
 
     & .post__top {
+        width:97%;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -93,6 +95,7 @@ const LinkColumn = styled.div`
 
     & .post__edit-button {
         color: #fff;
+        margin-right: 5px;
     }
 `;
 
@@ -155,5 +158,6 @@ export {
     InteractionColumn,
     LinkColumn,
     Snippet,
-    Hashtag,
+    Hashtag
 };
+
