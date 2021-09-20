@@ -130,6 +130,9 @@ export default function Post({
                             ref={inputRef}
                             value={editedText}
                             onChange={e => setEditedText(e.target.value)}
+                            onKeyUp={e =>
+                                e.key === "Escape" ? setIsEditing(false) : ""
+                            }
                         />
                     ) : (
                         <p className={"post__text"}>
