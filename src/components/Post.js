@@ -31,7 +31,6 @@ export default function Post({
     const { token, user } = useContext(UserContext);
     const [likesList, setLikesList] = useState("");
     const [modalIsOpen, setIsOpen] = useState(false);
-    
 
     function redirectTo(path) {
         history.push(path);
@@ -124,7 +123,12 @@ export default function Post({
                         >
                             {username}
                         </span>
-                        <FaRegTrashAlt color="white" onClick={openModal}/>
+                        {username === user.username ?(
+                            <FaRegTrashAlt color="white" onClick={openModal}/>
+                        ):(
+                            ""
+                        )}
+                        
                     </div>
                     <p className={"post__text"}>
                         <ReactHashtag
