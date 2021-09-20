@@ -40,6 +40,10 @@ function editPost(token, postId, newText) {
     return axios.put(`${URL}posts/${postId}`, newText, config(token));
 }
 
+function getMyLikes(token){
+    return axios.get(`${URL}posts/liked`, config(token));
+}
+
 export {
     signInUser,
     signUpUser,
@@ -51,4 +55,5 @@ export {
     getHashtagPostsList,
     deletePost,
     editPost,
+    getMyLikes
 };
