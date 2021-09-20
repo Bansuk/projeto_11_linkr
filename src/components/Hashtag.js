@@ -12,6 +12,7 @@ const [postsList, setPostsList] = useState([]);
 const { token } = useContext(UserContext);
 const { idHashtag } = useParams();
 
+
 useEffect(() => {
     getHashtagPostsList(token, idHashtag)
         .then(res => {
@@ -28,7 +29,12 @@ useEffect(() => {
 return (
     <Content>
             <div>
-            <Heading>{idHashtag}</Heading>
+                {idHashtag.length <= 10 ? (
+                    <Heading>#{idHashtag}</Heading>
+                ):(
+                    <Heading>#{idHashtag.substring(0,7)}...</Heading>
+                )}
+            
                 {statusMessage === "OK" ? (
                     postsList.map(post => <Post key={post.id} post={post}></Post>)
                 ) : (
