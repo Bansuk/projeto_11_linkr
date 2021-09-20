@@ -19,6 +19,8 @@ const Content = styled.div`
         width: 100%;
         max-width: none;
     }
+
+    
 `;
 
 const InnerContent = styled.div`
@@ -141,5 +143,6 @@ export {
     InteractionColumn,
     LinkColumn,
     Snippet,
-    Hashtag,
+    Hashtag
 };
+

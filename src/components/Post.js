@@ -7,12 +7,13 @@ import {
     InteractionColumn,
     LinkColumn,
     Hashtag,
-    Snippet,
+    Snippet
 } from "../styles/PostStyle";
 import { useContext, useState } from "react";
 import { likePost } from "../services/api.services";
 import UserContext from "../contexts/userContext";
 import ReactTooltip from "react-tooltip";
+import Modal from 'react-modal'
 
 export default function Post({
     post: {
@@ -29,6 +30,8 @@ export default function Post({
     const history = useHistory();
     const { token, user } = useContext(UserContext);
     const [likesList, setLikesList] = useState("");
+    const [modalIsOpen, setIsOpen] = useState(false);
+    
 
     function redirectTo(path) {
         history.push(path);
@@ -66,8 +69,28 @@ export default function Post({
         }
     }
 
+    function openModal(){
+        setIsOpen(true)
+    }
+    function closeModal(){
+        setIsOpen(false)
+    }
+
     return (
         <Content>
+            <Modal
+                onRequestClose={closeModal}
+                isOpen={modalIsOpen}
+                className="Modal"
+            >
+                <h2>Tem certeza que deseja excluir essa publicação?</h2>
+                <div className="modal-buttons">
+                    <button onClick={closeModal}>Não, voltar</button>
+                    <button>Sim, excluir</button>
+                </div>
+                
+
+            </Modal>
             <InnerContent>
                 <InteractionColumn>
                     <img
@@ -101,7 +124,7 @@ export default function Post({
                         >
                             {username}
                         </span>
-                        <FaRegTrashAlt color="white" />
+                        <FaRegTrashAlt color="white" onClick={openModal}/>
                     </div>
                     <p className={"post__text"}>
                         <ReactHashtag
