@@ -76,8 +76,9 @@ export default function TopBar({ setUser }) {
                         <span
                             onClick={() => {
                                 setIsMenuOpen(false);
-                                setUser({});
-                                redirectTo("/");
+                                setUser(null);
+                                localStorage.removeItem('user');    
+                                redirectTo("/");    
                             }}
                         >
                             Logout

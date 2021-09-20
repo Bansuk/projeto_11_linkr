@@ -5,6 +5,7 @@ import { Content, Heading } from "../styles/MainPage";
 import styled from "styled-components";
 import UserContext from "../contexts/userContext";
 import { useParams } from "react-router-dom";
+import TrendingHashtag from "./Trending";
 
 export default function UsersPosts() {
     const [statusMessage, setStatusMessage] = useState("Loading");
@@ -32,12 +33,15 @@ export default function UsersPosts() {
 
     return (
         <Content>
+            <div>
             <Heading>{`${targetUser}'s posts`}</Heading>
             {myPostsList && myPostsList[0] ? (
                 myPostsList.map(post => <Post key={post.id} post={post}></Post>)
             ) : (
                 <Message>{statusMessage}</Message>
             )}
+            </div>
+            <TrendingHashtag />
         </Content>
     );
 }
