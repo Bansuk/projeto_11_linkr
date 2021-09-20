@@ -14,6 +14,7 @@ import { likePost } from "../services/api.services";
 import UserContext from "../contexts/userContext";
 import ReactTooltip from "react-tooltip";
 import Modal from 'react-modal'
+import { deletePost } from "../services/api.services";
 
 export default function Post({
     post: {
@@ -74,6 +75,11 @@ export default function Post({
     function closeModal(){
         setIsOpen(false)
     }
+    function delPost(){
+        deletePost(token,id)
+        .then(()=> alert("Funfou"))
+        .catch(()=> alert("Não foi possível excluir o post"))
+    }
 
     return (
         <Content>
@@ -85,7 +91,7 @@ export default function Post({
                 <h2>Tem certeza que deseja excluir essa publicação?</h2>
                 <div className="modal-buttons">
                     <button onClick={closeModal}>Não, voltar</button>
-                    <button>Sim, excluir</button>
+                    <button onClick={delPost}>Sim, excluir</button>
                 </div>
                 
 

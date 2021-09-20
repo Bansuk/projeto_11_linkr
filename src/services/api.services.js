@@ -31,7 +31,9 @@ function getMyPostsList(token, user) {
 function likePost(token, postId, action) {
     return axios.post(`${URL}posts/${postId}/${action}`, "", config(token));
 }
-
+function deletePost(token,postId){
+    return axios.delete(`${URL}posts/${postId}`, config(token));
+}
 export {
     getPostsList,
     signInUser,
@@ -40,4 +42,5 @@ export {
     postNewPost,
     getHashtagsList,
     likePost,
+    deletePost
 };
