@@ -75,6 +75,11 @@ const LinkColumn = styled.div`
         overflow: hidden;
         max-width: 90%;
     }
+
+    & .user__trash{
+        display: flex;
+        justify-content: space-between;
+    }
 `;
 
 const Snippet = styled.div`

@@ -1,4 +1,4 @@
-import { FaRegHeart, FaHeart } from "react-icons/fa";
+import { FaRegHeart, FaHeart, FaRegTrashAlt } from "react-icons/fa";
 import { useHistory } from "react-router";
 import ReactHashtag from "react-hashtag";
 import {
@@ -94,12 +94,15 @@ export default function Post({
                     </span>
                 </InteractionColumn>
                 <LinkColumn>
-                    <span
-                        className={"post__author"}
-                        onClick={() => redirectTo(`/user/${userId}`)}
-                    >
-                        {username}
-                    </span>
+                    <div className="user__trash">
+                        <span
+                            className={"post__author"}
+                            onClick={() => redirectTo(`/user/${userId}`)}
+                        >
+                            {username}
+                        </span>
+                        <FaRegTrashAlt color="white" />
+                    </div>
                     <p className={"post__text"}>
                         <ReactHashtag
                             renderHashtag={hashtagValue => (
