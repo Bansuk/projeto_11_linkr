@@ -34,6 +34,10 @@ function likePost(token, postId, action) {
 function deletePost(token,postId){
     return axios.delete(`${URL}posts/${postId}`, config(token));
 }
+function editPost(token, postId, newText) {
+    return axios.put(`${URL}posts/${postId}`, newText, config(token));
+}
+
 export {
     getPostsList,
     signInUser,
@@ -42,5 +46,6 @@ export {
     postNewPost,
     getHashtagsList,
     likePost,
-    deletePost
+    deletePost,
+    editPost,
 };

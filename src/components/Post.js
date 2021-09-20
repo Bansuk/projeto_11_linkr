@@ -1,4 +1,5 @@
 import { FaRegHeart, FaHeart, FaRegTrashAlt } from "react-icons/fa";
+import { TiPencil } from "react-icons/ti";
 import { useHistory } from "react-router";
 import ReactHashtag from "react-hashtag";
 import {
@@ -7,10 +8,10 @@ import {
     InteractionColumn,
     LinkColumn,
     Hashtag,
-    Snippet
+    Snippet,
 } from "../styles/PostStyle";
-import { useContext, useState } from "react";
-import { likePost } from "../services/api.services";
+import { useContext, useRef, useState, useEffect } from "react";
+import { likePost, editPost } from "../services/api.services";
 import UserContext from "../contexts/userContext";
 import ReactTooltip from "react-tooltip";
 import Modal from 'react-modal'
@@ -31,8 +32,21 @@ export default function Post({
     const history = useHistory();
     const { token, user } = useContext(UserContext);
     const [likesList, setLikesList] = useState("");
+    const [isEditing, setIsEditing] = useState(false);
+    const [editedText, setEditedText] = useState("");
+    const [isDisabled, setIsDisabled] = useState(false);
+    const inputRef = useRef(null);
     const [modalIsOpen, setIsOpen] = useState(false);
     const [loading, setLoading]= useState(false);
+
+    useEffect(() => {
+        if (isEditing) {
+            const e = inputRef.current;
+            e.focus();
+            //Colocando o cursor ao final do texto ao focar
+            e.setSelectionRange(e.value.length, e.value.length);
+        }
+    }, [isEditing]);
 
     function redirectTo(path) {
         history.push(path);
@@ -86,6 +100,22 @@ export default function Post({
         })
     }
 
+    function saveModification(event) {
+        event.preventDefault();
+        setIsDisabled(true);
+        editPost(token, id, { text: editedText })
+            .then(res => {
+                setTimeout(() => {
+                    setIsEditing(false);
+                    setIsDisabled(false);
+                }, 3000);
+            })
+            .catch(err => {
+                alert("Não foi possível salvar as alterações!");
+                setIsDisabled(false);
+            });
+    }
+
     return (
         <Content>
             <Modal
@@ -131,39 +161,63 @@ export default function Post({
                     </span>
                 </InteractionColumn>
                 <LinkColumn>
-                    <div className="user__trash">
+                    <div className="post__top">
                         <span
                             className={"post__author"}
                             onClick={() => redirectTo(`/user/${userId}`)}
                         >
                             {username}
                         </span>
-                        {username === user.username ?(
-                            <FaRegTrashAlt color="white" onClick={openModal}/>
-                        ):(
+                        {user.id === userId ? (
+                            <div>
+                                <TiPencil
+                                    className={"post__edit-button"}
+                                    onClick={() => {
+                                        setIsEditing(!isEditing);
+                                        setEditedText(text);
+                                    }}
+                                />
+                                <FaRegTrashAlt color="white" onClick={openModal}/>
+                            </div>
+                        ) : (
                             ""
                         )}
-                        
                     </div>
-                    <p className={"post__text"}>
-                        <ReactHashtag
-                            renderHashtag={hashtagValue => (
-                                <Hashtag
-                                    key={hashtagValue}
-                                    onClick={hashtagValue => {
-                                        let hashtag =
-                                            hashtagValue.target.innerText;
-                                        hashtag = hashtag.slice(1);
-                                        redirectTo(`/hashtag/${hashtag}`);
-                                    }}
-                                >
-                                    {hashtagValue}
-                                </Hashtag>
-                            )}
-                        >
-                            {text}
-                        </ReactHashtag>
-                    </p>
+                    {isEditing ? (
+                        <textarea
+                            ref={inputRef}
+                            value={editedText}
+                            onChange={e => setEditedText(e.target.value)}
+                            onKeyDown={e =>
+                                e.key === "Escape"
+                                    ? setIsEditing(false)
+                                    : e.key === "Enter"
+                                    ? saveModification(e)
+                                    : ""
+                            }
+                            disabled={isDisabled}
+                        />
+                    ) : (
+                        <p className={"post__text"}>
+                            <ReactHashtag
+                                renderHashtag={hashtagValue => (
+                                    <Hashtag
+                                        key={hashtagValue}
+                                        onClick={hashtagValue => {
+                                            let hashtag =
+                                                hashtagValue.target.innerText;
+                                            hashtag = hashtag.slice(1);
+                                            redirectTo(`/hashtag/${hashtag}`);
+                                        }}
+                                    >
+                                        {hashtagValue}
+                                    </Hashtag>
+                                )}
+                            >
+                                {text}
+                            </ReactHashtag>
+                        </p>
+                    )}
                     <Snippet onClick={() => window.open(link)}>
                         <div>
                             <h1>{linkTitle}</h1>
