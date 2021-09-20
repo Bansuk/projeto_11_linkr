@@ -1,23 +1,16 @@
-import { BrowserRouter, Switch, Route, useHistory, Redirect } from "react-router-dom";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 import GlobalStyle from "./styles/GlobalStyle";
 import Timeline from "./components/Timeline";
 import SignUp from "./components/signUp";
 import Login from "./components/login";
 import UserContext from "./contexts/userContext";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import TopBar from "./components/TopBar";
 import MyPosts from "./components/myPosts";
 import Hashtag from "./components/Hashtag";
 
 export default function App() {
-    const [user, setUser] = useState(() => {
-        let loggedUser = localStorage.getItem('user');
-        loggedUser = JSON.parse(loggedUser);
-        return loggedUser;
-    });
-
-    const isAuth = !!user;
-    
+    const [user, setUser] = useState({});
 
     return (
         <UserContext.Provider value={user}>
@@ -27,9 +20,8 @@ export default function App() {
                     <Route path="/sign-up" exact>
                         <SignUp />
                     </Route>
-
                     <Route path="/" exact>
-                        <Login user={user} setUser={setUser} isAuth={isAuth} />
+                        <Login user={user} setUser={setUser} />
                     </Route>
                     <>
                         <TopBar setUser={setUser} />
@@ -44,6 +36,7 @@ export default function App() {
                             <Hashtag />
                         </Route>
                     </>
+
                 </Switch>
             </BrowserRouter>
         </UserContext.Provider>
