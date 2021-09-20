@@ -1,4 +1,5 @@
 import { FaRegHeart, FaHeart } from "react-icons/fa";
+import { TiPencil } from "react-icons/ti";
 import { useHistory } from "react-router";
 import ReactHashtag from "react-hashtag";
 import {
@@ -9,7 +10,7 @@ import {
     Hashtag,
     Snippet,
 } from "../styles/PostStyle";
-import { useContext, useState } from "react";
+import { useContext, useRef, useState, useEffect } from "react";
 import { likePost } from "../services/api.services";
 import UserContext from "../contexts/userContext";
 import ReactTooltip from "react-tooltip";
@@ -29,6 +30,18 @@ export default function Post({
     const history = useHistory();
     const { token, user } = useContext(UserContext);
     const [likesList, setLikesList] = useState("");
+    const [isEditing, setIsEditing] = useState(false);
+    const [editedText, setEditedText] = useState(null);
+    const inputRef = useRef(null);
+
+    useEffect(() => {
+        if (isEditing) {
+            inputRef.current.focus();
+            //Forcando o cursor a ficar ao final do texto no foco
+            setEditedText(null);
+            setEditedText(text);
+        }
+    }, [isEditing]);
 
     function redirectTo(path) {
         history.push(path);
@@ -94,31 +107,51 @@ export default function Post({
                     </span>
                 </InteractionColumn>
                 <LinkColumn>
-                    <span
-                        className={"post__author"}
-                        onClick={() => redirectTo(`/user/${userId}`)}
-                    >
-                        {username}
-                    </span>
-                    <p className={"post__text"}>
-                        <ReactHashtag
-                            renderHashtag={hashtagValue => (
-                                <Hashtag
-                                    key={hashtagValue}
-                                    onClick={hashtagValue => {
-                                        let hashtag =
-                                            hashtagValue.target.innerText;
-                                        hashtag = hashtag.slice(1);
-                                        redirectTo(`/hashtag/${hashtag}`);
-                                    }}
-                                >
-                                    {hashtagValue}
-                                </Hashtag>
-                            )}
+                    <div className="post__top">
+                        <span
+                            className={"post__author"}
+                            onClick={() => redirectTo(`/user/${userId}`)}
                         >
-                            {text}
-                        </ReactHashtag>
-                    </p>
+                            {username}
+                        </span>
+                        {user.id === userId ? (
+                            <TiPencil
+                                className={"post__edit-button"}
+                                onClick={() => {
+                                    setIsEditing(!isEditing);
+                                }}
+                            />
+                        ) : (
+                            ""
+                        )}
+                    </div>
+                    {isEditing ? (
+                        <textarea
+                            ref={inputRef}
+                            value={editedText}
+                            onChange={e => setEditedText(e.target.value)}
+                        />
+                    ) : (
+                        <p className={"post__text"}>
+                            <ReactHashtag
+                                renderHashtag={hashtagValue => (
+                                    <Hashtag
+                                        key={hashtagValue}
+                                        onClick={hashtagValue => {
+                                            let hashtag =
+                                                hashtagValue.target.innerText;
+                                            hashtag = hashtag.slice(1);
+                                            redirectTo(`/hashtag/${hashtag}`);
+                                        }}
+                                    >
+                                        {hashtagValue}
+                                    </Hashtag>
+                                )}
+                            >
+                                {text}
+                            </ReactHashtag>
+                        </p>
+                    )}
                     <Snippet onClick={() => window.open(link)}>
                         <div>
                             <h1>{linkTitle}</h1>
