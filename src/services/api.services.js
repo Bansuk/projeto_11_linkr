@@ -27,7 +27,7 @@ function getMyPostsList(token, user){
     return axios.get(`${URL}users/${user.id}/posts`, config(token));
 }
 
-function getMyLikes(token, user){
+function getMyLikes(token){
     return axios.get(`${URL}posts/liked`, config(token));
 }
 
