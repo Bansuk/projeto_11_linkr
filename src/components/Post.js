@@ -32,6 +32,7 @@ export default function Post({
     const { token, user } = useContext(UserContext);
     const [likesList, setLikesList] = useState("");
     const [modalIsOpen, setIsOpen] = useState(false);
+    const [loading, setLoading]= useState(false);
 
     function redirectTo(path) {
         history.push(path);
@@ -76,9 +77,13 @@ export default function Post({
         setIsOpen(false)
     }
     function delPost(){
+        setLoading(true);
         deletePost(token,id)
-        .then(()=> alert("Funfou"))
-        .catch(()=> alert("Não foi possível excluir o post"))
+        .then(()=> setLoading(false))
+        .catch(()=> {
+            setLoading(false)
+            alert("Não foi possível excluir o post")
+        })
     }
 
     return (
@@ -88,13 +93,17 @@ export default function Post({
                 isOpen={modalIsOpen}
                 className="Modal"
             >
-                <h2>Tem certeza que deseja excluir essa publicação?</h2>
-                <div className="modal-buttons">
-                    <button onClick={closeModal}>Não, voltar</button>
-                    <button onClick={delPost}>Sim, excluir</button>
-                </div>
-                
-
+                {loading ? (
+                    <h2>Excluindo...</h2>
+                ):(
+                    <>
+                        <h2>Tem certeza que deseja excluir essa publicação?</h2>
+                        <div className="modal-buttons">
+                            <button onClick={closeModal}>Não, voltar</button>
+                            <button onClick={delPost}>Sim, excluir</button>
+                        </div>
+                    </>
+                )}
             </Modal>
             <InnerContent>
                 <InteractionColumn>

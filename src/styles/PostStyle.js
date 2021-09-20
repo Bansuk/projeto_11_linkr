@@ -19,7 +19,6 @@ const Content = styled.div`
         width: 100%;
         max-width: none;
     }
-
     
 `;
 
@@ -81,6 +80,7 @@ const LinkColumn = styled.div`
     & .user__trash{
         display: flex;
         justify-content: space-between;
+        width: 97%;
     }
 `;
 
