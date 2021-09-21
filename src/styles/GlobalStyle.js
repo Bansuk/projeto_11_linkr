@@ -17,6 +17,10 @@ const GlobalStyle = createGlobalStyle`
         transform: translate(-50%,0%);
         display: flex;
         flex-direction: column;
+
+        &:focus{
+            outline: none;
+        }
     }
     .Modal h2{
         width: 360px;
