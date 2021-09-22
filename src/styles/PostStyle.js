@@ -97,14 +97,23 @@ const LinkColumn = styled.div`
         color: #fff;
         margin-right: 5px;
     }
+
+    & p{
+    margin: 6px 0;
+    font-size:17px;
+    color:#B7B7B7;
+
+    &:hover{
+        cursor: pointer;
+    }
+  }
 `;
 
 const VideoYoutube = styled.div`
-    height: 100vh;
     overflow: hidden;
 
   & iframe{
-    width: 10%;
+    width: 100%;
     height: calc((100vw*9) /16);
 }
 
@@ -114,10 +123,12 @@ const VideoYoutube = styled.div`
     
 
     & iframe{
-      width: calc((100vh*16)/9);
-      height: 100vh;
+      width: calc((100vh*32)/49);
+      height: 37vh;
       }
   }
+
+  
 `;
 
 const Snippet = styled.div`

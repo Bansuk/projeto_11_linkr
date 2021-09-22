@@ -229,6 +229,7 @@ export default function Post({
                         
                             
                             {idYoutube ? (
+                                <>
                                 <VideoYoutube onClick={() => window.open(link)}>
                                     <iframe 
                                         width="500px"
@@ -236,6 +237,8 @@ export default function Post({
                                         src={`https://www.youtube.com/embed/${idYoutube}`}
                                     />
                                 </VideoYoutube>
+                                <p onClick={() => window.open(link)}>{link}</p>
+                                </>
                             ):( 
                                 <Snippet onClick={() => window.open(link)}>
                                     <div>
