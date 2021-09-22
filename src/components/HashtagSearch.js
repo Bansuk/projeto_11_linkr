@@ -30,14 +30,14 @@ const InputContainer = styled.form`
     border-radius: 8px;
     display: flex;
     align-items: center;
-    justify-content: space-around;
     color: white;
-    padding: 0 8px;
+    padding: 0 13px;
 
     input{
         background-color: inherit;
         border: none;
         outline: none;
         color: white;
+        margin-left: 5px;
     }
 `
