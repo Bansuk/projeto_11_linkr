@@ -18,7 +18,6 @@ const Content = styled.div`
         width: 100%;
         max-width: none;
     }
-    
 `;
 
 const InnerContent = styled.div`
@@ -44,13 +43,36 @@ const InteractionColumn = styled.div`
             cursor: pointer;
         }
     }
+`;
+
+const ButtonsColumn = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 150px;
+    width: 55px;
+
+    & div {
+        display: inherit;
+        flex-direction: inherit;
+        align-items: inherit;
+    }
 
     & span {
-        font-size: 11px;
+        font-size: 12px;
     }
 
     & .post__like-button {
         color: #ac0000;
+    }
+
+    & .post__button {
+        font-size: 20px;
+
+        :hover {
+            cursor: pointer;
+        }
     }
 `;
 
@@ -71,7 +93,7 @@ const LinkColumn = styled.div`
     }
 
     & .post__top {
-        width:97%;
+        width: 97%;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -156,8 +178,8 @@ export {
     Content,
     InnerContent,
     InteractionColumn,
+    ButtonsColumn,
     LinkColumn,
     Snippet,
-    Hashtag
+    Hashtag,
 };
-

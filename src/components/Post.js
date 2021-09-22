@@ -1,4 +1,4 @@
-import { FaRegHeart, FaHeart, FaRegTrashAlt } from "react-icons/fa";
+import { FaRegHeart, FaHeart, FaRegTrashAlt, FaRetweet } from "react-icons/fa";
 import { TiPencil } from "react-icons/ti";
 import { useHistory } from "react-router";
 import ReactHashtag from "react-hashtag";
@@ -9,13 +9,14 @@ import {
     LinkColumn,
     Hashtag,
     Snippet,
+    ButtonsColumn,
 } from "../styles/PostStyle";
 import { useContext, useRef, useState, useEffect } from "react";
-import { likePost, editPost } from "../services/api.services";
+import { likePost, editPost, sharePost } from "../services/api.services";
 import UserContext from "../contexts/userContext";
 import ReactTooltip from "react-tooltip";
-import Modal from 'react-modal'
 import { deletePost } from "../services/api.services";
+import ConfirmationModal from "./ConfirmationModal";
 
 export default function Post({
     post: {
@@ -27,6 +28,8 @@ export default function Post({
         linkImage,
         user: { id: userId, username, avatar },
         likes,
+        repostCount,
+        repostedBy,
     },
 }) {
     const history = useHistory();
@@ -37,7 +40,8 @@ export default function Post({
     const [isDisabled, setIsDisabled] = useState(false);
     const inputRef = useRef(null);
     const [modalIsOpen, setIsOpen] = useState(false);
-    const [loading, setLoading]= useState(false);
+    const [loading, setLoading] = useState(false);
+    const [modalType, setModalType] = useState("");
 
     useEffect(() => {
         if (isEditing) {
@@ -84,26 +88,26 @@ export default function Post({
         }
     }
 
-    function openModal(){
-        setIsOpen(true)
+    function openModal(type) {
+        setIsOpen(true);
+        setModalType(type);
     }
-    function closeModal(){
-        setIsOpen(false)
+    function closeModal() {
+        setIsOpen(false);
     }
-    function delPost(){
+    function delPost() {
         setLoading(true);
-        deletePost(token,id)
-        .then(()=> {
-            setLoading(false)
-            setIsOpen(false)
-        })
-        .catch(()=> {
-            setLoading(false)
-            setIsOpen(false)
-            alert("Não foi possível excluir o post")
-        })
+        deletePost(token, id)
+            .then(() => {
+                setLoading(false);
+                setIsOpen(false);
+            })
+            .catch(() => {
+                setLoading(false);
+                setIsOpen(false);
+                alert("Não foi possível excluir o post");
+            });
     }
-
     function saveModification(event) {
         event.preventDefault();
         setIsDisabled(true);
@@ -119,26 +123,30 @@ export default function Post({
                 setIsDisabled(false);
             });
     }
+    function repost() {
+        setLoading(true);
+        sharePost(token, id)
+            .then(() => {
+                setLoading(false);
+                setIsOpen(false);
+            })
+            .catch(() => {
+                setLoading(false);
+                setIsOpen(false);
+                alert("Não foi possível repostar o post");
+            });
+    }
 
     return (
         <Content>
-            <Modal
-                onRequestClose={closeModal}
-                isOpen={modalIsOpen}
-                className="Modal"
-            >
-                {loading ? (
-                    <h2>Excluindo...</h2>
-                ):(
-                    <>
-                        <h2>Tem certeza que deseja excluir essa publicação?</h2>
-                        <div className="modal-buttons">
-                            <button onClick={closeModal}>Não, voltar</button>
-                            <button onClick={delPost}>Sim, excluir</button>
-                        </div>
-                    </>
-                )}
-            </Modal>
+            <ConfirmationModal
+                closeModal={closeModal}
+                modalIsOpen={modalIsOpen}
+                loading={loading}
+                delPost={delPost}
+                sharePost={repost}
+                modalType={modalType}
+            />
             <InnerContent>
                 <InteractionColumn>
                     <img
@@ -146,23 +154,48 @@ export default function Post({
                         alt="Foto de perfil do usuario"
                         onClick={() => redirectTo(`/user/${userId}`)}
                     />
-                    {likes.find(e => e.userId === user.id) ? (
-                        <FaHeart
-                            className={"post__like-button"}
-                            onClick={() => likePost(token, id, "dislike")}
-                        />
-                    ) : (
-                        <FaRegHeart
-                            onClick={() => likePost(token, id, "like")}
-                        />
-                    )}
-                    <ReactTooltip place="bottom" type="light" effect="solid" />
-                    <span
-                        data-tip={likesList}
-                        onMouseOver={() => handleLikes()}
-                    >
-                        {likes.length} likes
-                    </span>
+                    <ButtonsColumn>
+                        {/* LIKES */}
+                        <div>
+                            {likes.find(e => e.userId === user.id) ? (
+                                <FaHeart
+                                    className={"post__like-button post__button"}
+                                    onClick={() =>
+                                        likePost(token, id, "dislike")
+                                    }
+                                />
+                            ) : (
+                                <FaRegHeart
+                                    className={"post__button"}
+                                    onClick={() => likePost(token, id, "like")}
+                                />
+                            )}
+                            <ReactTooltip
+                                place="bottom"
+                                type="light"
+                                effect="solid"
+                            />
+                            <span
+                                data-tip={likesList}
+                                onMouseOver={() => handleLikes()}
+                            >
+                                {likes.length} likes
+                            </span>
+                        </div>
+                        {/* LIKES */}
+                        {/* REPOST */}
+                        <div>
+                            <FaRetweet
+                                className={"post__button"}
+                                onClick={() => openModal("repost")}
+                            />
+                            <span>
+                                {repostCount}{" "}
+                                {repostCount === 1 ? "re-post" : "re-posts"}
+                            </span>
+                        </div>
+                        {/* REPOST */}
+                    </ButtonsColumn>
                 </InteractionColumn>
                 <LinkColumn>
                     <div className="post__top">
@@ -181,7 +214,10 @@ export default function Post({
                                         setEditedText(text);
                                     }}
                                 />
-                                <FaRegTrashAlt color="white" onClick={openModal}/>
+                                <FaRegTrashAlt
+                                    color="white"
+                                    onClick={() => openModal("delete")}
+                                />
                             </div>
                         ) : (
                             ""
