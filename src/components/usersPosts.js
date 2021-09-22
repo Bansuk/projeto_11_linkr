@@ -112,6 +112,7 @@ justify-content: space-between;
     justify-content: center;
     align-items: center;
     background-color: #FFFFFF;
+    cursor: pointer;
 }
 & .Follow{
     background-color: #1877F2;
