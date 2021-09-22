@@ -66,5 +66,6 @@ export {
     editPost,
     getMyLikes,
     seeFollowersUsers,
-    followUser
+    followUser,
+    unfollowUser
 };
