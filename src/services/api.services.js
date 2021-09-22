@@ -43,6 +43,15 @@ function editPost(token, postId, newText) {
 function getMyLikes(token){
     return axios.get(`${URL}posts/liked`, config(token));
 }
+function seeFollowersUsers(token){
+    return axios.get(`${URL}users/follows`, config(token));
+}
+function followUser(token, user){
+    return axios.post(`${URL}users/${user.id}/follow`, "",config(token));
+}
+function unfollowUser(token, user){
+    return axios.post(`${URL}users/${user.id}/unfollow`, "",config(token));
+}
 
 export {
     signInUser,
@@ -55,5 +64,7 @@ export {
     getHashtagPostsList,
     deletePost,
     editPost,
-    getMyLikes
+    getMyLikes,
+    seeFollowersUsers,
+    followUser
 };

@@ -29,18 +29,21 @@ export default function Timeline() {
 
     return (
         <Content>
-            <div>
                 <Heading>timeline</Heading>
-                <PublishPost />
-                {statusMessage === "OK" ? (
-                    postsList.map(post => (
-                        <Post key={post.id} post={post}></Post>
-                    ))
-                ) : (
-                    <Message>{statusMessage}</Message>
-                )}
+            <div className="posts">
+                <div>
+                    <PublishPost />
+                    {statusMessage === "OK" ? (
+                        postsList.map(post => (
+                            <Post key={post.id} post={post}></Post>
+                        ))
+                    ) : (
+                        <Message>{statusMessage}</Message>
+                    )}
+                </div>
+                <TrendingHashtag />
             </div>
-            <TrendingHashtag />
+            
         </Content>
     );
 }
