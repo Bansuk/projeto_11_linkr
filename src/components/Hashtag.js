@@ -28,19 +28,21 @@ useEffect(() => {
 
 return (
     <Content>
-            <div>
                 {idHashtag.length <= 10 ? (
                     <Heading>#{idHashtag}</Heading>
                 ):(
                     <Heading>#{idHashtag.substring(0,7)}...</Heading>
                 )}
-                {statusMessage === "OK" ? (
-                    postsList.map(post => <Post key={post.id} post={post}></Post>)
-                ) : (
-                    <Message>{statusMessage}</Message>
-                )}
-            </div>
+            <div className="posts">
+                <div>
+                    {statusMessage === "OK" ? (
+                        postsList.map(post => <Post key={post.id} post={post}></Post>)
+                    ) : (
+                        <Message>{statusMessage}</Message>
+                    )}
+                </div>
             <TrendingHashtag />
+            </div>
         </Content>
 );
 }

@@ -26,8 +26,9 @@ export default function MyPosts() {
 
     return (
         <Content>
-            <div>
-                <Heading>my posts</Heading>
+            <Heading>my posts</Heading>
+            <div className="posts">
+                <div>
                 {myPostsList && myPostsList[0] ? (
                     myPostsList.map(post => (
                         <Post key={post.id} post={post}></Post>
@@ -35,8 +36,9 @@ export default function MyPosts() {
                 ) : (
                     <Message>{statusMessage}</Message>
                 )}
-            </div>
+                </div>
             <TrendingHashtag />
+            </div>
         </Content>
     );
 }
