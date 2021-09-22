@@ -99,6 +99,27 @@ const LinkColumn = styled.div`
     }
 `;
 
+const VideoYoutube = styled.div`
+    height: 100vh;
+    overflow: hidden;
+
+  & iframe{
+    width: 10%;
+    height: calc((100vw*9) /16);
+}
+
+    @media (max-aspect-ratio: 16/9) {
+      width: 100%;
+      overflow: hidden;
+    
+
+    & iframe{
+      width: calc((100vh*16)/9);
+      height: 100vh;
+      }
+  }
+`;
+
 const Snippet = styled.div`
     height: 170px;
     border: 1px solid #4d4d4d;
@@ -158,6 +179,7 @@ export {
     InteractionColumn,
     LinkColumn,
     Snippet,
-    Hashtag
+    Hashtag,
+    VideoYoutube
 };
 

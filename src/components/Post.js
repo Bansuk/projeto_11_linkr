@@ -9,6 +9,7 @@ import {
     LinkColumn,
     Hashtag,
     Snippet,
+    VideoYoutube
 } from "../styles/PostStyle";
 import { useContext, useRef, useState, useEffect } from "react";
 import { likePost, editPost } from "../services/api.services";
@@ -224,29 +225,29 @@ export default function Post({
                             </ReactHashtag>
                         </p>
                     )}
-                    <Snippet onClick={() => window.open(link)}>
+                    
                         
                             
                             {idYoutube ? (
+                                <VideoYoutube onClick={() => window.open(link)}>
                                     <iframe 
-                                        width="420px"
-                                        height="435px"
+                                        width="500px"
                                         title={linkTitle}
                                         src={`https://www.youtube.com/embed/${idYoutube}`}
                                     />
+                                </VideoYoutube>
                             ):( 
-                                <>
-                                <div>
-                                    <h1>{linkTitle}</h1>
-                                    <p>{linkDescription}</p>
-                                    <span>{link}</span>
-                                </div>
+                                <Snippet onClick={() => window.open(link)}>
+                                    <div>
+                                        <h1>{linkTitle}</h1>
+                                        <p>{linkDescription}</p>
+                                        <span>{link}</span>
+                                    </div>
                                     <img src={linkImage} alt="Imagem do post" />
-                                </>
+                                </Snippet>
                             )}
                         
                         
-                    </Snippet>
                 </LinkColumn>
             </InnerContent>
         </Content>
