@@ -1,21 +1,24 @@
-import { FaRegHeart, FaHeart, FaRegTrashAlt } from "react-icons/fa";
+import { FaRegHeart, FaHeart, FaRegTrashAlt, FaRetweet } from "react-icons/fa";
 import { TiPencil } from "react-icons/ti";
 import { useHistory } from "react-router";
 import ReactHashtag from "react-hashtag";
 import {
     Content,
+    RepostInfo,
     InnerContent,
     InteractionColumn,
     LinkColumn,
     Hashtag,
     Snippet,
+    ButtonsColumn,
+    OutterContent,
 } from "../styles/PostStyle";
 import { useContext, useRef, useState, useEffect } from "react";
-import { likePost, editPost } from "../services/api.services";
+import { likePost, editPost, sharePost } from "../services/api.services";
 import UserContext from "../contexts/userContext";
 import ReactTooltip from "react-tooltip";
-import Modal from 'react-modal'
 import { deletePost } from "../services/api.services";
+import ConfirmationModal from "./ConfirmationModal";
 
 export default function Post({
     post: {
@@ -27,7 +30,9 @@ export default function Post({
         linkImage,
         user: { id: userId, username, avatar },
         likes,
+        repostCount,
     },
+    repostedBy: { repostUserId, repostUsername },
 }) {
     const history = useHistory();
     const { token, user } = useContext(UserContext);
@@ -37,7 +42,8 @@ export default function Post({
     const [isDisabled, setIsDisabled] = useState(false);
     const inputRef = useRef(null);
     const [modalIsOpen, setIsOpen] = useState(false);
-    const [loading, setLoading]= useState(false);
+    const [loading, setLoading] = useState(false);
+    const [modalType, setModalType] = useState("");
 
     useEffect(() => {
         if (isEditing) {
@@ -84,26 +90,26 @@ export default function Post({
         }
     }
 
-    function openModal(){
-        setIsOpen(true)
+    function openModal(type) {
+        setIsOpen(true);
+        setModalType(type);
     }
-    function closeModal(){
-        setIsOpen(false)
+    function closeModal() {
+        setIsOpen(false);
     }
-    function delPost(){
+    function delPost() {
         setLoading(true);
-        deletePost(token,id)
-        .then(()=> {
-            setLoading(false)
-            setIsOpen(false)
-        })
-        .catch(()=> {
-            setLoading(false)
-            setIsOpen(false)
-            alert("Não foi possível excluir o post")
-        })
+        deletePost(token, id)
+            .then(() => {
+                setLoading(false);
+                setIsOpen(false);
+            })
+            .catch(() => {
+                setLoading(false);
+                setIsOpen(false);
+                alert("Não foi possível excluir o post");
+            });
     }
-
     function saveModification(event) {
         event.preventDefault();
         setIsDisabled(true);
@@ -119,119 +125,172 @@ export default function Post({
                 setIsDisabled(false);
             });
     }
+    function repost() {
+        setLoading(true);
+        sharePost(token, id)
+            .then(() => {
+                setLoading(false);
+                setIsOpen(false);
+            })
+            .catch(() => {
+                setLoading(false);
+                setIsOpen(false);
+                alert("Não foi possível repostar o post");
+            });
+    }
 
     return (
-        <Content>
-            <Modal
-                onRequestClose={closeModal}
-                isOpen={modalIsOpen}
-                className="Modal"
-            >
-                {loading ? (
-                    <h2>Excluindo...</h2>
-                ):(
-                    <>
-                        <h2>Tem certeza que deseja excluir essa publicação?</h2>
-                        <div className="modal-buttons">
-                            <button onClick={closeModal}>Não, voltar</button>
-                            <button onClick={delPost}>Sim, excluir</button>
-                        </div>
-                    </>
-                )}
-            </Modal>
-            <InnerContent>
-                <InteractionColumn>
-                    <img
-                        src={avatar}
-                        alt="Foto de perfil do usuario"
-                        onClick={() => redirectTo(`/user/${userId}`)}
-                    />
-                    {likes.find(e => e.userId === user.id) ? (
-                        <FaHeart
-                            className={"post__like-button"}
-                            onClick={() => likePost(token, id, "dislike")}
-                        />
-                    ) : (
-                        <FaRegHeart
-                            onClick={() => likePost(token, id, "like")}
-                        />
-                    )}
-                    <ReactTooltip place="bottom" type="light" effect="solid" />
-                    <span
-                        data-tip={likesList}
-                        onMouseOver={() => handleLikes()}
-                    >
-                        {likes.length} likes
+        <OutterContent>
+            {repostCount ? (
+                <RepostInfo>
+                    <FaRetweet className={"post__button"} />
+                    <span>
+                        Re-posted by{" "}
+                        {repostUserId === user.id ? "you" : repostUsername}
                     </span>
-                </InteractionColumn>
-                <LinkColumn>
-                    <div className="post__top">
-                        <span
-                            className={"post__author"}
+                </RepostInfo>
+            ) : (
+                ""
+            )}
+
+            <Content>
+                <ConfirmationModal
+                    closeModal={closeModal}
+                    modalIsOpen={modalIsOpen}
+                    loading={loading}
+                    delPost={delPost}
+                    sharePost={repost}
+                    modalType={modalType}
+                />
+                <InnerContent>
+                    <InteractionColumn>
+                        <img
+                            src={avatar}
+                            alt="Foto de perfil do usuario"
                             onClick={() => redirectTo(`/user/${userId}`)}
-                        >
-                            {username}
-                        </span>
-                        {user.id === userId ? (
-                            <div>
-                                <TiPencil
-                                    className={"post__edit-button"}
-                                    onClick={() => {
-                                        setIsEditing(!isEditing);
-                                        setEditedText(text);
-                                    }}
-                                />
-                                <FaRegTrashAlt color="white" onClick={openModal}/>
-                            </div>
-                        ) : (
-                            ""
-                        )}
-                    </div>
-                    {isEditing ? (
-                        <textarea
-                            ref={inputRef}
-                            value={editedText}
-                            onChange={e => setEditedText(e.target.value)}
-                            onKeyDown={e =>
-                                e.key === "Escape"
-                                    ? setIsEditing(false)
-                                    : e.key === "Enter"
-                                    ? saveModification(e)
-                                    : ""
-                            }
-                            disabled={isDisabled}
                         />
-                    ) : (
-                        <p className={"post__text"}>
-                            <ReactHashtag
-                                renderHashtag={hashtagValue => (
-                                    <Hashtag
-                                        key={hashtagValue}
-                                        onClick={hashtagValue => {
-                                            let hashtag =
-                                                hashtagValue.target.innerText;
-                                            hashtag = hashtag.slice(1);
-                                            redirectTo(`/hashtag/${hashtag}`);
-                                        }}
-                                    >
-                                        {hashtagValue}
-                                    </Hashtag>
+                        <ButtonsColumn>
+                            {/* LIKES */}
+                            <div>
+                                {likes.find(e => e.userId === user.id) ? (
+                                    <FaHeart
+                                        className={
+                                            "post__like-button post__button"
+                                        }
+                                        onClick={() =>
+                                            likePost(token, id, "dislike")
+                                        }
+                                    />
+                                ) : (
+                                    <FaRegHeart
+                                        className={"post__button"}
+                                        onClick={() =>
+                                            likePost(token, id, "like")
+                                        }
+                                    />
                                 )}
+                                <ReactTooltip
+                                    place="bottom"
+                                    type="light"
+                                    effect="solid"
+                                />
+                                <span
+                                    data-tip={likesList}
+                                    onMouseOver={() => handleLikes()}
+                                >
+                                    {likes.length} likes
+                                </span>
+                            </div>
+                            {/* LIKES */}
+                            {/* REPOST */}
+                            <div>
+                                <FaRetweet
+                                    className={"post__button"}
+                                    onClick={() => openModal("repost")}
+                                />
+                                <span>
+                                    {repostCount}{" "}
+                                    {repostCount === 1 ? "re-post" : "re-posts"}
+                                </span>
+                            </div>
+                            {/* REPOST */}
+                        </ButtonsColumn>
+                    </InteractionColumn>
+                    <LinkColumn>
+                        <div className="post__top">
+                            <span
+                                className={"post__author"}
+                                onClick={() => redirectTo(`/user/${userId}`)}
                             >
-                                {text}
-                            </ReactHashtag>
-                        </p>
-                    )}
-                    <Snippet onClick={() => window.open(link)}>
-                        <div>
-                            <h1>{linkTitle}</h1>
-                            <p>{linkDescription}</p>
-                            <span>{link}</span>
+                                {username}
+                            </span>
+                            {user.id === userId ? (
+                                <div>
+                                    <TiPencil
+                                        className={"post__edit-button"}
+                                        onClick={() => {
+                                            setIsEditing(!isEditing);
+                                            setEditedText(text);
+                                        }}
+                                    />
+                                    <FaRegTrashAlt
+                                        color="white"
+                                        onClick={() => openModal("delete")}
+                                    />
+                                </div>
+                            ) : (
+                                ""
+                            )}
                         </div>
-                        <img src={linkImage} alt="Imagem do post" />
-                    </Snippet>
-                </LinkColumn>
-            </InnerContent>
-        </Content>
+                        {isEditing ? (
+                            <textarea
+                                ref={inputRef}
+                                value={editedText}
+                                onChange={e => setEditedText(e.target.value)}
+                                onKeyDown={e =>
+                                    e.key === "Escape"
+                                        ? setIsEditing(false)
+                                        : e.key === "Enter"
+                                        ? saveModification(e)
+                                        : ""
+                                }
+                                disabled={isDisabled}
+                            />
+                        ) : (
+                            <p className={"post__text"}>
+                                <ReactHashtag
+                                    renderHashtag={hashtagValue => (
+                                        <Hashtag
+                                            key={hashtagValue}
+                                            onClick={hashtagValue => {
+                                                let hashtag =
+                                                    hashtagValue.target
+                                                        .innerText;
+                                                hashtag = hashtag.slice(1);
+                                                redirectTo(
+                                                    `/hashtag/${hashtag}`
+                                                );
+                                            }}
+                                        >
+                                            {hashtagValue}
+                                        </Hashtag>
+                                    )}
+                                >
+                                    {text}
+                                </ReactHashtag>
+                            </p>
+                        )}
+                        <Snippet onClick={() => window.open(link)}>
+                            <div>
+                                <h1>{linkTitle}</h1>
+                                <p>{linkDescription}</p>
+                                <span>{link}</span>
+                            </div>
+                            <img src={linkImage} alt="Imagem do post" />
+                        </Snippet>
+                    </LinkColumn>
+                </InnerContent>
+            </Content>
+        </OutterContent>
     );
 }
