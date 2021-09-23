@@ -1,11 +1,31 @@
 import styled from "styled-components";
 
+const OutterContent = styled.div`
+    background-color: #1e1e1e;
+    padding-top: 0px;
+    border-radius: 16px;
+`;
+
+const RepostInfo = styled.div`
+    display: flex;
+    align-items: center;
+    color: #fff;
+    padding: 10px 0px 10px 15px;
+
+    & span {
+        font-size: 11px;
+        margin-left: 5px;
+    }
+    & .post__button {
+        font-size: 20px;
+    }
+`;
+
 const Content = styled.div`
     align-items: center;
     background-color: #171717;
     border-radius: 16px;
     display: flex;
-    height: inherit;
     justify-content: center;
     width: 800px;
     margin-bottom: 15px;
@@ -175,6 +195,8 @@ const Hashtag = styled.span`
 `;
 
 export {
+    OutterContent,
+    RepostInfo,
     Content,
     InnerContent,
     InteractionColumn,
