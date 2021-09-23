@@ -13,7 +13,7 @@ export default function Timeline() {
     const [postsList, setPostsList] = useState([]);
     const { token } = useContext(UserContext);
 
-    useEffect(() => {
+    function refresh(){
         getFollowingList(token)
             .then((res) => {
                 if(!res.data.users[0]){
@@ -31,8 +31,10 @@ export default function Timeline() {
                         });
                 }
             })
-        
-    }, [token]);
+    }
+    
+    useEffect(refresh, []);
+    useInterval(refresh, 15000);
 
     return (
         <Content>
