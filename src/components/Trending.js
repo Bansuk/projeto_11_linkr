@@ -33,7 +33,7 @@ export default function TrendingHashtag(){
 
 
 
-const CardTrendingHashtag = styled.div`
+const CardTrendingHashtag = styled.section`
     border-radius: 16px;
 	width: 301px;
 	height: 406px;
