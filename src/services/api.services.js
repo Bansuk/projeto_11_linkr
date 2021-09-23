@@ -26,22 +26,25 @@ function getHashtagsList(token) {
 function getMyPostsList(token, user) {
     return axios.get(`${URL}users/${user.id}/posts`, config(token));
 }
-function getHashtagPostsList(token,idHashtag){
+function getHashtagPostsList(token, idHashtag) {
     return axios.get(`${URL}/hashtags/${idHashtag}/posts`, config(token));
 }
 
 function likePost(token, postId, action) {
     return axios.post(`${URL}posts/${postId}/${action}`, "", config(token));
 }
-function deletePost(token,postId){
+function deletePost(token, postId) {
     return axios.delete(`${URL}posts/${postId}`, config(token));
 }
 function editPost(token, postId, newText) {
     return axios.put(`${URL}posts/${postId}`, newText, config(token));
 }
 
-function getMyLikes(token){
+function getMyLikes(token) {
     return axios.get(`${URL}posts/liked`, config(token));
+}
+function sharePost(token, postId) {
+    return axios.post(`${URL}posts/${postId}/share`, "", config(token));
 }
 
 export {
@@ -55,5 +58,6 @@ export {
     getHashtagPostsList,
     deletePost,
     editPost,
-    getMyLikes
+    getMyLikes,
+    sharePost,
 };
