@@ -71,7 +71,7 @@ const ButtonsColumn = styled.div`
     align-items: center;
     justify-content: space-between;
     height: 150px;
-    width: 55px;
+    width: 65px;
 
     & div {
         display: inherit;

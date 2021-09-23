@@ -1,4 +1,5 @@
 import { FaRegHeart, FaHeart, FaRegTrashAlt, FaRetweet } from "react-icons/fa";
+import { AiOutlineComment } from "react-icons/ai";
 import { TiPencil } from "react-icons/ti";
 import { useHistory } from "react-router";
 import ReactHashtag from "react-hashtag";
@@ -31,6 +32,7 @@ export default function Post({
         user: { id: userId, username, avatar },
         likes,
         repostCount,
+        commentCount,
     },
     repostedBy: { repostUserId, repostUsername },
 }) {
@@ -202,6 +204,17 @@ export default function Post({
                                 </span>
                             </div>
                             {/* LIKES */}
+                            {/* COMMENTS */}
+                            <div>
+                                <AiOutlineComment className={"post__button"} />
+                                <span>
+                                    {commentCount}{" "}
+                                    {commentCount === 1
+                                        ? "comment"
+                                        : "comments"}
+                                </span>
+                            </div>
+                            {/* COMMENTS */}
                             {/* REPOST */}
                             <div>
                                 <FaRetweet

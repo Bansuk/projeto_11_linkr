@@ -34,7 +34,19 @@ export default function Timeline() {
                 <PublishPost />
                 {statusMessage === "OK" ? (
                     postsList.map(post => (
-                        <Post key={post.id} post={post}></Post>
+                        <Post
+                            key={post.id}
+                            post={post}
+                            repostedBy={
+                                post.repostedBy
+                                    ? {
+                                          repostUserId: post.repostedBy.id,
+                                          repostUsername:
+                                              post.repostedBy.username,
+                                      }
+                                    : { repostUserId: "", repostUsername: "" }
+                            }
+                        ></Post>
                     ))
                 ) : (
                     <Message>{statusMessage}</Message>
