@@ -6,6 +6,7 @@ import styled from "styled-components";
 import UserContext from "../contexts/userContext";
 import PublishPost from "./PublishPost";
 import TrendingHashtag from "./Trending";
+import useInterval from "react-useinterval";
 
 export default function Timeline() {
     const [statusMessage, setStatusMessage] = useState("Loading");
