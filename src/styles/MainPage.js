@@ -20,6 +20,8 @@ const Heading = styled.h1`
     font-family: "Oswald", sans-serif;
     font-size: 43px;
     margin-bottom: 40px;
+    width: 800px;
+    word-wrap: break-word;
 
     @media (max-width: 800px) {
         margin-left: 15px;

@@ -29,7 +29,7 @@ export default function MyLikes() {
             <Heading>my likes</Heading>
             <div className="posts">
                 <div>
-                {myPostsList && myPostsList[0] ? (
+                {myPostsList.lenght ? (
                     myPostsList.map(post => <Post key={post.id} post={post}></Post>)
                 ) : (
                     <Message>{statusMessage}</Message>

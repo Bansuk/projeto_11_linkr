@@ -75,7 +75,7 @@ const y="FollowButton onClick={followUnfollow}>UnFollow</FollowButton>"
                 </HeadingFollow>
             <div className="posts"> 
                     <div>
-                    {myPostsList && myPostsList[0] ? (
+                    {myPostsList.lenght ? (
                         myPostsList.map(post => <Post key={post.id} post={post}></Post>)
                     ) : (
                         <Message>{statusMessage}</Message>

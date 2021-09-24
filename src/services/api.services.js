@@ -15,7 +15,7 @@ function signUpUser(user) {
     return axios.post(`${URL}sign-up`, user);
 }
 function getPostsList(token) {
-    return axios.get(`${URL}/posts`, config(token));
+    return axios.get(`${URL}following/posts`, config(token));
 }
 function postNewPost(post, token) {
     return axios.post(`${URL}/posts`, post, config(token));
@@ -53,6 +53,10 @@ function unfollowUser(token, user){
     return axios.post(`${URL}users/${user.id}/unfollow`, "",config(token));
 }
 
+function getFollowingList(token){
+    return axios.get(`${URL}users/follows`, config(token));
+}
+
 export {
     signInUser,
     signUpUser,
@@ -67,5 +71,6 @@ export {
     getMyLikes,
     seeFollowersUsers,
     followUser,
-    unfollowUser
+    unfollowUser,
+    getFollowingList,
 };
