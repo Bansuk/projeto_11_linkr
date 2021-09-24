@@ -110,25 +110,17 @@ const LinkColumn = styled.div`
 `;
 
 const VideoYoutube = styled.div`
-    overflow: hidden;
+    position: relative;
+  padding-bottom: 56.25%; /* 16:9 */
+  height: 0;
 
   & iframe{
-    width: 100%;
-    height: calc((100vw*9) /16);
+    position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
-
-    @media (max-aspect-ratio: 16/9) {
-      width: 100%;
-      overflow: hidden;
-    
-
-    & iframe{
-      width: calc((100vh*32)/49);
-      height: 37vh;
-      }
-  }
-
-  
 `;
 
 const Snippet = styled.div`
