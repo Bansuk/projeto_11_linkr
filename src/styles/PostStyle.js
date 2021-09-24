@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 const OutterContent = styled.div`
     background-color: #1e1e1e;
-    padding-top: 0px;
     border-radius: 16px;
 `;
 
@@ -28,7 +27,6 @@ const Content = styled.div`
     display: flex;
     justify-content: center;
     width: 800px;
-    margin-bottom: 15px;
     font-family: "Lato", sans-serif;
     box-sizing: border-box;
     padding: 15px;

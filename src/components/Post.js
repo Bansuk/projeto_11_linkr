@@ -25,6 +25,7 @@ import UserContext from "../contexts/userContext";
 import ReactTooltip from "react-tooltip";
 import { deletePost } from "../services/api.services";
 import ConfirmationModal from "./ConfirmationModal";
+import Comment from "./Comment";
 
 export default function Post({
     post: {
@@ -52,6 +53,7 @@ export default function Post({
     const [loading, setLoading] = useState(false);
     const [modalType, setModalType] = useState("");
     const [showComments, setShowComments] = useState(false);
+    const [comments, setComments] = useState([]);
 
     useEffect(() => {
         if (isEditing) {
@@ -146,6 +148,11 @@ export default function Post({
                 alert("Não foi possível repostar o post");
             });
     }
+    function getComments() {
+        getPostComments(token, id)
+            .then(res => setComments(res.data.comments))
+            .catch(err => alert("Erro ao obter os comentários do post!"));
+    }
 
     return (
         <OutterContent>
@@ -214,7 +221,14 @@ export default function Post({
                             <div>
                                 <AiOutlineComment
                                     className={"post__button"}
-                                    onClick={() => setShowComments(true)}
+                                    onClick={() => {
+                                        if (showComments === true)
+                                            setShowComments(false);
+                                        else {
+                                            getComments();
+                                            setShowComments(true);
+                                        }
+                                    }}
                                 />
                                 <span>
                                     {commentCount}{" "}
@@ -314,11 +328,9 @@ export default function Post({
                 </InnerContent>
             </Content>
             {showComments
-                ? getPostComments(token, id)
-                      .then(res => console.log(res.data.comments[0]))
-                      .catch(err =>
-                          alert("Erro ao obter os comentários do post!")
-                      )
+                ? comments.map(comment => (
+                      <Comment key={comment.id} comment={comment} />
+                  ))
                 : ""}
         </OutterContent>
     );
