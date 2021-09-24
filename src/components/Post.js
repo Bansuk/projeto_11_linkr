@@ -169,7 +169,7 @@ export default function Post({
                 ""
             )}
 
-            <Content>
+            <Content showComments={showComments}>
                 <ConfirmationModal
                     closeModal={closeModal}
                     modalIsOpen={modalIsOpen}

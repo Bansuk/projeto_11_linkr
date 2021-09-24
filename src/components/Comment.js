@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styled from "styled-components";
 import { getFollowingList } from "../services/api.services";
 
@@ -9,7 +10,12 @@ export default function Comment({
     authorId,
     token,
 }) {
-    getFollowingList(token).then(res => console.log(res.data));
+    const [following, setFollowing] = useState([]);
+    getFollowingList(token)
+        .then(res => setFollowing(res.data.users))
+        .catch(err =>
+            alert("Não foi possível obter a lista de usuários que você segue!")
+        );
     return (
         <Container>
             <Content>
@@ -17,7 +23,14 @@ export default function Comment({
                 <div>
                     <span className={"comment__user"}>
                         {username}
-                        {id === authorId ? " • posts's author" : ""}
+                        <span className={"comment__info"}>
+                            {id === authorId
+                                ? " • posts's author"
+                                : following.filter(e => e.id === id).length !==
+                                  0
+                                ? " • following"
+                                : ""}
+                        </span>
                     </span>
 
                     <span className={"comment__text"}>{text}</span>
@@ -72,6 +85,10 @@ const Content = styled.div`
             color: #f3f3f3;
             font-weight: 700;
             margin-bottom: 5px;
+        }
+
+        & .comment__info {
+            color: #565656;
         }
     }
 `;

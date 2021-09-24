@@ -54,6 +54,7 @@ const Content = styled.div`
     display: flex;
     align-items: center;
     height: 70px;
+    position: relative;
 
     & img {
         border-radius: 50%;
@@ -80,6 +81,8 @@ const Content = styled.div`
 
     & .comment__button {
         color: #fff;
+        position: absolute;
+        right: 15px;
 
         :hover {
             cursor: pointer;

@@ -30,6 +30,7 @@ const Content = styled.div`
     font-family: "Lato", sans-serif;
     box-sizing: border-box;
     padding: 15px;
+    margin-bottom: ${props => (props.showComments ? 0 : "15px")};
 
     @media (max-width: 900px) {
         border-radius: 0;
