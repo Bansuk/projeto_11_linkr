@@ -339,7 +339,12 @@ export default function Post({
                   ))
                 : ""}
             {showComments ? (
-                <CommentInput token={token} postId={id} avatar={user.avatar} />
+                <CommentInput
+                    token={token}
+                    postId={id}
+                    avatar={user.avatar}
+                    getComments={getComments}
+                />
             ) : (
                 ""
             )}
