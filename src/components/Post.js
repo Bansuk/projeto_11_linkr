@@ -15,7 +15,12 @@ import {
     OutterContent,
 } from "../styles/PostStyle";
 import { useContext, useRef, useState, useEffect } from "react";
-import { likePost, editPost, sharePost } from "../services/api.services";
+import {
+    likePost,
+    editPost,
+    sharePost,
+    getPostComments,
+} from "../services/api.services";
 import UserContext from "../contexts/userContext";
 import ReactTooltip from "react-tooltip";
 import { deletePost } from "../services/api.services";
@@ -46,6 +51,7 @@ export default function Post({
     const [modalIsOpen, setIsOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const [modalType, setModalType] = useState("");
+    const [showComments, setShowComments] = useState(false);
 
     useEffect(() => {
         if (isEditing) {
@@ -206,7 +212,10 @@ export default function Post({
                             {/* LIKES */}
                             {/* COMMENTS */}
                             <div>
-                                <AiOutlineComment className={"post__button"} />
+                                <AiOutlineComment
+                                    className={"post__button"}
+                                    onClick={() => setShowComments(true)}
+                                />
                                 <span>
                                     {commentCount}{" "}
                                     {commentCount === 1
@@ -304,6 +313,13 @@ export default function Post({
                     </LinkColumn>
                 </InnerContent>
             </Content>
+            {showComments
+                ? getPostComments(token, id)
+                      .then(res => console.log(res.data.comments[0]))
+                      .catch(err =>
+                          alert("Erro ao obter os comentários do post!")
+                      )
+                : ""}
         </OutterContent>
     );
 }

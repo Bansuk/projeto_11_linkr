@@ -46,6 +46,9 @@ function getMyLikes(token) {
 function sharePost(token, postId) {
     return axios.post(`${URL}posts/${postId}/share`, "", config(token));
 }
+function getPostComments(token, postId) {
+    return axios.get(`${URL}posts/${postId}/comments`, config(token));
+}
 
 export {
     signInUser,
@@ -60,4 +63,5 @@ export {
     editPost,
     getMyLikes,
     sharePost,
+    getPostComments,
 };
