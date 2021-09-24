@@ -1,6 +1,5 @@
 import { createGlobalStyle } from "styled-components";
 
-
 const GlobalStyle = createGlobalStyle`
     body{
         background-color: #333;
@@ -17,6 +16,11 @@ const GlobalStyle = createGlobalStyle`
         transform: translate(-50%,0%);
         display: flex;
         flex-direction: column;
+
+        :focus{
+            outline: none;
+            border: none;
+        }
     }
     .Modal h2{
         width: 360px;
