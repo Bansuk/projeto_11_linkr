@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { getHashtagsList } from "../services/api.services"
 import UserContext from "../contexts/userContext";
 import HashtagList from "./HashtagList";
+import HashtagSearch from "./HashtagSearch";
+
 export default function TrendingHashtag(){
     const [hashtagsList, setHashtagsList]= useState("");
     const { token} = useContext(UserContext);
@@ -21,7 +23,8 @@ export default function TrendingHashtag(){
                 <Divider></Divider>
                 <ul>
                     {hashtagsList.map((hashtags) => <HashtagList key={hashtags.id} hashtag={hashtags.name}/>)}
-                </ul>  
+                </ul>
+                <HashtagSearch />
             </CardTrendingHashtag>
         )
     }return ("")
@@ -30,7 +33,7 @@ export default function TrendingHashtag(){
 
 
 
-const CardTrendingHashtag = styled.div`
+const CardTrendingHashtag = styled.section`
     border-radius: 16px;
 	width: 301px;
 	height: 406px;
