@@ -15,7 +15,6 @@ export default function UsersPosts() {
     const userId = {
         id: useParams().id
     }
-    
 
     useEffect(() => {
         getMyPostsList(token, userId)

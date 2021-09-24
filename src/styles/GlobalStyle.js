@@ -37,6 +37,19 @@ const GlobalStyle = createGlobalStyle`
         background-color: #1877F2;
         color: #FFFFFF;
     }
+    .preview{
+        position: fixed;
+        top:20%;
+        left:50%;
+        height: 500px;
+        width: 595px;
+
+        & iframe{
+            width:500px;
+            height:500px;
+        }
+    }
+
 `;
 
 export default GlobalStyle;

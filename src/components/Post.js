@@ -37,8 +37,8 @@ export default function Post({
     const [isDisabled, setIsDisabled] = useState(false);
     const inputRef = useRef(null);
     const [modalIsOpen, setIsOpen] = useState(false);
+    const [previewIsOpen, setPreviewIsOpen] = useState(false);
     const [loading, setLoading]= useState(false);
-
     useEffect(() => {
         if (isEditing) {
             const e = inputRef.current;
@@ -84,12 +84,7 @@ export default function Post({
         }
     }
 
-    function openModal(){
-        setIsOpen(true)
-    }
-    function closeModal(){
-        setIsOpen(false)
-    }
+    
     function delPost(){
         setLoading(true);
         deletePost(token,id)
@@ -123,7 +118,7 @@ export default function Post({
     return (
         <Content>
             <Modal
-                onRequestClose={closeModal}
+                onRequestClose={() => setIsOpen(false)}
                 isOpen={modalIsOpen}
                 className="Modal"
             >
@@ -133,11 +128,21 @@ export default function Post({
                     <>
                         <h2>Tem certeza que deseja excluir essa publicação?</h2>
                         <div className="modal-buttons">
-                            <button onClick={closeModal}>Não, voltar</button>
+                            <button onClick={() => setIsOpen(false)}>Não, voltar</button>
                             <button onClick={delPost}>Sim, excluir</button>
                         </div>
                     </>
                 )}
+            </Modal>
+            <Modal
+            onRequestClose={() => setPreviewIsOpen(false)}
+            isOpen={previewIsOpen}
+            className="preview"
+            >
+                <div>
+                <iframe src={link} />
+                </div>
+                
             </Modal>
             <InnerContent>
                 <InteractionColumn>
@@ -181,7 +186,7 @@ export default function Post({
                                         setEditedText(text);
                                     }}
                                 />
-                                <FaRegTrashAlt color="white" onClick={openModal}/>
+                                <FaRegTrashAlt color="white" onClick={() => setIsOpen(true)}/>
                             </div>
                         ) : (
                             ""
@@ -222,7 +227,7 @@ export default function Post({
                             </ReactHashtag>
                         </p>
                     )}
-                    <Snippet onClick={() => window.open(link)}>
+                    <Snippet onClick={() => setPreviewIsOpen(true)}>
                         <div>
                             <h1>{linkTitle}</h1>
                             <p>{linkDescription}</p>
