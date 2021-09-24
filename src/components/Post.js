@@ -26,6 +26,7 @@ import ReactTooltip from "react-tooltip";
 import { deletePost } from "../services/api.services";
 import ConfirmationModal from "./ConfirmationModal";
 import Comment from "./Comment";
+import CommentInput from "./CommentInput";
 
 export default function Post({
     post: {
@@ -329,9 +330,19 @@ export default function Post({
             </Content>
             {showComments
                 ? comments.map(comment => (
-                      <Comment key={comment.id} comment={comment} />
+                      <Comment
+                          key={comment.id}
+                          comment={comment}
+                          authorId={userId}
+                          token={token}
+                      />
                   ))
                 : ""}
+            {showComments ? (
+                <CommentInput token={token} postId={id} avatar={user.avatar} />
+            ) : (
+                ""
+            )}
         </OutterContent>
     );
 }

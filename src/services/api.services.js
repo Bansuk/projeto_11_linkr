@@ -50,6 +50,9 @@ function getPostComments(token, postId) {
 function getFollowingList(token) {
     return axios.get(`${URL}users/follows`, config(token));
 }
+function publishComment(token, postId, comment) {
+    return axios.post(`${URL}posts/${postId}/comment`, comment, config(token));
+}
 
 export {
     signInUser,
@@ -66,4 +69,5 @@ export {
     sharePost,
     getPostComments,
     getFollowingList,
+    publishComment,
 };
