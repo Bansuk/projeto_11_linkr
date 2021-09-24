@@ -13,24 +13,24 @@ export default function Timeline() {
     const { token } = useContext(UserContext);
 
     useEffect(() => {
-        getFollowingList(token)
-            .then((res) => {
-                if(!res.data.users[0]){
-                    setStatusMessage("você não segue ninguém ainda, procure por perfis na busca")
-                }else{
-                    getPostsList(token)
-                        .then(res => {
-                            setPostsList(res.data.posts);
-                            setStatusMessage("Nenhum post encontrado");
-                        })
-                        .catch(err => {
-                            setStatusMessage(
-                                "Houve uma falha ao obter os posts, por favor atualize a página"
-                            );
-                        });
-                }
-            })
-        
+        getFollowingList(token).then(res => {
+            if (!res.data.users[0]) {
+                setStatusMessage(
+                    "você não segue ninguém ainda, procure por perfis na busca"
+                );
+            } else {
+                getPostsList(token)
+                    .then(res => {
+                        setPostsList(res.data.posts);
+                        setStatusMessage("Nenhum post encontrado");
+                    })
+                    .catch(err => {
+                        setStatusMessage(
+                            "Houve uma falha ao obter os posts, por favor atualize a página"
+                        );
+                    });
+            }
+        });
     }, [token]);
 
     return (

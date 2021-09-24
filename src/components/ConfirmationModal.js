@@ -10,6 +10,7 @@ export default function ConfirmationModal({
 }) {
     return (
         <Modal
+            ariaHideApp={false}
             onRequestClose={closeModal}
             isOpen={modalIsOpen}
             className="Modal"
