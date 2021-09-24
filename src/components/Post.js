@@ -141,7 +141,7 @@ export default function Post({
 
     return (
         <OutterContent>
-            {repostCount ? (
+            {repostCount && repostUserId ? (
                 <RepostInfo>
                     <FaRetweet className={"post__button"} />
                     <span>
@@ -209,8 +209,12 @@ export default function Post({
                                     onClick={() => openModal("repost")}
                                 />
                                 <span>
-                                    {repostCount}{" "}
-                                    {repostCount === 1 ? "re-post" : "re-posts"}
+                                    {repostCount === 0
+                                        ? repostCount
+                                        : repostUserId
+                                        ? repostCount
+                                        : repostCount - 1}{" "}
+                                    {"re-posts"}
                                 </span>
                             </div>
                             {/* REPOST */}
