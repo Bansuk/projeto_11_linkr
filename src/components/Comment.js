@@ -15,12 +15,11 @@ export default function Comment({
             <Content>
                 <img src={avatar} alt="Imagem de perfil do usuário." />
                 <div>
-                    <UserInfo>
-                        <span className={"comment__user"}>
-                            {username} •{" "}
-                            {id === authorId ? "posts's author" : ""}
-                        </span>
-                    </UserInfo>
+                    <span className={"comment__user"}>
+                        {username}
+                        {id === authorId ? " • posts's author" : ""}
+                    </span>
+
                     <span className={"comment__text"}>{text}</span>
                 </div>
             </Content>
@@ -47,8 +46,9 @@ const Content = styled.div`
     height: 70px;
 
     & img {
-        border-radius: 26px;
+        border-radius: 50%;
         width: 39px;
+        height: 39px;
     }
 
     & div {
@@ -61,15 +61,17 @@ const Content = styled.div`
         & .comment__text {
             color: #acacac;
         }
-    }
-`;
 
-const UserInfo = styled.div`
-    margin-left: 0;
-
-    & .comment__user {
-        color: #f3f3f3;
-        font-weight: 700;
-        margin-bottom: 5px;
+        & .comment__text {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            max-width: 650px;
+        }
+        & .comment__user {
+            color: #f3f3f3;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
     }
 `;

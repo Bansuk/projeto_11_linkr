@@ -56,8 +56,9 @@ const Content = styled.div`
     height: 70px;
 
     & img {
-        border-radius: 26px;
+        border-radius: 50%;
         width: 39px;
+        height: 39px;
     }
 
     & input {
