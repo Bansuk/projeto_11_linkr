@@ -1,4 +1,5 @@
 import { FaRegHeart, FaHeart, FaRegTrashAlt } from "react-icons/fa";
+import { AiOutlineClose } from "react-icons/ai"
 import { TiPencil } from "react-icons/ti";
 import { useHistory } from "react-router";
 import ReactHashtag from "react-hashtag";
@@ -140,8 +141,10 @@ export default function Post({
             className="preview"
             >
                 <div>
-                <iframe src={link} />
+                    <button onClick={()=> window.open(link)}>Open in new tab</button>
+                    <AiOutlineClose color="white" fontSize="21px" onClick={() => setPreviewIsOpen(false)}/>
                 </div>
+                <iframe src={link} />
                 
             </Modal>
             <InnerContent>

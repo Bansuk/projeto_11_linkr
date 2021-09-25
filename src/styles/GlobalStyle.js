@@ -17,6 +17,10 @@ const GlobalStyle = createGlobalStyle`
         transform: translate(-50%,0%);
         display: flex;
         flex-direction: column;
+
+        &:focus{
+            outline: none;
+        }
     }
     .Modal h2{
         width: 360px;
@@ -39,14 +43,43 @@ const GlobalStyle = createGlobalStyle`
     }
     .preview{
         position: fixed;
-        top:20%;
+        top:50%;
         left:50%;
-        height: 500px;
-        width: 595px;
+        height: 70%;
+        width: 70%;
+        transform: translate(-50%,-50%);
+        background-color: #333333;
+        border-radius: 20px;
+
+        &:focus{
+            outline: none;
+        }
 
         & iframe{
-            width:500px;
-            height:500px;
+            height: 90%;
+            width: 95%;
+            position: absolute;
+            top:52.5%;
+            left:50%;
+            transform: translate(-50%,-50%);
+        }
+        & div{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-sizing: border-box;
+            height: 59px;
+            padding: 25px;
+
+            & button{
+                width: 138px;
+                height: 31px;
+                font-weight: 700;
+                font-size: 14px;
+                background-color: #1877F2;
+                color: #FFFFFF;
+                border-radius: 5px;
+            }
         }
     }
 
