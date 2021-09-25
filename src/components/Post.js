@@ -9,6 +9,7 @@ import {
     LinkColumn,
     Hashtag,
     Snippet,
+    VideoYoutube
 } from "../styles/PostStyle";
 import { useContext, useRef, useState, useEffect } from "react";
 import { likePost, editPost } from "../services/api.services";
@@ -16,6 +17,7 @@ import UserContext from "../contexts/userContext";
 import ReactTooltip from "react-tooltip";
 import Modal from 'react-modal'
 import { deletePost } from "../services/api.services";
+import getYouTubeID from "get-youtube-id";
 
 export default function Post({
     post: {
@@ -38,6 +40,7 @@ export default function Post({
     const inputRef = useRef(null);
     const [modalIsOpen, setIsOpen] = useState(false);
     const [loading, setLoading]= useState(false);
+    const idYoutube = getYouTubeID(link);
 
     useEffect(() => {
         if (isEditing) {
@@ -222,14 +225,32 @@ export default function Post({
                             </ReactHashtag>
                         </p>
                     )}
-                    <Snippet onClick={() => window.open(link)}>
-                        <div>
-                            <h1>{linkTitle}</h1>
-                            <p>{linkDescription}</p>
-                            <span>{link}</span>
-                        </div>
-                        <img src={linkImage} alt="Imagem do post" />
-                    </Snippet>
+                    
+                        
+                            
+                            {idYoutube ? (
+                                <>
+                                <VideoYoutube onClick={() => window.open(link)}>
+                                    <iframe 
+                                        width="500px"
+                                        title={linkTitle}
+                                        src={`https://www.youtube.com/embed/${idYoutube}`}
+                                    />
+                                </VideoYoutube>
+                                <p onClick={() => window.open(link)}>{link}</p>
+                                </>
+                            ):( 
+                                <Snippet onClick={() => window.open(link)}>
+                                    <div>
+                                        <h1>{linkTitle}</h1>
+                                        <p>{linkDescription}</p>
+                                        <span>{link}</span>
+                                    </div>
+                                    <img src={linkImage} alt="Imagem do post" />
+                                </Snippet>
+                            )}
+                        
+                        
                 </LinkColumn>
             </InnerContent>
         </Content>
