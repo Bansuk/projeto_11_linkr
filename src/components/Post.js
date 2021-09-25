@@ -1,4 +1,5 @@
 import { FaRegHeart, FaHeart, FaRegTrashAlt } from "react-icons/fa";
+import { AiOutlineClose } from "react-icons/ai"
 import { TiPencil } from "react-icons/ti";
 import { useHistory } from "react-router";
 import ReactHashtag from "react-hashtag";
@@ -39,6 +40,7 @@ export default function Post({
     const [isDisabled, setIsDisabled] = useState(false);
     const inputRef = useRef(null);
     const [modalIsOpen, setIsOpen] = useState(false);
+    const [previewIsOpen, setPreviewIsOpen] = useState(false);
     const [loading, setLoading]= useState(false);
     const idYoutube = getYouTubeID(link);
 
@@ -87,12 +89,7 @@ export default function Post({
         }
     }
 
-    function openModal(){
-        setIsOpen(true)
-    }
-    function closeModal(){
-        setIsOpen(false)
-    }
+    
     function delPost(){
         setLoading(true);
         deletePost(token,id)
@@ -126,7 +123,7 @@ export default function Post({
     return (
         <Content>
             <Modal
-                onRequestClose={closeModal}
+                onRequestClose={() => setIsOpen(false)}
                 isOpen={modalIsOpen}
                 className="Modal"
             >
@@ -136,11 +133,23 @@ export default function Post({
                     <>
                         <h2>Tem certeza que deseja excluir essa publicação?</h2>
                         <div className="modal-buttons">
-                            <button onClick={closeModal}>Não, voltar</button>
+                            <button onClick={() => setIsOpen(false)}>Não, voltar</button>
                             <button onClick={delPost}>Sim, excluir</button>
                         </div>
                     </>
                 )}
+            </Modal>
+            <Modal
+            onRequestClose={() => setPreviewIsOpen(false)}
+            isOpen={previewIsOpen}
+            className="preview"
+            >
+                <div>
+                    <button onClick={()=> window.open(link)}>Open in new tab</button>
+                    <AiOutlineClose color="white" fontSize="21px" cursor="pointer" onClick={() => setPreviewIsOpen(false)}/>
+                </div>
+                <iframe src={link} />
+                
             </Modal>
             <InnerContent>
                 <InteractionColumn>
@@ -184,7 +193,7 @@ export default function Post({
                                         setEditedText(text);
                                     }}
                                 />
-                                <FaRegTrashAlt color="white" onClick={openModal}/>
+                                <FaRegTrashAlt color="white" onClick={() => setIsOpen(true)}/>
                             </div>
                         ) : (
                             ""
@@ -240,7 +249,7 @@ export default function Post({
                                 <p onClick={() => window.open(link)}>{link}</p>
                                 </>
                             ):( 
-                                <Snippet onClick={() => window.open(link)}>
+                                <Snippet onClick={() => setPreviewIsOpen(true)}>
                                     <div>
                                         <h1>{linkTitle}</h1>
                                         <p>{linkDescription}</p>
