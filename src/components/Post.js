@@ -209,12 +209,10 @@ export default function Post({
                                     onClick={() => openModal("repost")}
                                 />
                                 <span>
-                                    {repostCount === 0
-                                        ? repostCount
-                                        : repostUserId
-                                        ? repostCount
-                                        : repostCount - 1}{" "}
-                                    {"re-posts"}
+                                    {repostCount && !repostUserId
+                                        ? repostCount - 1
+                                        : repostCount}
+                                    {" re-posts"}
                                 </span>
                             </div>
                             {/* REPOST */}
@@ -251,13 +249,10 @@ export default function Post({
                                 ref={inputRef}
                                 value={editedText}
                                 onChange={e => setEditedText(e.target.value)}
-                                onKeyDown={e =>
-                                    e.key === "Escape"
-                                        ? setIsEditing(false)
-                                        : e.key === "Enter"
-                                        ? saveModification(e)
-                                        : ""
-                                }
+                                onKeyDown={e => {
+                                    if (e.key === "Escape") setIsEditing(false);
+                                    if (e.key === "Enter") saveModification(e);
+                                }}
                                 disabled={isDisabled}
                             />
                         ) : (

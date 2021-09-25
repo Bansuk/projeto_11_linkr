@@ -17,20 +17,20 @@ export default function ConfirmationModal({
         >
             {loading ? (
                 <h2>
-                    {modalType === "delete" ? "Excluindo..." : "Re-posting..."}
+                    {modalType === "delete" ? "Excluindo..." : "Repostando..."}
                 </h2>
             ) : (
                 <>
                     <h2>
                         {modalType === "delete"
                             ? "Tem certeza que deseja excluir essa publicação?"
-                            : "Do you want to re-post this link?"}
+                            : "Você gostaria de repostar este link?"}
                     </h2>
                     <div className="modal-buttons">
                         <button onClick={closeModal}>
                             {modalType === "delete"
                                 ? "Não, voltar"
-                                : "No, cancel"}
+                                : "Não, cancelar"}
                         </button>
                         <button
                             onClick={
@@ -39,7 +39,7 @@ export default function ConfirmationModal({
                         >
                             {modalType === "delete"
                                 ? "Sim, excluir"
-                                : "Yes, share!"}
+                                : "Sim, compartilhar!"}
                         </button>
                     </div>
                 </>

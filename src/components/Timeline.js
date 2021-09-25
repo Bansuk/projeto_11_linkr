@@ -6,13 +6,14 @@ import styled from "styled-components";
 import UserContext from "../contexts/userContext";
 import PublishPost from "./PublishPost";
 import TrendingHashtag from "./Trending";
+import useInterval from "react-useinterval";
 
 export default function Timeline() {
     const [statusMessage, setStatusMessage] = useState("Loading");
     const [postsList, setPostsList] = useState([]);
     const { token } = useContext(UserContext);
 
-    useEffect(() => {
+    function refresh() {
         getFollowingList(token).then(res => {
             if (!res.data.users[0]) {
                 setStatusMessage(
@@ -31,7 +32,19 @@ export default function Timeline() {
                     });
             }
         });
-    }, [token]);
+    }
+
+    function setRepostedBy(post) {
+        if (post.repostedBy) {
+            return {
+                repostUserId: post.repostedBy.id,
+                repostUsername: post.repostedBy.username,
+            };
+        } else return { repostUserId: "", repostUsername: "" };
+    }
+
+    useEffect(refresh, []);
+    useInterval(refresh, 15000);
 
     return (
         <Content>
@@ -43,15 +56,7 @@ export default function Timeline() {
                         <Post
                             key={post.id}
                             post={post}
-                            repostedBy={
-                                post.repostedBy
-                                    ? {
-                                          repostUserId: post.repostedBy.id,
-                                          repostUsername:
-                                              post.repostedBy.username,
-                                      }
-                                    : { repostUserId: "", repostUsername: "" }
-                            }
+                            repostedBy={setRepostedBy(post)}
                         ></Post>
                     ))
                 ) : (
