@@ -18,7 +18,6 @@ const Content = styled.div`
         width: 100%;
         max-width: none;
     }
-    
 `;
 
 const InnerContent = styled.div`
@@ -71,7 +70,7 @@ const LinkColumn = styled.div`
     }
 
     & .post__top {
-        width:97%;
+        width: 97%;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -80,6 +79,12 @@ const LinkColumn = styled.div`
     & .post__author {
         font-size: 19px;
         color: #fff;
+    }
+
+    & .post__location {
+        color: #fff;
+        font-size: 16px;
+        margin-left: 8px;
     }
 
     & .post__text {
@@ -158,6 +163,5 @@ export {
     InteractionColumn,
     LinkColumn,
     Snippet,
-    Hashtag
+    Hashtag,
 };
-

@@ -3,6 +3,7 @@ import { useContext, useState } from "react";
 import UserContext from "../contexts/userContext";
 import { postNewPost } from "../services/api.services";
 import { BiMap } from "react-icons/bi";
+import { useParams } from "react-router";
 
 export default function PublishPost() {
     const [link, setLink] = useState("");
@@ -10,13 +11,15 @@ export default function PublishPost() {
     const [button, setButton] = useState(true);
     const { user, token } = useContext(UserContext);
     const [isLocationActive, setIsLocationActive] = useState(false);
-    let post = { link, text };
+    const [geolocation, setGeolocation] = useState({});
+    let post = { link, text, geolocation };
 
     function publishContent() {
         if (link === "") {
             alert("Favor preencher o link");
         } else {
             setButton(false);
+            console.log(post);
             postNewPost(post, token)
                 .then(response => {
                     setButton(true);
@@ -40,12 +43,15 @@ export default function PublishPost() {
     }
 
     function locationSuccess(position) {
-        console.log(position.coords);
+        setGeolocation({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+        });
     }
 
     function locationError() {
-        alert("Não foi possível obter sua localização!");
         setIsLocationActive(false);
+        alert("Não foi possível obter sua localização!");
     }
 
     return (
