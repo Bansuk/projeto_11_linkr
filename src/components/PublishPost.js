@@ -2,12 +2,14 @@ import styled from "styled-components";
 import { useContext, useState } from "react";
 import UserContext from "../contexts/userContext";
 import { postNewPost } from "../services/api.services";
+import { BiMap } from "react-icons/bi";
 
 export default function PublishPost() {
     const [link, setLink] = useState("");
     const [text, setText] = useState("");
     const [button, setButton] = useState(true);
     const { user, token } = useContext(UserContext);
+    const [isLocationActive, setIsLocationActive] = useState(false);
     let post = { link, text };
     function publishContent() {
         if (link === "") {
@@ -49,6 +51,21 @@ export default function PublishPost() {
                     onChange={e => setText(e.target.value)}
                     disabled={!button}
                 />
+                <LowerBarPublishPost
+                    isLocationActive={isLocationActive}
+                    onClick={() => {
+                        setIsLocationActive(!isLocationActive);
+                        navigator.geolocation.getCurrentPosition(() =>
+                            alert("a")
+                        );
+                    }}
+                >
+                    <BiMap className={"publishpost__icon"} />
+                    <span>
+                        Localização{" "}
+                        {isLocationActive ? "ativada" : "desativada"}
+                    </span>
+                </LowerBarPublishPost>
                 {button ? (
                     <ButtonPublishPost onClick={publishContent}>
                         Publicar
@@ -109,7 +126,7 @@ const FirstInputPublishPost = styled.input`
 `;
 const SecondInputPublishPost = styled.input`
     height: 66px;
-    margin-bottom: 31px;
+    margin-bottom: 15px;
     border-radius: 5px;
     background-color: #efefef;
     border: inherit;
@@ -118,6 +135,26 @@ const SecondInputPublishPost = styled.input`
         color: #949494;
     }
 `;
+
+const LowerBarPublishPost = styled.div`
+    display: inherit;
+    align-items: center;
+    width: 25%;
+    color: ${props => (props.isLocationActive ? "#238700" : "#949494")};
+    & span {
+        font-size: 13px;
+        font-weight: 300;
+    }
+
+    & .publishpost__icon {
+        font-size: 20px;
+    }
+
+    :hover {
+        cursor: pointer;
+    }
+`;
+
 const ButtonPublishPost = styled.button`
     width: 112px;
     height: 31px;
@@ -127,4 +164,5 @@ const ButtonPublishPost = styled.button`
     position: absolute;
     right: 0px;
     bottom: 0px;
+    border: none;
 `;
