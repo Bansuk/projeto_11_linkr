@@ -29,10 +29,12 @@ export default function CommentInput({ token, postId, avatar, getComments }) {
                 <img src={avatar} alt="Imagem de perfil do usuário." />
                 <input
                     type="text"
-                    placeholder={isDisabled ? "" : "write a comment..."}
-                    value={isDisabled ? "" : comment}
+                    placeholder={!isDisabled && "write a comment..."}
+                    value={!isDisabled && comment}
                     onChange={e => setComment(e.target.value)}
-                    onKeyDown={e => (e.key === "Enter" ? saveComment() : "")}
+                    onKeyDown={e => {
+                        if (e.key === "Enter") saveComment();
+                    }}
                     disabled={isDisabled}
                 ></input>
                 <FiSend

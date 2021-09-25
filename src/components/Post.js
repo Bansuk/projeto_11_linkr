@@ -157,7 +157,7 @@ export default function Post({
 
     return (
         <OutterContent>
-            {repostCount ? (
+            {repostCount !== 0 && (
                 <RepostInfo>
                     <FaRetweet className={"post__button"} />
                     <span>
@@ -165,8 +165,6 @@ export default function Post({
                         {repostUserId === user.id ? "you" : repostUsername}
                     </span>
                 </RepostInfo>
-            ) : (
-                ""
             )}
 
             <Content showComments={showComments}>

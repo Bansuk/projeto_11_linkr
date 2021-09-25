@@ -11,11 +11,20 @@ export default function Comment({
     token,
 }) {
     const [following, setFollowing] = useState([]);
+
     getFollowingList(token)
         .then(res => setFollowing(res.data.users))
         .catch(err =>
             alert("Não foi possível obter a lista de usuários que você segue!")
         );
+
+    function authorAdditionalInfo() {
+        if (id === authorId) return " • posts's author";
+
+        const numberFollowers = following.filter(e => e.id === id).length;
+        if (numberFollowers) return " • following";
+    }
+
     return (
         <Container>
             <Content>
@@ -24,12 +33,7 @@ export default function Comment({
                     <span className={"comment__user"}>
                         {username}
                         <span className={"comment__info"}>
-                            {id === authorId
-                                ? " • posts's author"
-                                : following.filter(e => e.id === id).length !==
-                                  0
-                                ? " • following"
-                                : ""}
+                            {authorAdditionalInfo()}
                         </span>
                     </span>
 
