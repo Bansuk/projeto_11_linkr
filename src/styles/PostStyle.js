@@ -138,6 +138,30 @@ const LinkColumn = styled.div`
         color: #fff;
         margin-right: 5px;
     }
+
+    & p {
+        margin: 6px 0;
+        font-size: 17px;
+        color: #b7b7b7;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+`;
+
+const VideoYoutube = styled.div`
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 */
+    height: 0;
+
+    & iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
 `;
 
 const Snippet = styled.div`
@@ -203,4 +227,5 @@ export {
     LinkColumn,
     Snippet,
     Hashtag,
+    VideoYoutube,
 };
