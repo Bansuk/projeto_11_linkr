@@ -79,6 +79,10 @@ const GlobalStyle = createGlobalStyle`
                 background-color: #1877F2;
                 color: #FFFFFF;
                 border-radius: 5px;
+
+                :hover{
+                    cursor: pointer;
+                }
             }
         }
     }
