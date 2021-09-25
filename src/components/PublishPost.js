@@ -11,6 +11,7 @@ export default function PublishPost() {
     const { user, token } = useContext(UserContext);
     const [isLocationActive, setIsLocationActive] = useState(false);
     let post = { link, text };
+
     function publishContent() {
         if (link === "") {
             alert("Favor preencher o link");
@@ -27,6 +28,24 @@ export default function PublishPost() {
                     setButton(true);
                 });
         }
+    }
+
+    function toggleLocation() {
+        setIsLocationActive(!isLocationActive);
+        if (!isLocationActive)
+            navigator.geolocation.getCurrentPosition(
+                locationSuccess,
+                locationError
+            );
+    }
+
+    function locationSuccess(position) {
+        console.log(position.coords);
+    }
+
+    function locationError() {
+        alert("Não foi possível obter sua localização!");
+        setIsLocationActive(false);
     }
 
     return (
@@ -53,12 +72,7 @@ export default function PublishPost() {
                 />
                 <LowerBarPublishPost
                     isLocationActive={isLocationActive}
-                    onClick={() => {
-                        setIsLocationActive(!isLocationActive);
-                        navigator.geolocation.getCurrentPosition(() =>
-                            alert("a")
-                        );
-                    }}
+                    onClick={toggleLocation}
                 >
                     <BiMap className={"publishpost__icon"} />
                     <span>
