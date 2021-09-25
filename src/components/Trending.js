@@ -41,8 +41,8 @@ const CardTrendingHashtag = styled.section`
     display:flex;
     flex-direction: column;
     position: sticky;
-    margin-top: 80px;
     top: 100px;
+    margin-left: 25px;
     
     ul{
         margin: 22px 0 0 16px;
