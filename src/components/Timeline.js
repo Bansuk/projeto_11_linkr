@@ -1,38 +1,47 @@
 import { useContext, useEffect, useState } from "react";
-import { getPostsList } from "../services/api.services";
+import { getPostsList, getFollowingList } from "../services/api.services";
 import Post from "./Post";
 import { Content, Heading } from "../styles/MainPage";
 import styled from "styled-components";
 import UserContext from "../contexts/userContext";
 import PublishPost from "./PublishPost";
 import TrendingHashtag from "./Trending";
+import useInterval from "react-useinterval";
 
 export default function Timeline() {
     const [statusMessage, setStatusMessage] = useState("Loading");
     const [postsList, setPostsList] = useState([]);
-    const { token, user } = useContext(UserContext);
+    const { token } = useContext(UserContext);
 
-    useEffect(() => {
-        getPostsList(token)
-            .then(res => {
-                setPostsList(res.data.posts);
-                if (postsList === [])
-                    setStatusMessage("Nenhum post encontrado");
-                else setStatusMessage("OK");
+    function refresh(){
+        getFollowingList(token)
+            .then((res) => {
+                if(!res.data.users[0]){
+                    setStatusMessage("você não segue ninguém ainda, procure por perfis na busca")
+                }else{
+                    getPostsList(token)
+                        .then(res => {
+                            setPostsList(res.data.posts);
+                            setStatusMessage("Nenhum post encontrado");
+                        })
+                        .catch(err => {
+                            setStatusMessage(
+                                "Houve uma falha ao obter os posts, por favor atualize a página"
+                            );
+                        });
+                }
             })
-            .catch(err => {
-                setStatusMessage(
-                    "Houve uma falha ao obter os posts, por favor atualize a página"
-                );
-            });
-    }, [token, postsList]);
+    }
+    
+    useEffect(refresh, []);
+    useInterval(refresh, 15000);
 
     return (
         <Content>
             <div>
                 <Heading>timeline</Heading>
                 <PublishPost />
-                {statusMessage === "OK" ? (
+                {postsList[0] ? (
                     postsList.map(post => (
                         <Post key={post.id} post={post}></Post>
                     ))
@@ -45,7 +54,7 @@ export default function Timeline() {
     );
 }
 
-const Message = styled.span`
+const Message = styled.p`
     color: #fff;
     font-weight: 700;
     font-family: "Oswald", sans-serif;
