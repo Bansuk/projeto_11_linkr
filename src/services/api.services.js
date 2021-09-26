@@ -26,35 +26,41 @@ function getHashtagsList(token) {
 function getMyPostsList(token, user) {
     return axios.get(`${URL}users/${user.id}/posts`, config(token));
 }
-function getHashtagPostsList(token,idHashtag){
+function getHashtagPostsList(token, idHashtag) {
     return axios.get(`${URL}/hashtags/${idHashtag}/posts`, config(token));
 }
-
 function likePost(token, postId, action) {
     return axios.post(`${URL}posts/${postId}/${action}`, "", config(token));
 }
-function deletePost(token,postId){
+function deletePost(token, postId) {
     return axios.delete(`${URL}posts/${postId}`, config(token));
 }
 function editPost(token, postId, newText) {
     return axios.put(`${URL}posts/${postId}`, newText, config(token));
 }
-
-function getMyLikes(token){
+function getMyLikes(token) {
     return axios.get(`${URL}posts/liked`, config(token));
 }
-function seeFollowersUsers(token){
+function sharePost(token, postId) {
+    return axios.post(`${URL}posts/${postId}/share`, "", config(token));
+}
+function getPostComments(token, postId) {
+    return axios.get(`${URL}posts/${postId}/comments`, config(token));
+}
+function seeFollowersUsers(token) {
     return axios.get(`${URL}users/follows`, config(token));
 }
-function followUser(token, user){
-    return axios.post(`${URL}users/${user.id}/follow`, "",config(token));
+function followUser(token, user) {
+    return axios.post(`${URL}users/${user.id}/follow`, "", config(token));
 }
-function unfollowUser(token, user){
-    return axios.post(`${URL}users/${user.id}/unfollow`, "",config(token));
+function unfollowUser(token, user) {
+    return axios.post(`${URL}users/${user.id}/unfollow`, "", config(token));
 }
-
-function getFollowingList(token){
+function getFollowingList(token) {
     return axios.get(`${URL}users/follows`, config(token));
+}
+function publishComment(token, postId, comment) {
+    return axios.post(`${URL}posts/${postId}/comment`, comment, config(token));
 }
 
 function getSearchOptions(token, string){
@@ -77,10 +83,13 @@ export {
     deletePost,
     editPost,
     getMyLikes,
+    sharePost,
+    getPostComments,
     seeFollowersUsers,
     followUser,
     unfollowUser,
     getFollowingList,
     getSearchOptions,
     getUserInfo,
+    publishComment,
 };

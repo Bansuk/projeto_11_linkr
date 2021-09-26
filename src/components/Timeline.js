@@ -13,45 +13,59 @@ export default function Timeline() {
     const [postsList, setPostsList] = useState([]);
     const { token } = useContext(UserContext);
 
-    function refresh(){
-        getFollowingList(token)
-            .then((res) => {
-                if(!res.data.users[0]){
-                    setStatusMessage("você não segue ninguém ainda, procure por perfis na busca")
-                }else{
-                    getPostsList(token)
-                        .then(res => {
-                            setPostsList(res.data.posts);
-                            setStatusMessage("Nenhum post encontrado");
-                        })
-                        .catch(err => {
-                            setStatusMessage(
-                                "Houve uma falha ao obter os posts, por favor atualize a página"
-                            );
-                        });
-                }
-            })
+    function refresh() {
+        getFollowingList(token).then(res => {
+            if (!res.data.users[0]) {
+                setStatusMessage(
+                    "você não segue ninguém ainda, procure por perfis na busca"
+                );
+            } else {
+                getPostsList(token)
+                    .then(res => {
+                        setPostsList(res.data.posts);
+                        setStatusMessage("Nenhum post encontrado");
+                    })
+                    .catch(err => {
+                        setStatusMessage(
+                            "Houve uma falha ao obter os posts, por favor atualize a página"
+                        );
+                    });
+            }
+        });
     }
-    
+
+    function setRepostedBy(post) {
+        if (post.repostedBy) {
+            return {
+                repostUserId: post.repostedBy.id,
+                repostUsername: post.repostedBy.username,
+            };
+        } else return { repostUserId: "", repostUsername: "" };
+    }
+
     useEffect(refresh, []);
     useInterval(refresh, 15000);
 
     return (
         <Content>
-                <Heading>timeline</Heading>
-                <div className="posts">
-                    <div>
-                        <PublishPost />
-                        {postsList[0] ? (
-                            postsList.map(post => (
-                                <Post key={post.id} post={post}></Post>
-                            ))
-                        ) : (
-                            <Message>{statusMessage}</Message>
-                        )}
-                    </div>
-                    <TrendingHashtag />
+            <Heading>timeline</Heading>
+            <div className="posts">
+                <div>
+                    <PublishPost />
+                    {postsList[0] ? (
+                        postsList.map(post => (
+                            <Post
+                                key={post.id}
+                                post={post}
+                                repostedBy={setRepostedBy(post)}
+                            ></Post>
+                        ))
+                    ) : (
+                        <Message>{statusMessage}</Message>
+                    )}
                 </div>
+                <TrendingHashtag />
+            </div>
         </Content>
     );
 }
