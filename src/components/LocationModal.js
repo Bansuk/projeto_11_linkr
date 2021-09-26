@@ -3,7 +3,17 @@ import { Component } from "react";
 
 export class LocationModal extends Component {
     render() {
-        return <Map google={this.props.google} zoom={14} />;
+        return (
+            <Map
+                google={this.props.google}
+                style={{ width: "100%", height: "80%" }}
+                initialCenter={{
+                    lat: this.props.coords.latitude,
+                    lng: this.props.coords.longitude,
+                }}
+                zoom={14}
+            />
+        );
     }
 }
 

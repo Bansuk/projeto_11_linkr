@@ -121,12 +121,20 @@ const LinkColumn = styled.div`
     & .post__author {
         font-size: 19px;
         color: #fff;
+
+        &:hover {
+            cursor: pointer;
+        }
     }
 
     & .post__location {
         color: #fff;
         font-size: 16px;
         margin-left: 8px;
+
+        &:hover {
+            cursor: pointer;
+        }
     }
 
     & .post__text {
