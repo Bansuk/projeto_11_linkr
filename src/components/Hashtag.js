@@ -12,12 +12,12 @@ const [postsList, setPostsList] = useState([]);
 const { token } = useContext(UserContext);
 const { idHashtag } = useParams();
 
-  
+
 useEffect(() => {
     getHashtagPostsList(token, idHashtag)
         .then(res => {
             setPostsList(res.data.posts);
-            setStatusMessage("OK");
+            setStatusMessage("Nenhum post encontrado");
         })
         .catch(err => {
             setStatusMessage(
@@ -28,19 +28,21 @@ useEffect(() => {
 
 return (
     <Content>
-            <div>
-                {idHashtag.length <= 10 ? (
-                    <Heading>#{idHashtag}</Heading>
-                ):(
-                    <Heading>#{idHashtag.substring(0,7)}...</Heading>
-                )}
-                {statusMessage === "OK" ? (
-                    postsList.map(post => <Post key={post.id} post={post}></Post>)
-                ) : (
-                    <Message>{statusMessage}</Message>
-                )}
+            <div className="posts">
+                <div>
+                    {idHashtag.length <= 10 ? (
+                        <Heading>#{idHashtag}</Heading>
+                    ):(
+                        <Heading>#{idHashtag.substring(0,7)}...</Heading>
+                    )}
+                    {postsList[0] ? (
+                        postsList.map(post => <Post key={post.id} post={post}></Post>)
+                    ) : (
+                        <Message>{statusMessage}</Message>
+                    )}
+                </div>
+                <TrendingHashtag />
             </div>
-            <TrendingHashtag />
         </Content>
 );
 }

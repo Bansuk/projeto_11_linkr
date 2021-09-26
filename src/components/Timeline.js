@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { getPostsList, getFollowingList } from "../services/api.services";
+import { getPostsList, getFollowingList, getMorePostsList } from "../services/api.services";
 import Post from "./Post";
 import { Content, Heading } from "../styles/MainPage";
 import styled from "styled-components";
@@ -13,6 +13,8 @@ export default function Timeline() {
     const [statusMessage, setStatusMessage] = useState("Loading");
     const [postsList, setPostsList] = useState([]);
     const { token } = useContext(UserContext);
+    const [lastId, setLastId] = useState("")
+    const [hasMorePosts, setHasMorePosts] = useState(true)
 
     function refresh() {
         getFollowingList(token).then(res => {
@@ -25,6 +27,7 @@ export default function Timeline() {
                     .then(res => {
                         setPostsList(res.data.posts);
                         setStatusMessage("Nenhum post encontrado");
+                        setLastId(res.data.posts[res.data.posts.length-1].id)
                     })
                     .catch(err => {
                         setStatusMessage(
@@ -33,6 +36,24 @@ export default function Timeline() {
                     });
             }
         });
+    }
+
+    function postsInfiniteScroll() {
+        getMorePostsList(token,lastId)
+        .then(res => {
+            setLastId(res.data.posts[res.data.posts.length-1].id)
+            setPostsList([...postsList, ...res.data.posts])
+            if(res.data.posts.length === 0){
+                setHasMorePosts(false)
+            }
+            console.log(res.data.posts)
+            
+        })
+        .catch(err => {
+            setStatusMessage(
+                "Houve uma falha ao obter os posts, por favor atualize a página"
+            );
+        })
     }
 
     function setRepostedBy(post) {
@@ -54,7 +75,18 @@ export default function Timeline() {
                 <div>
                     <PublishPost />
                     {postsList[0] ? (
-                    <InfinityScroll>
+                    <InfiniteScroll
+                    dataLength={postsList.length}
+                    pageStart={0}
+                    next={postsInfiniteScroll}
+                    hasMore={hasMorePosts}
+                    loader={<h4>Loading...</h4>}
+                    endMessage={
+                        <p style={{ textAlign: 'center' }}>
+                          <b>Yay! You have seen it all</b>
+                        </p>
+                      }
+                    >
                         {postsList.map(post => (
                             <Post
                                 key={post.id}
@@ -62,7 +94,7 @@ export default function Timeline() {
                                 repostedBy={setRepostedBy(post)}
                             ></Post>
                         ))}
-                    </InfinityScroll>
+                    </InfiniteScroll>
                     ) : (
                         <Message>{statusMessage}</Message>
                     )}

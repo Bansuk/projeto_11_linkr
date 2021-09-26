@@ -17,6 +17,10 @@ function signUpUser(user) {
 function getPostsList(token) {
     return axios.get(`${URL}following/posts`, config(token));
 }
+function getMorePostsList(token, lastId){
+    console.log(lastId)
+    return axios.get(`${URL}following/posts?olderThan=${lastId}`, config(token))
+}
 function postNewPost(post, token) {
     return axios.post(`${URL}/posts`, post, config(token));
 }
@@ -82,4 +86,5 @@ export {
     unfollowUser,
     getFollowingList,
     publishComment,
+    getMorePostsList
 };

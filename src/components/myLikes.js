@@ -26,15 +26,17 @@ export default function MyLikes() {
 
     return (
         <Content>
-            <div>
             <Heading>my likes</Heading>
-            {myPostsList && myPostsList[0] ? (
-                myPostsList.map(post => <Post key={post.id} post={post}></Post>)
-            ) : (
-                <Message>{statusMessage}</Message>
-            )}
-            </div>
+            <div className="posts">
+                <div>
+                {myPostsList.lenght ? (
+                    myPostsList.map(post => <Post key={post.id} post={post}></Post>)
+                ) : (
+                    <Message>{statusMessage}</Message>
+                )}
+                </div>
             <TrendingHashtag />
+            </div>
         </Content>
     );
 }
