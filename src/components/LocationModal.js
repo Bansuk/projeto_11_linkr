@@ -18,5 +18,5 @@ export class LocationModal extends Component {
 }
 
 export default GoogleApiWrapper({
-    apiKey: "AIzaSyBJ3I82lQN9arSLcD22tDm2SOPSy4gpe78",
+    apiKey: process.env.REACT_APP_GOOGLE_API_KEY,
 })(LocationModal);
