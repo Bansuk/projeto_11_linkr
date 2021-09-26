@@ -30,7 +30,7 @@ export default function CommentInput({ token, postId, avatar, getComments }) {
                 <input
                     type="text"
                     placeholder={!isDisabled && "write a comment..."}
-                    value={!isDisabled && comment}
+                    value={!isDisabled ? comment : ""}
                     onChange={e => setComment(e.target.value)}
                     onKeyDown={e => {
                         if (e.key === "Enter") saveComment();

@@ -256,7 +256,7 @@ export default function Post({
                             >
                                 {username}
                             </span>
-                            {user.id === userId ? (
+                            {user.id === userId && (
                                 <div>
                                     <TiPencil
                                         className={"post__edit-button"}
@@ -270,8 +270,6 @@ export default function Post({
                                         onClick={() => setIsOpen(true)}
                                     />
                                 </div>
-                            ) : (
-                                ""
                             )}
                         </div>
                         {isEditing ? (
@@ -279,13 +277,10 @@ export default function Post({
                                 ref={inputRef}
                                 value={editedText}
                                 onChange={e => setEditedText(e.target.value)}
-                                onKeyDown={e =>
-                                    e.key === "Escape"
-                                        ? setIsEditing(false)
-                                        : e.key === "Enter"
-                                        ? saveModification(e)
-                                        : ""
-                                }
+                                onKeyDown={e => {
+                                    if (e.key === "Escape") setIsEditing(false);
+                                    if (e.key === "Enter") saveModification(e);
+                                }}
                                 disabled={isDisabled}
                             />
                         ) : (
@@ -336,25 +331,22 @@ export default function Post({
                     </LinkColumn>
                 </InnerContent>
             </Content>
-            {showComments
-                ? comments.map(comment => (
-                      <Comment
-                          key={comment.id}
-                          comment={comment}
-                          authorId={userId}
-                          token={token}
-                      />
-                  ))
-                : ""}
-            {showComments ? (
+            {showComments &&
+                comments.map(comment => (
+                    <Comment
+                        key={comment.id}
+                        comment={comment}
+                        authorId={userId}
+                        token={token}
+                    />
+                ))}
+            {showComments && (
                 <CommentInput
                     token={token}
                     postId={id}
                     avatar={user.avatar}
                     getComments={getComments}
                 />
-            ) : (
-                ""
             )}
         </OutterContent>
     );

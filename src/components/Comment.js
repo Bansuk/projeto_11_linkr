@@ -76,14 +76,15 @@ const Content = styled.div`
         border-bottom: none;
 
         & .comment__text {
-            color: #acacac;
-        }
-
-        & .comment__text {
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
             overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            max-width: 650px;
+            hyphens: auto;
+            max-width: 645px;
+            color: #acacac;
         }
         & .comment__user {
             color: #f3f3f3;
