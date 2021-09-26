@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { getMyPostsList, seeFollowersUsers, followUser, unfollowUser} from "../services/api.services";
+import { getMyPostsList, seeFollowersUsers, followUser, unfollowUser, getUserInfo} from "../services/api.services";
 import Post from "./Post";
 import { Content, Heading } from "../styles/MainPage";
 import styled from "styled-components";
@@ -19,17 +19,21 @@ export default function UsersPosts() {
     }
 
     useEffect(() => {
+        getUserInfo(token, userId)
+            .then((res) => setTargetUser(res.data.user.username))
+
         getMyPostsList(token, userId)
             .then(res => {
                 setMyPostsList(res.data.posts);
                 setStatusMessage("Nenhum post encontrado");
-                setTargetUser(res.data.posts[0].user.username);
             })
             .catch(err => {
+                console.log(err);
                 setStatusMessage(
                     "Houve uma falha ao obter os posts, por favor atualize a página"
                 );
             });
+
             seeFollowersUsers(token)
             .then(resp =>{
                 if(resp.data.users.find(({id})=> id === Number(userId.id))){
@@ -77,7 +81,7 @@ export default function UsersPosts() {
                     </HeadingFollow>
                     <div className="posts">
                         <div>
-                        {myPostsList.length ? (
+                        {myPostsList[0] ? (
                             myPostsList.map(post => <Post key={post.id} post={post}></Post>)
                         ) : (
                             <Message>{statusMessage}</Message>
