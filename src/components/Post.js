@@ -1,4 +1,5 @@
 import { FaRegHeart, FaHeart, FaRegTrashAlt, FaRetweet } from "react-icons/fa";
+import { AiOutlineComment, AiOutlineClose } from "react-icons/ai";
 import { TiPencil } from "react-icons/ti";
 import { useHistory } from "react-router";
 import ReactHashtag from "react-hashtag";
@@ -12,13 +13,23 @@ import {
     Snippet,
     ButtonsColumn,
     OutterContent,
+    VideoYoutube,
 } from "../styles/PostStyle";
 import { useContext, useRef, useState, useEffect } from "react";
-import { likePost, editPost, sharePost } from "../services/api.services";
+import {
+    likePost,
+    editPost,
+    sharePost,
+    getPostComments,
+    deletePost,
+} from "../services/api.services";
 import UserContext from "../contexts/userContext";
 import ReactTooltip from "react-tooltip";
-import { deletePost } from "../services/api.services";
+import Modal from "react-modal";
 import ConfirmationModal from "./ConfirmationModal";
+import Comment from "./Comment";
+import CommentInput from "./CommentInput";
+import getYouTubeID from "get-youtube-id";
 
 export default function Post({
     post: {
@@ -31,6 +42,7 @@ export default function Post({
         user: { id: userId, username, avatar },
         likes,
         repostCount,
+        commentCount,
     },
     repostedBy: { repostUserId, repostUsername },
 }) {
@@ -44,6 +56,10 @@ export default function Post({
     const [modalIsOpen, setIsOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const [modalType, setModalType] = useState("");
+    const [showComments, setShowComments] = useState(false);
+    const [comments, setComments] = useState([]);
+    const [previewIsOpen, setPreviewIsOpen] = useState(false);
+    const idYoutube = getYouTubeID(link);
 
     useEffect(() => {
         if (isEditing) {
@@ -138,6 +154,11 @@ export default function Post({
                 alert("Não foi possível repostar o post");
             });
     }
+    function getComments() {
+        getPostComments(token, id)
+            .then(res => setComments(res.data.comments))
+            .catch(err => alert("Erro ao obter os comentários do post!"));
+    }
 
     return (
         <OutterContent>
@@ -152,16 +173,46 @@ export default function Post({
             ) : (
                 ""
             )}
-
-            <Content>
-                <ConfirmationModal
-                    closeModal={closeModal}
-                    modalIsOpen={modalIsOpen}
-                    loading={loading}
-                    delPost={delPost}
-                    sharePost={repost}
-                    modalType={modalType}
-                />
+            <Content showComments={showComments}>
+                <Modal
+                    onRequestClose={() => setIsOpen(false)}
+                    isOpen={modalIsOpen}
+                    className="Modal"
+                >
+                    {loading ? (
+                        <h2>Excluindo...</h2>
+                    ) : (
+                        <>
+                            <h2>
+                                Tem certeza que deseja excluir essa publicação?
+                            </h2>
+                            <div className="modal-buttons">
+                                <button onClick={() => setIsOpen(false)}>
+                                    Não, voltar
+                                </button>
+                                <button onClick={delPost}>Sim, excluir</button>
+                            </div>
+                        </>
+                    )}
+                </Modal>
+                <Modal
+                    onRequestClose={() => setPreviewIsOpen(false)}
+                    isOpen={previewIsOpen}
+                    className="preview"
+                >
+                    <div>
+                        <button onClick={() => window.open(link)}>
+                            Open in new tab
+                        </button>
+                        <AiOutlineClose
+                            color="white"
+                            fontSize="21px"
+                            cursor="pointer"
+                            onClick={() => setPreviewIsOpen(false)}
+                        />
+                    </div>
+                    <iframe src={link} />
+                </Modal>
                 <InnerContent>
                     <InteractionColumn>
                         <img
@@ -202,6 +253,27 @@ export default function Post({
                                 </span>
                             </div>
                             {/* LIKES */}
+                            {/* COMMENTS */}
+                            <div>
+                                <AiOutlineComment
+                                    className={"post__button"}
+                                    onClick={() => {
+                                        if (showComments === true)
+                                            setShowComments(false);
+                                        else {
+                                            getComments();
+                                            setShowComments(true);
+                                        }
+                                    }}
+                                />
+                                <span>
+                                    {commentCount}{" "}
+                                    {commentCount === 1
+                                        ? "comment"
+                                        : "comments"}
+                                </span>
+                            </div>
+                            {/* COMMENTS */}
                             {/* REPOST */}
                             <div>
                                 <FaRetweet
@@ -226,7 +298,7 @@ export default function Post({
                             >
                                 {username}
                             </span>
-                            {user.id === userId ? (
+                            {user.id === userId && (
                                 <div>
                                     <TiPencil
                                         className={"post__edit-button"}
@@ -237,11 +309,9 @@ export default function Post({
                                     />
                                     <FaRegTrashAlt
                                         color="white"
-                                        onClick={() => openModal("delete")}
+                                        onClick={() => setIsOpen(true)}
                                     />
                                 </div>
-                            ) : (
-                                ""
                             )}
                         </div>
                         {isEditing ? (
@@ -279,17 +349,47 @@ export default function Post({
                                 </ReactHashtag>
                             </p>
                         )}
-                        <Snippet onClick={() => window.open(link)}>
-                            <div>
-                                <h1>{linkTitle}</h1>
-                                <p>{linkDescription}</p>
-                                <span>{link}</span>
-                            </div>
-                            <img src={linkImage} alt="Imagem do post" />
-                        </Snippet>
+                        {idYoutube ? (
+                            <>
+                                <VideoYoutube onClick={() => window.open(link)}>
+                                    <iframe
+                                        width="500px"
+                                        title={linkTitle}
+                                        src={`https://www.youtube.com/embed/${idYoutube}`}
+                                    />
+                                </VideoYoutube>
+                                <p onClick={() => window.open(link)}>{link}</p>
+                            </>
+                        ) : (
+                            <Snippet onClick={() => setPreviewIsOpen(true)}>
+                                <div>
+                                    <h1>{linkTitle}</h1>
+                                    <p>{linkDescription}</p>
+                                    <span>{link}</span>
+                                </div>
+                                <img src={linkImage} alt="Imagem do post" />
+                            </Snippet>
+                        )}
                     </LinkColumn>
                 </InnerContent>
             </Content>
+            {showComments &&
+                comments.map(comment => (
+                    <Comment
+                        key={comment.id}
+                        comment={comment}
+                        authorId={userId}
+                        token={token}
+                    />
+                ))}
+            {showComments && (
+                <CommentInput
+                    token={token}
+                    postId={id}
+                    avatar={user.avatar}
+                    getComments={getComments}
+                />
+            )}
         </OutterContent>
     );
 }

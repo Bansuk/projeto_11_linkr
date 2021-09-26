@@ -48,22 +48,24 @@ export default function Timeline() {
 
     return (
         <Content>
-            <div>
-                <Heading>timeline</Heading>
-                <PublishPost />
-                {postsList[0] ? (
-                    postsList.map(post => (
-                        <Post
-                            key={post.id}
-                            post={post}
-                            repostedBy={setRepostedBy(post)}
-                        ></Post>
-                    ))
-                ) : (
-                    <Message>{statusMessage}</Message>
-                )}
+            <Heading>timeline</Heading>
+            <div className="posts">
+                <div>
+                    <PublishPost />
+                    {postsList[0] ? (
+                        postsList.map(post => (
+                            <Post
+                                key={post.id}
+                                post={post}
+                                repostedBy={setRepostedBy(post)}
+                            ></Post>
+                        ))
+                    ) : (
+                        <Message>{statusMessage}</Message>
+                    )}
+                </div>
+                <TrendingHashtag />
             </div>
-            <TrendingHashtag />
         </Content>
     );
 }

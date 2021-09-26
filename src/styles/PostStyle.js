@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 const OutterContent = styled.div`
     background-color: #1e1e1e;
-    padding-top: 0px;
     border-radius: 16px;
 `;
 
@@ -28,10 +27,10 @@ const Content = styled.div`
     display: flex;
     justify-content: center;
     width: 800px;
-    margin-bottom: 15px;
     font-family: "Lato", sans-serif;
     box-sizing: border-box;
     padding: 15px;
+    margin-bottom: ${props => (props.showComments ? 0 : "15px")};
 
     @media (max-width: 900px) {
         border-radius: 0;
@@ -71,7 +70,7 @@ const ButtonsColumn = styled.div`
     align-items: center;
     justify-content: space-between;
     height: 150px;
-    width: 55px;
+    width: 75px;
 
     & div {
         display: inherit;
@@ -139,6 +138,30 @@ const LinkColumn = styled.div`
         color: #fff;
         margin-right: 5px;
     }
+
+    & p {
+        margin: 6px 0;
+        font-size: 17px;
+        color: #b7b7b7;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+`;
+
+const VideoYoutube = styled.div`
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 */
+    height: 0;
+
+    & iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
 `;
 
 const Snippet = styled.div`
@@ -204,4 +227,5 @@ export {
     LinkColumn,
     Snippet,
     Hashtag,
+    VideoYoutube,
 };
