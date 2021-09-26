@@ -10,13 +10,14 @@ export default function ConfirmationModal({
 }) {
     return (
         <Modal
+            ariaHideApp={false}
             onRequestClose={closeModal}
             isOpen={modalIsOpen}
             className="Modal"
         >
             {loading ? (
                 <h2>
-                    {modalType === "delete" ? "Excluindo..." : "Re-posting..."}
+                    {modalType === "delete" ? "Excluindo..." : "Repostando..."}
                 </h2>
             ) : (
                 <>
