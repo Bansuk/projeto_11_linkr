@@ -174,27 +174,14 @@ export default function Post({
                 ""
             )}
             <Content showComments={showComments}>
-                <Modal
-                    onRequestClose={() => setIsOpen(false)}
-                    isOpen={modalIsOpen}
-                    className="Modal"
-                >
-                    {loading ? (
-                        <h2>Excluindo...</h2>
-                    ) : (
-                        <>
-                            <h2>
-                                Tem certeza que deseja excluir essa publicação?
-                            </h2>
-                            <div className="modal-buttons">
-                                <button onClick={() => setIsOpen(false)}>
-                                    Não, voltar
-                                </button>
-                                <button onClick={delPost}>Sim, excluir</button>
-                            </div>
-                        </>
-                    )}
-                </Modal>
+                <ConfirmationModal
+                    closeModal={closeModal}
+                    modalIsOpen={modalIsOpen}
+                    loading={loading}
+                    delPost={delPost}
+                    sharePost={repost}
+                    modalType={modalType}
+                />
                 <Modal
                     onRequestClose={() => setPreviewIsOpen(false)}
                     isOpen={previewIsOpen}
@@ -309,7 +296,7 @@ export default function Post({
                                     />
                                     <FaRegTrashAlt
                                         color="white"
-                                        onClick={() => setIsOpen(true)}
+                                        onClick={() => openModal("delete")}
                                     />
                                 </div>
                             )}
