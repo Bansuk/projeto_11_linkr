@@ -21,6 +21,7 @@ import UserContext from "../contexts/userContext";
 import ReactTooltip from "react-tooltip";
 import Modal from "react-modal";
 import { deletePost } from "../services/api.services";
+import LocationModal from "./LocationModal";
 
 export default function Post({
     post: {
@@ -128,6 +129,7 @@ export default function Post({
 
     return (
         <Content>
+            <LocationModal />
             <Modal
                 onRequestClose={closeModal}
                 isOpen={modalIsOpen}

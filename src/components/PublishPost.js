@@ -3,7 +3,6 @@ import { useContext, useState } from "react";
 import UserContext from "../contexts/userContext";
 import { postNewPost } from "../services/api.services";
 import { BiMap } from "react-icons/bi";
-import { useParams } from "react-router";
 
 export default function PublishPost() {
     const [link, setLink] = useState("");
