@@ -34,23 +34,38 @@ export default function Timeline() {
         });
     }
 
+    function setRepostedBy(post) {
+        if (post.repostedBy) {
+            return {
+                repostUserId: post.repostedBy.id,
+                repostUsername: post.repostedBy.username,
+            };
+        } else return { repostUserId: "", repostUsername: "" };
+    }
+
     useEffect(refresh, []);
     useInterval(refresh, 15000);
 
     return (
         <Content>
-            <div>
-                <Heading>timeline</Heading>
-                <PublishPost />
-                {postsList[0] ? (
-                    postsList.map(post => (
-                        <Post key={post.id} post={post}></Post>
-                    ))
-                ) : (
-                    <Message>{statusMessage}</Message>
-                )}
+            <Heading>timeline</Heading>
+            <div className="posts">
+                <div>
+                    <PublishPost />
+                    {postsList[0] ? (
+                        postsList.map(post => (
+                            <Post
+                                key={post.id}
+                                post={post}
+                                repostedBy={setRepostedBy(post)}
+                            ></Post>
+                        ))
+                    ) : (
+                        <Message>{statusMessage}</Message>
+                    )}
+                </div>
+                <TrendingHashtag />
             </div>
-            <TrendingHashtag />
         </Content>
     );
 }

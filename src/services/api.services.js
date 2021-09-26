@@ -41,8 +41,26 @@ function editPost(token, postId, newText) {
 function getMyLikes(token) {
     return axios.get(`${URL}posts/liked`, config(token));
 }
+function sharePost(token, postId) {
+    return axios.post(`${URL}posts/${postId}/share`, "", config(token));
+}
+function getPostComments(token, postId) {
+    return axios.get(`${URL}posts/${postId}/comments`, config(token));
+}
+function seeFollowersUsers(token) {
+    return axios.get(`${URL}users/follows`, config(token));
+}
+function followUser(token, user) {
+    return axios.post(`${URL}users/${user.id}/follow`, "", config(token));
+}
+function unfollowUser(token, user) {
+    return axios.post(`${URL}users/${user.id}/unfollow`, "", config(token));
+}
 function getFollowingList(token) {
     return axios.get(`${URL}users/follows`, config(token));
+}
+function publishComment(token, postId, comment) {
+    return axios.post(`${URL}posts/${postId}/comment`, comment, config(token));
 }
 
 export {
@@ -57,5 +75,11 @@ export {
     deletePost,
     editPost,
     getMyLikes,
+    sharePost,
+    getPostComments,
+    seeFollowersUsers,
+    followUser,
+    unfollowUser,
     getFollowingList,
+    publishComment,
 };

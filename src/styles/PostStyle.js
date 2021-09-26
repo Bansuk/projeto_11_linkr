@@ -1,17 +1,36 @@
 import styled from "styled-components";
 
+const OutterContent = styled.div`
+    background-color: #1e1e1e;
+    border-radius: 16px;
+`;
+
+const RepostInfo = styled.div`
+    display: flex;
+    align-items: center;
+    color: #fff;
+    padding: 10px 0px 10px 15px;
+
+    & span {
+        font-size: 11px;
+        margin-left: 5px;
+    }
+    & .post__button {
+        font-size: 20px;
+    }
+`;
+
 const Content = styled.div`
     align-items: center;
     background-color: #171717;
     border-radius: 16px;
     display: flex;
-    height: inherit;
     justify-content: center;
     width: 800px;
-    margin-bottom: 15px;
     font-family: "Lato", sans-serif;
     box-sizing: border-box;
     padding: 15px;
+    margin-bottom: ${props => (props.showComments ? 0 : "15px")};
 
     @media (max-width: 900px) {
         border-radius: 0;
@@ -43,13 +62,36 @@ const InteractionColumn = styled.div`
             cursor: pointer;
         }
     }
+`;
+
+const ButtonsColumn = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 150px;
+    width: 75px;
+
+    & div {
+        display: inherit;
+        flex-direction: inherit;
+        align-items: inherit;
+    }
 
     & span {
-        font-size: 11px;
+        font-size: 12px;
     }
 
     & .post__like-button {
         color: #ac0000;
+    }
+
+    & .post__button {
+        font-size: 20px;
+
+        :hover {
+            cursor: pointer;
+        }
     }
 `;
 
@@ -101,6 +143,30 @@ const LinkColumn = styled.div`
     & .post__edit-button {
         color: #fff;
         margin-right: 5px;
+    }
+
+    & p {
+        margin: 6px 0;
+        font-size: 17px;
+        color: #b7b7b7;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+`;
+
+const VideoYoutube = styled.div`
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 */
+    height: 0;
+
+    & iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
     }
 `;
 
@@ -158,10 +224,14 @@ const Hashtag = styled.span`
 `;
 
 export {
+    OutterContent,
+    RepostInfo,
     Content,
     InnerContent,
     InteractionColumn,
+    ButtonsColumn,
     LinkColumn,
     Snippet,
     Hashtag,
+    VideoYoutube,
 };
