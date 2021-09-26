@@ -129,7 +129,7 @@ export default function Post({
 
     return (
         <Content>
-            <LocationModal />
+            {/* <LocationModal /> */}
             <Modal
                 onRequestClose={closeModal}
                 isOpen={modalIsOpen}
@@ -182,7 +182,10 @@ export default function Post({
                                 {username}
                             </span>
                             {geolocation && (
-                                <FaMapMarkerAlt className={"post__location"} />
+                                <FaMapMarkerAlt
+                                    className={"post__location"}
+                                    onClick={openModal}
+                                />
                             )}
                         </div>
                         {user.id === userId ? (
