@@ -1,51 +1,79 @@
 import { useContext, useEffect, useState } from "react";
-import { getPostsList } from "../services/api.services";
+import { getPostsList, getFollowingList } from "../services/api.services";
 import Post from "./Post";
 import { Content, Heading } from "../styles/MainPage";
 import styled from "styled-components";
 import UserContext from "../contexts/userContext";
 import PublishPost from "./PublishPost";
 import TrendingHashtag from "./Trending";
+import useInterval from "react-useinterval";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 export default function Timeline() {
     const [statusMessage, setStatusMessage] = useState("Loading");
     const [postsList, setPostsList] = useState([]);
-    const { token, user } = useContext(UserContext);
+    const { token } = useContext(UserContext);
 
-    useEffect(() => {
-        getPostsList(token)
-            .then(res => {
-                setPostsList(res.data.posts);
-                if (postsList === [])
-                    setStatusMessage("Nenhum post encontrado");
-                else setStatusMessage("OK");
-            })
-            .catch(err => {
+    function refresh() {
+        getFollowingList(token).then(res => {
+            if (!res.data.users[0]) {
                 setStatusMessage(
-                    "Houve uma falha ao obter os posts, por favor atualize a página"
+                    "você não segue ninguém ainda, procure por perfis na busca"
                 );
-            });
-    }, [token, postsList]);
+            } else {
+                getPostsList(token)
+                    .then(res => {
+                        setPostsList(res.data.posts);
+                        setStatusMessage("Nenhum post encontrado");
+                    })
+                    .catch(err => {
+                        setStatusMessage(
+                            "Houve uma falha ao obter os posts, por favor atualize a página"
+                        );
+                    });
+            }
+        });
+    }
+
+    function setRepostedBy(post) {
+        if (post.repostedBy) {
+            return {
+                repostUserId: post.repostedBy.id,
+                repostUsername: post.repostedBy.username,
+            };
+        } else return { repostUserId: "", repostUsername: "" };
+    }
+
+    useEffect(refresh, []);
+    useInterval(refresh, 15000);
 
     return (
         <Content>
-            <div>
-                <Heading>timeline</Heading>
-                <PublishPost />
-                {statusMessage === "OK" ? (
-                    postsList.map(post => (
-                        <Post key={post.id} post={post}></Post>
-                    ))
-                ) : (
-                    <Message>{statusMessage}</Message>
-                )}
+            <Heading>timeline</Heading>
+            <div className="posts">
+                <div>
+                    <PublishPost />
+                    {postsList[0] ? (
+                    <InfinityScroll>
+                        {postsList.map(post => (
+                            <Post
+                                key={post.id}
+                                post={post}
+                                repostedBy={setRepostedBy(post)}
+                            ></Post>
+                        ))}
+                    </InfinityScroll>
+                    ) : (
+                        <Message>{statusMessage}</Message>
+                    )}
+                </div>
+                <TrendingHashtag />
             </div>
-            <TrendingHashtag />
         </Content>
     );
 }
 
-const Message = styled.span`
+const Message = styled.p`
     color: #fff;
     font-weight: 700;
     font-family: "Oswald", sans-serif;
