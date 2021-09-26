@@ -16,11 +16,17 @@ import {
     VideoYoutube,
 } from "../styles/PostStyle";
 import { useContext, useRef, useState, useEffect } from "react";
-import { likePost, editPost, getPostComments } from "../services/api.services";
+import {
+    likePost,
+    editPost,
+    sharePost,
+    getPostComments,
+    deletePost,
+} from "../services/api.services";
 import UserContext from "../contexts/userContext";
 import ReactTooltip from "react-tooltip";
 import Modal from "react-modal";
-import { deletePost } from "../services/api.services";
+import ConfirmationModal from "./ConfirmationModal";
 import Comment from "./Comment";
 import CommentInput from "./CommentInput";
 import getYouTubeID from "get-youtube-id";
@@ -49,6 +55,7 @@ export default function Post({
     const inputRef = useRef(null);
     const [modalIsOpen, setIsOpen] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [modalType, setModalType] = useState("");
     const [showComments, setShowComments] = useState(false);
     const [comments, setComments] = useState([]);
     const [previewIsOpen, setPreviewIsOpen] = useState(false);
@@ -99,6 +106,13 @@ export default function Post({
         }
     }
 
+    function openModal(type) {
+        setIsOpen(true);
+        setModalType(type);
+    }
+    function closeModal() {
+        setIsOpen(false);
+    }
     function delPost() {
         setLoading(true);
         deletePost(token, id)
@@ -127,6 +141,19 @@ export default function Post({
                 setIsDisabled(false);
             });
     }
+    function repost() {
+        setLoading(true);
+        sharePost(token, id)
+            .then(() => {
+                setLoading(false);
+                setIsOpen(false);
+            })
+            .catch(() => {
+                setLoading(false);
+                setIsOpen(false);
+                alert("Não foi possível repostar o post");
+            });
+    }
     function getComments() {
         getPostComments(token, id)
             .then(res => setComments(res.data.comments))
@@ -135,7 +162,7 @@ export default function Post({
 
     return (
         <OutterContent>
-            {repostCount !== 0 && (
+            {repostCount && repostUserId ? (
                 <RepostInfo>
                     <FaRetweet className={"post__button"} />
                     <span>
@@ -143,30 +170,18 @@ export default function Post({
                         {repostUserId === user.id ? "you" : repostUsername}
                     </span>
                 </RepostInfo>
+            ) : (
+                ""
             )}
-
             <Content showComments={showComments}>
-                <Modal
-                    onRequestClose={() => setIsOpen(false)}
-                    isOpen={modalIsOpen}
-                    className="Modal"
-                >
-                    {loading ? (
-                        <h2>Excluindo...</h2>
-                    ) : (
-                        <>
-                            <h2>
-                                Tem certeza que deseja excluir essa publicação?
-                            </h2>
-                            <div className="modal-buttons">
-                                <button onClick={() => setIsOpen(false)}>
-                                    Não, voltar
-                                </button>
-                                <button onClick={delPost}>Sim, excluir</button>
-                            </div>
-                        </>
-                    )}
-                </Modal>
+                <ConfirmationModal
+                    closeModal={closeModal}
+                    modalIsOpen={modalIsOpen}
+                    loading={loading}
+                    delPost={delPost}
+                    sharePost={repost}
+                    modalType={modalType}
+                />
                 <Modal
                     onRequestClose={() => setPreviewIsOpen(false)}
                     isOpen={previewIsOpen}
@@ -246,6 +261,20 @@ export default function Post({
                                 </span>
                             </div>
                             {/* COMMENTS */}
+                            {/* REPOST */}
+                            <div>
+                                <FaRetweet
+                                    className={"post__button"}
+                                    onClick={() => openModal("repost")}
+                                />
+                                <span>
+                                    {repostCount && !repostUserId
+                                        ? repostCount - 1
+                                        : repostCount}
+                                    {" re-posts"}
+                                </span>
+                            </div>
+                            {/* REPOST */}
                         </ButtonsColumn>
                     </InteractionColumn>
                     <LinkColumn>
@@ -267,7 +296,7 @@ export default function Post({
                                     />
                                     <FaRegTrashAlt
                                         color="white"
-                                        onClick={() => setIsOpen(true)}
+                                        onClick={() => openModal("delete")}
                                     />
                                 </div>
                             )}
