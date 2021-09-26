@@ -19,12 +19,12 @@ export default function PublishPost() {
             alert("Favor preencher o link");
         } else {
             setButton(false);
-            console.log(post);
             postNewPost(post, token)
                 .then(response => {
                     setButton(true);
                     setLink("");
                     setText("");
+                    setGeolocation({});
                 })
                 .catch(() => {
                     alert("Houve um erro ao publicar seu link");
