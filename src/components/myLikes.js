@@ -5,6 +5,8 @@ import { Content, Heading } from "../styles/MainPage";
 import styled from "styled-components";
 import UserContext from "../contexts/userContext";
 import TrendingHashtag from "./Trending";
+import InfiniteScroll from "react-infinite-scroll-component";
+import Loader from "react-loader-spinner";
 
 export default function MyLikes() {
     const [statusMessage, setStatusMessage] = useState("Loading");
@@ -38,7 +40,7 @@ export default function MyLikes() {
             <Heading>my likes</Heading>
             <div className="posts">
                 <div>
-                {myPostsList.lenght ? (
+                {myPostsList.length ? (
                     myPostsList.map(post => (
                     <Post
                         key={post.id}

@@ -20,6 +20,9 @@ function getPostsList(token) {
 function getMorePostsList(token, lastId){
     return axios.get(`${URL}following/posts?olderThan=${lastId}`, config(token))
 }
+function getMorePostsHashtagsList(token, lastId,idHashtag){
+    return axios.get(`${URL}/hashtags/${idHashtag}/posts?olderThan=${lastId}`, config(token));
+}
 function getEarlierPostsList(token, firstId){
     return axios.get(`${URL}following/posts?earlierThan=${firstId}`, config(token))
 }
@@ -89,5 +92,6 @@ export {
     getFollowingList,
     publishComment,
     getMorePostsList,
+    getMorePostsHashtagsList,
     getEarlierPostsList
 };
