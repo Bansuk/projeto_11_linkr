@@ -17,6 +17,10 @@ const Container = styled.div`
         font-size: 49px;
         color: #fff;
         font-family: "Passion One", cursive;
+
+        :hover {
+            cursor: pointer;
+        }
     }
 
     .topbar__icon {
