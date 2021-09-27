@@ -25,6 +25,9 @@ export default function Timeline() {
             setStatusMessage("Nenhum post encontrado");
             setLastId(res.data.posts[res.data.posts.length-1].id)
             setFirstId(res.data.posts[0].id)
+            if(res.data.posts.length < 10){
+                setHasMorePosts(false)
+            }
         })
         .catch(err => {
             setStatusMessage(
@@ -54,23 +57,23 @@ export default function Timeline() {
             }
         });
     }
-function postsInfiniteScroll() {
-    getMorePostsList(token,lastId)
-    .then(res => {
-        setLastId(res.data.posts[res.data.posts.length-1].id)
-        setPostsList([...postsList, ...res.data.posts])
-        console.log(res.data.posts.length)
-        if(res.data.posts.length < 10){
-            setHasMorePosts(false)
-        }
-        
-    })
-    .catch(err => {
-        setStatusMessage(
-            "Houve uma falha ao obter os posts, por favor atualize a página"
-        );
-    })
-}
+    function postsInfiniteScroll() {
+        getMorePostsList(token,lastId)
+        .then(res => {
+            setLastId(res.data.posts[res.data.posts.length-1].id)
+            setPostsList([...postsList, ...res.data.posts])
+            console.log(res.data.posts.length)
+            if(res.data.posts.length < 10){
+                setHasMorePosts(false)
+            }
+            
+        })
+        .catch(err => {
+            setStatusMessage(
+                "Houve uma falha ao obter os posts, por favor atualize a página"
+            );
+        })
+    }
 
     function setRepostedBy(post) {
         if (post.repostedBy) {

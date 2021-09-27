@@ -21,6 +21,9 @@ export default function MyPosts() {
                 setMyPostsList(res.data.posts);
                 setStatusMessage("Nenhum post encontrado");
                 setLastId(res.data.posts[res.data.posts.length-1].id)
+                if(res.data.posts.length < 10){
+                    setHasMorePosts(false)
+                }
             })
             .catch(err => {
                 setStatusMessage(
