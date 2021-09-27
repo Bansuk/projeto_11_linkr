@@ -14,8 +14,8 @@ export default function Option(target){
             <User>{target.user.username}</User>
             {target.user.isFollowingLoggedUser ? (
                 <>
-                <Circle />
-                <span>following</span>
+                    <Circle />
+                    <span>following</span>
                 </>
             ) : ''}            
         </OptionContainer>
