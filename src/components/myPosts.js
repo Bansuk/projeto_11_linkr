@@ -24,20 +24,33 @@ export default function MyPosts() {
             });
     }, [token]);
 
+    function setRepostedBy(post) {
+        if (post.repostedBy) {
+            return {
+                repostUserId: post.repostedBy.id,
+                repostUsername: post.repostedBy.username,
+            };
+        } else return { repostUserId: "", repostUsername: "" };
+    }
+
     return (
         <Content>
             <Heading>my posts</Heading>
             <div className="posts">
                 <div>
-                {myPostsList && myPostsList[0] ? (
-                    myPostsList.map(post => (
-                        <Post key={post.id} post={post}></Post>
-                    ))
-                ) : (
-                    <Message>{statusMessage}</Message>
-                )}
+                    {myPostsList && myPostsList[0] ? (
+                        myPostsList.map(post => (
+                            <Post
+                                key={post.id}
+                                post={post}
+                                repostedBy={setRepostedBy(post)}
+                            ></Post>
+                        ))
+                    ) : (
+                        <Message>{statusMessage}</Message>
+                    )}
                 </div>
-            <TrendingHashtag />
+                <TrendingHashtag />
             </div>
         </Content>
     );
