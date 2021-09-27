@@ -95,7 +95,7 @@ export default function MyLikes() {
                 )}
                 </InfiniteScroll>
                 </div>
-            <TrendingHashtag />
+                <TrendingHashtag />
             </div>
         </Content>
     );

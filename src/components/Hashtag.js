@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import UserContext from "../contexts/userContext";
 import { Content, Heading } from "../styles/MainPage";
@@ -9,7 +9,6 @@ import TrendingHashtag from './Trending';
 import InfiniteScroll from "react-infinite-scroll-component";
 import Loader from "react-loader-spinner";
 
-
 export default function Hashtag(){
 const [statusMessage, setStatusMessage] = useState("Loading");
 const [postsList, setPostsList] = useState([]);
@@ -18,6 +17,19 @@ const { idHashtag } = useParams();
 const [lastId, setLastId] = useState("")
 const [hasMorePosts, setHasMorePosts] = useState(true)
 
+
+    useEffect(() => {
+        getHashtagPostsList(token, idHashtag)
+            .then(res => {
+                setPostsList(res.data.posts);
+                setStatusMessage("Nenhum post encontrado");
+            })
+            .catch(err => {
+                setStatusMessage(
+                    "Houve uma falha ao obter os posts, por favor atualize a página"
+                );
+            });
+    }, [idHashtag, token]);
 
 useEffect(() => {
     getHashtagPostsList(token, idHashtag)
@@ -88,8 +100,8 @@ return (
                     >
                     {idHashtag.length <= 10 ? (
                         <Heading>#{idHashtag}</Heading>
-                    ):(
-                        <Heading>#{idHashtag.substring(0,7)}...</Heading>
+                    ) : (
+                        <Heading>#{idHashtag.substring(0, 7)}...</Heading>
                     )}
                     {postsList.length ? (postsList.map(post => (
                             <Post
@@ -107,7 +119,7 @@ return (
             </div>
             
         </Content>
-);
+    );
 }
 
 const Message = styled.span`

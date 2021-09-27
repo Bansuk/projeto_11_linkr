@@ -62,7 +62,6 @@ export default function Timeline() {
         .then(res => {
             setLastId(res.data.posts[res.data.posts.length-1].id)
             setPostsList([...postsList, ...res.data.posts])
-            console.log(res.data.posts.length)
             if(res.data.posts.length < 10){
                 setHasMorePosts(false)
             }
