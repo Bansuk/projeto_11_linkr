@@ -13,7 +13,6 @@ export default function MyLikes() {
     const [myPostsList, setMyPostsList] = useState([]);
     const { token, user } = useContext(UserContext);
     const [lastId, setLastId] = useState("")
-    const [firstId, setFirstId] = useState("")
     const [hasMorePosts, setHasMorePosts] = useState(true)
 
     useEffect(() => {
@@ -22,7 +21,6 @@ export default function MyLikes() {
             setMyPostsList(res.data.posts);
             setStatusMessage("Nenhum post encontrado");
             setLastId(res.data.posts[res.data.posts.length-1].id)
-            setFirstId(res.data.posts[0].id)
             })
             .catch(err => {
                 setStatusMessage(
