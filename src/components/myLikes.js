@@ -38,7 +38,7 @@ export default function MyLikes() {
             <Heading>my likes</Heading>
             <div className="posts">
                 <div>
-                    {myPostsList.lenght ? (
+                    {myPostsList.length ? (
                         myPostsList.map(post => (
                             <Post
                                 key={post.id}
