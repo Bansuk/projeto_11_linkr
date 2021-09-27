@@ -12,6 +12,18 @@ const Content = styled.div`
     & .posts{
         display:flex;
     }
+
+    & h4{
+        margin: 10px 0;
+    }
+
+    & h5{
+        margin: 20px 0;
+        font-size: 25px;
+        color: #FFFFFF;
+        font-weight: 700;
+    }
+    
 `;
 
 const Heading = styled.h1`

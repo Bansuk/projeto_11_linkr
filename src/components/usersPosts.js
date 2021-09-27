@@ -40,6 +40,15 @@ export default function UsersPosts() {
             })
         }, [token])
 
+        function setRepostedBy(post) {
+            if (post.repostedBy) {
+                return {
+                    repostUserId: post.repostedBy.id,
+                    repostUsername: post.repostedBy.username,
+                };
+            } else return { repostUserId: "", repostUsername: "" };
+        }
+
         function followUnfollow(){
             if (button === "Follow"){
                 setButton("Carregando...")
@@ -78,7 +87,13 @@ export default function UsersPosts() {
                     <div className="posts">
                         <div>
                         {myPostsList.length ? (
-                            myPostsList.map(post => <Post key={post.id} post={post}></Post>)
+                            myPostsList.map(post => (
+                                <Post
+                                    key={post.id}
+                                    post={post}
+                                    repostedBy={setRepostedBy(post)}
+                                ></Post>
+                            ))
                         ) : (
                             <Message>{statusMessage}</Message>
                         )}

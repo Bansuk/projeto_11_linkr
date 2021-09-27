@@ -24,13 +24,28 @@ export default function MyLikes() {
             });
     }, [token]);
 
+    function setRepostedBy(post) {
+        if (post.repostedBy) {
+            return {
+                repostUserId: post.repostedBy.id,
+                repostUsername: post.repostedBy.username,
+            };
+        } else return { repostUserId: "", repostUsername: "" };
+    }
+
     return (
         <Content>
             <Heading>my likes</Heading>
             <div className="posts">
                 <div>
                 {myPostsList.lenght ? (
-                    myPostsList.map(post => <Post key={post.id} post={post}></Post>)
+                    myPostsList.map(post => (
+                    <Post
+                        key={post.id}
+                        post={post}
+                        repostedBy={setRepostedBy(post)}
+                    ></Post>
+                    ))
                 ) : (
                     <Message>{statusMessage}</Message>
                 )}

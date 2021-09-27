@@ -26,6 +26,15 @@ useEffect(() => {
         });
 }, [idHashtag,token]);
 
+function setRepostedBy(post) {
+    if (post.repostedBy) {
+        return {
+            repostUserId: post.repostedBy.id,
+            repostUsername: post.repostedBy.username,
+        };
+    } else return { repostUserId: "", repostUsername: "" };
+}
+
 return (
     <Content>
             <div className="posts">
@@ -35,8 +44,13 @@ return (
                     ):(
                         <Heading>#{idHashtag.substring(0,7)}...</Heading>
                     )}
-                    {postsList[0] ? (
-                        postsList.map(post => <Post key={post.id} post={post}></Post>)
+                    {postsList.length ? (postsList.map(post => (
+                            <Post
+                                key={post.id}
+                                post={post}
+                                repostedBy={setRepostedBy(post)}
+                            ></Post>
+                        ))
                     ) : (
                         <Message>{statusMessage}</Message>
                     )}
