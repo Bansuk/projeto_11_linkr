@@ -31,7 +31,7 @@ export default function TopBar({ setUser }) {
     return (
         <>
         <Container>
-            <h1>linkr</h1>
+            <h1 onClick={() => redirectTo("/timeline")}>linkr</h1>
             <div ref={ref}>
                 <div>
                     {isMenuOpen ? (
@@ -79,8 +79,8 @@ export default function TopBar({ setUser }) {
                             onClick={() => {
                                 setIsMenuOpen(false);
                                 setUser(null);
-                                localStorage.removeItem('user');    
-                                redirectTo("/");    
+                                localStorage.removeItem("user");
+                                redirectTo("/");
                             }}
                         >
                             Logout
