@@ -27,6 +27,15 @@ export default function Hashtag() {
             });
     }, [idHashtag, token]);
 
+    function setRepostedBy(post) {
+        if (post.repostedBy) {
+            return {
+                repostUserId: post.repostedBy.id,
+                repostUsername: post.repostedBy.username,
+            };
+        } else return { repostUserId: "", repostUsername: "" };
+    }
+
     return (
         <Content>
             <div className="posts">
@@ -38,7 +47,11 @@ export default function Hashtag() {
                     )}
                     {postsList[0] ? (
                         postsList.map(post => (
-                            <Post key={post.id} post={post}></Post>
+                            <Post
+                                key={post.id}
+                                post={post}
+                                repostedBy={setRepostedBy(post)}
+                            ></Post>
                         ))
                     ) : statusMessage !== "Loading" ? (
                         <Message>{statusMessage}</Message>
