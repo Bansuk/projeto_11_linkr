@@ -5,6 +5,7 @@ import { Content, Heading } from "../styles/MainPage";
 import styled from "styled-components";
 import UserContext from "../contexts/userContext";
 import TrendingHashtag from "./Trending";
+import Loading from "./Loading";
 
 export default function MyLikes() {
     const [statusMessage, setStatusMessage] = useState("Loading");
@@ -29,13 +30,17 @@ export default function MyLikes() {
             <Heading>my likes</Heading>
             <div className="posts">
                 <div>
-                {myPostsList.lenght ? (
-                    myPostsList.map(post => <Post key={post.id} post={post}></Post>)
-                ) : (
-                    <Message>{statusMessage}</Message>
-                )}
+                    {myPostsList.lenght ? (
+                        myPostsList.map(post => (
+                            <Post key={post.id} post={post}></Post>
+                        ))
+                    ) : statusMessage !== "Loading" ? (
+                        <Message>{statusMessage}</Message>
+                    ) : (
+                        <Loading />
+                    )}
                 </div>
-            <TrendingHashtag />
+                <TrendingHashtag />
             </div>
         </Content>
     );

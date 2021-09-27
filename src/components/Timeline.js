@@ -7,6 +7,7 @@ import UserContext from "../contexts/userContext";
 import PublishPost from "./PublishPost";
 import TrendingHashtag from "./Trending";
 import useInterval from "react-useinterval";
+import Loading from "./Loading";
 
 export default function Timeline() {
     const [statusMessage, setStatusMessage] = useState("Loading");
@@ -52,7 +53,7 @@ export default function Timeline() {
             <div className="posts">
                 <div>
                     <PublishPost />
-                    {postsList[0] ? (
+                    {postsList.length ? (
                         postsList.map(post => (
                             <Post
                                 key={post.id}
@@ -60,8 +61,10 @@ export default function Timeline() {
                                 repostedBy={setRepostedBy(post)}
                             ></Post>
                         ))
-                    ) : (
+                    ) : statusMessage !== "Loading" ? (
                         <Message>{statusMessage}</Message>
+                    ) : (
+                        <Loading />
                     )}
                 </div>
                 <TrendingHashtag />
