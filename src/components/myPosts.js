@@ -29,15 +29,15 @@ export default function MyPosts() {
             <Heading>my posts</Heading>
             <div className="posts">
                 <div>
-                {myPostsList && myPostsList[0] ? (
-                    myPostsList.map(post => (
-                        <Post key={post.id} post={post}></Post>
-                    ))
-                ) : (
-                    <Message>{statusMessage}</Message>
-                )}
+                    {myPostsList && myPostsList[0] ? (
+                        myPostsList.map(post => (
+                            <Post key={post.id} post={post}></Post>
+                        ))
+                    ) : (
+                        <Message>{statusMessage}</Message>
+                    )}
                 </div>
-            <TrendingHashtag />
+                <TrendingHashtag />
             </div>
         </Content>
     );
