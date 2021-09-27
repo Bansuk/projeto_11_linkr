@@ -5,6 +5,7 @@ import { Content, Heading } from "../styles/MainPage";
 import styled from "styled-components";
 import UserContext from "../contexts/userContext";
 import TrendingHashtag from "./Trending";
+import Loading from "./Loading";
 
 export default function MyPosts() {
     const [statusMessage, setStatusMessage] = useState("Loading");
@@ -46,8 +47,10 @@ export default function MyPosts() {
                                 repostedBy={setRepostedBy(post)}
                             ></Post>
                         ))
-                    ) : (
+                    ) : statusMessage !== "Loading" ? (
                         <Message>{statusMessage}</Message>
+                    ) : (
+                        <Loading />
                     )}
                 </div>
                 <TrendingHashtag />

@@ -11,6 +11,7 @@ import styled from "styled-components";
 import UserContext from "../contexts/userContext";
 import { useParams } from "react-router-dom";
 import TrendingHashtag from "./Trending";
+import Loading from "./Loading";
 
 export default function UsersPosts() {
     const [statusMessage, setStatusMessage] = useState("Loading");
@@ -18,7 +19,6 @@ export default function UsersPosts() {
     const [targetUser, setTargetUser] = useState("");
     const { token } = useContext(UserContext);
     const [button, setButton] = useState("Carregando...");
-    const [followersUsers, setFollowersUsers] = useState([]);
     const userId = {
         id: useParams().id,
     };
@@ -100,8 +100,10 @@ export default function UsersPosts() {
                                 repostedBy={setRepostedBy(post)}
                             ></Post>
                         ))
-                    ) : (
+                    ) : statusMessage !== "Loading" ? (
                         <Message>{statusMessage}</Message>
+                    ) : (
+                        <Loading />
                     )}
                 </div>
                 <TrendingHashtag />

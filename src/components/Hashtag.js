@@ -6,6 +6,8 @@ import { getHashtagPostsList } from "../services/api.services";
 import Post from "./Post";
 import styled from "styled-components";
 import TrendingHashtag from "./Trending";
+import Loading from "./Loading";
+
 export default function Hashtag() {
     const [statusMessage, setStatusMessage] = useState("Loading");
     const [postsList, setPostsList] = useState([]);
@@ -51,8 +53,10 @@ export default function Hashtag() {
                                 repostedBy={setRepostedBy(post)}
                             ></Post>
                         ))
-                    ) : (
+                    ) : statusMessage !== "Loading" ? (
                         <Message>{statusMessage}</Message>
+                    ) : (
+                        <Loading />
                     )}
                 </div>
                 <TrendingHashtag />
