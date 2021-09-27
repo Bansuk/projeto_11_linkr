@@ -9,6 +9,7 @@ import TrendingHashtag from "./Trending";
 import useInterval from "react-useinterval";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Loader from "react-loader-spinner";
+import Loading from "./Loading";
 
 export default function Timeline() {
     const [statusMessage, setStatusMessage] = useState("Loading");
@@ -92,7 +93,7 @@ export default function Timeline() {
             <div className="posts">
                 <div>
                     <PublishPost />
-                    {postsList[0] ? (
+                    {postsList.length ?  (
                     <InfiniteScroll
                     dataLength={postsList.length}
                     pageStart={0}
@@ -119,9 +120,10 @@ export default function Timeline() {
                             ></Post>
                         ))}
                     </InfiniteScroll>
-                    ) : (
+                    ) : (statusMessage !== "Loading" ? (
                         <Message>{statusMessage}</Message>
-                    )}
+                        ) : (<Loading />) )
+                    }
                 </div>
                 <TrendingHashtag />
             </div>

@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import TrendingHashtag from './Trending';
 import InfiniteScroll from "react-infinite-scroll-component";
 import Loader from "react-loader-spinner";
+import Loading from "./Loading";
 
 export default function Hashtag(){
 const [statusMessage, setStatusMessage] = useState("Loading");
@@ -110,8 +111,10 @@ return (
                                 repostedBy={setRepostedBy(post)}
                             ></Post>
                         ))
-                    ) : (
+                    ) : statusMessage !== "Loading" ? (
                         <Message>{statusMessage}</Message>
+                    ) : (
+                        <Loading />
                     )}
                     </InfiniteScroll>
                 </div>

@@ -7,6 +7,7 @@ import UserContext from "../contexts/userContext";
 import TrendingHashtag from "./Trending";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Loader from "react-loader-spinner";
+import Loading from "./Loading";
 
 export default function MyLikes() {
     const [statusMessage, setStatusMessage] = useState("Loading");
@@ -90,8 +91,10 @@ export default function MyLikes() {
                         repostedBy={setRepostedBy(post)}
                     ></Post>
                     ))
-                ) : (
+                ) : statusMessage !== "Loading" ? (
                     <Message>{statusMessage}</Message>
+                ) : (
+                    <Loading />
                 )}
                 </InfiniteScroll>
                 </div>

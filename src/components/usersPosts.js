@@ -8,6 +8,7 @@ import { useParams } from "react-router-dom";
 import TrendingHashtag from "./Trending";
 import Loader from "react-loader-spinner";
 import InfiniteScroll from "react-infinite-scroll-component";
+import Loading from "./Loading";
 
 export default function UsersPosts() {
     const [statusMessage, setStatusMessage] = useState("Loading");
