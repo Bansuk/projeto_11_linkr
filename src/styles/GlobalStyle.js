@@ -84,6 +84,22 @@ const GlobalStyle = createGlobalStyle`
                 }
             }
         }
+
+        & h1{
+            font-family: Oswald;
+            font-weight: bold;
+            font-size: 38px;
+            color: #fff;
+        }
+
+        & .map{
+            height: 100%;
+            width: 90%;
+            position: absolute;
+            top:65%;
+            left:44.5%;
+            transform: translate(-50%,-50%);
+        }
     }
     .page {
   position: absolute;

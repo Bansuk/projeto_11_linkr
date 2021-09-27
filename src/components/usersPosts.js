@@ -68,6 +68,15 @@ export default function UsersPosts() {
         }
     }
 
+    function setRepostedBy(post) {
+        if (post.repostedBy) {
+            return {
+                repostUserId: post.repostedBy.id,
+                repostUsername: post.repostedBy.username,
+            };
+        } else return { repostUserId: "", repostUsername: "" };
+    }
+
     return (
         <Content>
             <HeadingFollow>
@@ -85,7 +94,11 @@ export default function UsersPosts() {
                 <div>
                     {myPostsList.length ? (
                         myPostsList.map(post => (
-                            <Post key={post.id} post={post}></Post>
+                            <Post
+                                key={post.id}
+                                post={post}
+                                repostedBy={setRepostedBy(post)}
+                            ></Post>
                         ))
                     ) : (
                         <Message>{statusMessage}</Message>

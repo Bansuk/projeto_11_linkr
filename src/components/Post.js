@@ -1,4 +1,10 @@
-import { FaRegHeart, FaHeart, FaRegTrashAlt, FaRetweet } from "react-icons/fa";
+import {
+    FaRegHeart,
+    FaHeart,
+    FaRegTrashAlt,
+    FaRetweet,
+    FaMapMarkerAlt,
+} from "react-icons/fa";
 import { AiOutlineComment, AiOutlineClose } from "react-icons/ai";
 import { TiPencil } from "react-icons/ti";
 import { useHistory } from "react-router";
@@ -30,6 +36,7 @@ import ConfirmationModal from "./ConfirmationModal";
 import Comment from "./Comment";
 import CommentInput from "./CommentInput";
 import getYouTubeID from "get-youtube-id";
+import LocationModal from "./LocationModal";
 
 export default function Post({
     post: {
@@ -41,6 +48,7 @@ export default function Post({
         linkImage,
         user: { id: userId, username, avatar },
         likes,
+        geolocation,
         repostCount,
         commentCount,
     },
@@ -60,6 +68,7 @@ export default function Post({
     const [comments, setComments] = useState([]);
     const [previewIsOpen, setPreviewIsOpen] = useState(false);
     const idYoutube = getYouTubeID(link);
+    const [locationIsOpen, setLocationIsOpen] = useState(false);
 
     useEffect(() => {
         if (isEditing) {
@@ -200,6 +209,24 @@ export default function Post({
                     </div>
                     <iframe src={link} />
                 </Modal>
+                <Modal
+                    onRequestClose={() => setLocationIsOpen(false)}
+                    isOpen={locationIsOpen}
+                    className="preview"
+                >
+                    <div>
+                        <h1>Localização de {username}</h1>
+                        <AiOutlineClose
+                            color="white"
+                            fontSize="21px"
+                            cursor="pointer"
+                            onClick={() => setLocationIsOpen(false)}
+                        />
+                    </div>
+                    <div className={"map"}>
+                        <LocationModal coords={geolocation} />
+                    </div>
+                </Modal>
                 <InnerContent>
                     <InteractionColumn>
                         <img
@@ -279,12 +306,22 @@ export default function Post({
                     </InteractionColumn>
                     <LinkColumn>
                         <div className="post__top">
-                            <span
-                                className={"post__author"}
-                                onClick={() => redirectTo(`/user/${userId}`)}
-                            >
-                                {username}
-                            </span>
+                            <div>
+                                <span
+                                    className={"post__author"}
+                                    onClick={() =>
+                                        redirectTo(`/user/${userId}`)
+                                    }
+                                >
+                                    {username}
+                                </span>
+                                {geolocation && (
+                                    <FaMapMarkerAlt
+                                        className={"post__location"}
+                                        onClick={() => setLocationIsOpen(true)}
+                                    />
+                                )}
+                            </div>
                             {user.id === userId && (
                                 <div>
                                     <TiPencil
