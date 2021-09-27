@@ -1,5 +1,12 @@
 import { useContext, useEffect, useState } from "react";
-import { getMyPostsList, seeFollowersUsers, followUser, unfollowUser, getMoreMyPostsList} from "../services/api.services";
+import {
+    getMyPostsList,
+    seeFollowersUsers,
+    followUser,
+    unfollowUser,
+    getUserInfo,
+    getMoreMyPostsList
+} from "../services/api.services";
 import Post from "./Post";
 import { Content, Heading } from "../styles/MainPage";
 import styled from "styled-components";
@@ -24,11 +31,13 @@ export default function UsersPosts() {
     }
 
     useEffect(() => {
+        getUserInfo(token, userId)
+            .then((res) => setTargetUser(res.data.user.username))
+
         getMyPostsList(token, userId)
             .then(res => {
                 setMyPostsList(res.data.posts);
                 setStatusMessage("Nenhum post encontrado");
-                setTargetUser(res.data.posts[0].user.username);
                 setLastId(res.data.posts[res.data.posts.length-1].id)
                 if(res.data.posts.length < 10){
                     setHasMorePosts(false)
@@ -130,7 +139,7 @@ export default function UsersPosts() {
                         </h5>
                       }
                     >
-                        {myPostsList.length ? (
+                        {myPostsList[0] ? (
                             myPostsList.map(post => (
                                 <Post
                                     key={post.id}

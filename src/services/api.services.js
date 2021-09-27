@@ -78,6 +78,14 @@ function publishComment(token, postId, comment) {
     return axios.post(`${URL}posts/${postId}/comment`, comment, config(token));
 }
 
+function getSearchOptions(token, string){
+    return axios.get(`${URL}users/search?username=${string}`, config(token));
+}
+
+function getUserInfo(token, user){
+    return axios.get(`${URL}users/${user.id}`, config(token));
+}
+
 export {
     signInUser,
     signUpUser,
@@ -96,6 +104,8 @@ export {
     followUser,
     unfollowUser,
     getFollowingList,
+    getSearchOptions,
+    getUserInfo,
     publishComment,
     getMorePostsList,
     getMorePostsHashtagsList,

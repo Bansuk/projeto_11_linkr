@@ -3,6 +3,7 @@ import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 import { useHistory } from "react-router";
 import { Container, Menu } from "../styles/TopBarStyle";
 import UserContext from "../contexts/userContext";
+import SearchInput from "./searchInput";
 
 export default function TopBar({ setUser }) {
     const { user } = useContext(UserContext);
@@ -28,6 +29,7 @@ export default function TopBar({ setUser }) {
     }
 
     return (
+        <>
         <Container>
             <h1 onClick={() => redirectTo("/timeline")}>linkr</h1>
             <div ref={ref}>
@@ -89,5 +91,7 @@ export default function TopBar({ setUser }) {
                 )}
             </div>
         </Container>
+        <SearchInput />
+        </>
     );
 }
