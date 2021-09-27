@@ -17,6 +17,21 @@ function signUpUser(user) {
 function getPostsList(token) {
     return axios.get(`${URL}following/posts`, config(token));
 }
+function getMorePostsList(token, lastId){
+    return axios.get(`${URL}following/posts?olderThan=${lastId}`, config(token))
+}
+function getMorePostsHashtagsList(token, lastId,idHashtag){
+    return axios.get(`${URL}/hashtags/${idHashtag}/posts?olderThan=${lastId}`, config(token));
+}
+function getMoreMyLikesPostsList(token, lastId){
+    return axios.get(`${URL}posts/liked?olderThan=${lastId}`, config(token));
+}
+function getMoreMyPostsList(token, user, lastId){
+    return axios.get(`${URL}users/${user.id}/posts?olderThan=${lastId}`, config(token));
+}
+function getEarlierPostsList(token, firstId){
+    return axios.get(`${URL}following/posts?earlierThan=${firstId}`, config(token))
+}
 function postNewPost(post, token) {
     return axios.post(`${URL}/posts`, post, config(token));
 }
@@ -82,4 +97,9 @@ export {
     unfollowUser,
     getFollowingList,
     publishComment,
+    getMorePostsList,
+    getMorePostsHashtagsList,
+    getEarlierPostsList,
+    getMoreMyLikesPostsList,
+    getMoreMyPostsList
 };

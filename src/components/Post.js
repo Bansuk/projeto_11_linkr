@@ -82,7 +82,6 @@ export default function Post({
     function redirectTo(path) {
         history.push(path);
     }
-
     function handleLikes() {
         let usersList = "";
         likes.forEach(e => (usersList += `${e["user.username"]} `));
@@ -251,6 +250,7 @@ export default function Post({
                                         className={"post__button"}
                                         onClick={() =>
                                             likePost(token, id, "like")
+                                            .then(()=> handleLikes())
                                         }
                                     />
                                 )}
